@@ -7140,10 +7140,38 @@ exports[`Storyshots Components/ProfileSubmissions Profile Submissions Card 1`] =
 
 exports[`Storyshots Components/ProgressCard Basic 1`] = `
 <div
-  className="progress-card__container d-flex card shadow-sm mt-3 bg-primary text-white p-2 border-0"
+  className="progress-card__container card shadow-sm mt-3 bg-primary text-white px-3 px-xl-4 py-2 border-0"
 >
+  <h4
+    className="progress-card__title mt-3 text-center"
+  >
+    You're off to a great start!
+  </h4>
   <div
-    className="card-body"
+    className="d-block d-xl-none"
+  >
+    <div
+      className="bg-white my-3 rounded"
+    >
+      <div
+        className="progress-card__horizontal bg-primary d-flex rounded-left"
+        style={
+          Object {
+            "width": "min-content",
+          }
+        }
+      >
+        <div
+          className="align-self-center px-1 ml-auto font-weight-bold"
+        >
+          0
+          %
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="d-none d-xl-flex justify-content-center"
   >
     <div
       className="progress-card__wrapper d-flex align-items-center"
@@ -7194,28 +7222,28 @@ exports[`Storyshots Components/ProgressCard Basic 1`] = `
         </g>
       </svg>
     </div>
-    <h4
-      className="progress-card__title mt-3"
+  </div>
+  <div
+    className="mt-3"
+  >
+    Join us on
+    <a
+      className="progress-newuser__chatlink text-white"
+      href="https://discord.gg/c0d3"
+      rel="noopener noreferrer"
+      target="_blank"
     >
-      You're off to a great start!
-    </h4>
-    <div
-      className="mt-3"
-    >
-      Join us on
-      <a
-        className="progress-newuser__chatlink text-white"
-        href="https://discord.gg/c0d3"
-        rel="noopener noreferrer"
-        target="_blank"
+      <p
+        className="font-weight-bold d-inline"
       >
         Discord
-      </a>
-      to ask your questions.
-      <p>
-        Start by setting up your development environment and then follow the lessons in the course.
       </p>
-    </div>
+    </a>
+    to ask your questions. Start by setting up your development environment and then follow the lessons in the course.
+  </div>
+  <div
+    className="mt-4 d-flex flex-column"
+  >
     <a
       className="btn btn-light progress-card__button mt-2 text-primary"
       href="/docs/setup"
@@ -7230,10 +7258,38 @@ exports[`Storyshots Components/ProgressCard Basic 1`] = `
 
 exports[`Storyshots Components/ProgressCard Completed Progress 1`] = `
 <div
-  className="progress-card__container d-flex card shadow-sm mt-3 bg-primary text-white p-2 border-0"
+  className="progress-card__container card shadow-sm mt-3 bg-primary text-white px-3 px-xl-4 py-2 border-0"
 >
+  <h4
+    className="progress-card__title mt-3 text-center"
+  >
+    Congratulations! You've finished the course!
+  </h4>
   <div
-    className="card-body"
+    className="d-block d-xl-none"
+  >
+    <div
+      className="bg-white my-3 rounded"
+    >
+      <div
+        className="progress-card__horizontal bg-primary d-flex rounded"
+        style={
+          Object {
+            "width": "100%",
+          }
+        }
+      >
+        <div
+          className="align-self-center px-1 ml-auto font-weight-bold"
+        >
+          100
+          %
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="d-none d-xl-flex justify-content-center"
   >
     <div
       className="progress-card__wrapper d-flex align-items-center"
@@ -7284,28 +7340,28 @@ exports[`Storyshots Components/ProgressCard Completed Progress 1`] = `
         </g>
       </svg>
     </div>
-    <h4
-      className="progress-card__title mt-3"
+  </div>
+  <div
+    className="mt-3"
+  >
+    Join us on
+    <a
+      className="progress-newuser__chatlink text-white"
+      href="https://discord.gg/c0d3"
+      rel="noopener noreferrer"
+      target="_blank"
     >
-      Congratulations! You've finished the course!
-    </h4>
-    <div
-      className="mt-3"
-    >
-      Join us on
-      <a
-        className="progress-newuser__chatlink text-white"
-        href="https://discord.gg/c0d3"
-        rel="noopener noreferrer"
-        target="_blank"
+      <p
+        className="font-weight-bold d-inline"
       >
         Discord
-      </a>
-      to ask your questions.
-      <p>
-        Start by setting up your development environment and then follow the lessons in the course.
       </p>
-    </div>
+    </a>
+    to ask your questions. Start by setting up your development environment and then follow the lessons in the course.
+  </div>
+  <div
+    className="mt-4 d-flex flex-column"
+  >
     <a
       className="btn btn-light progress-card__button mt-2 text-primary"
       href="/docs/setup"
@@ -7320,33 +7376,34 @@ exports[`Storyshots Components/ProgressCard Completed Progress 1`] = `
 
 exports[`Storyshots Components/ProgressCard Logged Out 1`] = `
 <div
-  className="progress-card__container d-flex card shadow-sm mt-3 bg-primary text-white p-2 border-0"
+  className="progress-card__container card shadow-sm mt-3 bg-primary text-white px-3 px-xl-4 py-2 border-0"
 >
-  <div
-    className="card-body"
+  <h4
+    className="progress-card__title mt-4 text-center "
   >
-    <h4
-      className="progress-card__title mt-3"
+    Join C0D3 now and start your software engineering journey!
+  </h4>
+  <div
+    className="mt-3"
+  >
+    Join us on
+    <a
+      className="progress-newuser__chatlink text-white"
+      href="https://discord.gg/c0d3"
+      rel="noopener noreferrer"
+      target="_blank"
     >
-      Join C0D3 now and start your software engineering journey!
-    </h4>
-    <div
-      className="mt-3"
-    >
-      Join us on
-      <a
-        className="progress-newuser__chatlink text-white"
-        href="https://discord.gg/c0d3"
-        rel="noopener noreferrer"
-        target="_blank"
+      <p
+        className="font-weight-bold d-inline"
       >
         Discord
-      </a>
-      to ask your questions.
-      <p>
-        Start by setting up your development environment and then follow the lessons in the course.
       </p>
-    </div>
+    </a>
+    to ask your questions. Start by setting up your development environment and then follow the lessons in the course.
+  </div>
+  <div
+    className="mt-4 d-flex flex-column"
+  >
     <a
       className="btn btn-light progress-card__button mt-2 text-primary"
       href="/docs/setup"
@@ -7361,10 +7418,38 @@ exports[`Storyshots Components/ProgressCard Logged Out 1`] = `
 
 exports[`Storyshots Components/ProgressCard Progress 1`] = `
 <div
-  className="progress-card__container d-flex card shadow-sm mt-3 bg-primary text-white p-2 border-0"
+  className="progress-card__container card shadow-sm mt-3 bg-primary text-white px-3 px-xl-4 py-2 border-0"
 >
+  <h4
+    className="progress-card__title mt-3 text-center"
+  >
+    Keep up the great work!
+  </h4>
   <div
-    className="card-body"
+    className="d-block d-xl-none"
+  >
+    <div
+      className="bg-white my-3 rounded"
+    >
+      <div
+        className="progress-card__horizontal bg-primary d-flex rounded-left"
+        style={
+          Object {
+            "width": "40%",
+          }
+        }
+      >
+        <div
+          className="align-self-center px-1 ml-auto font-weight-bold"
+        >
+          40
+          %
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="d-none d-xl-flex justify-content-center"
   >
     <div
       className="progress-card__wrapper d-flex align-items-center"
@@ -7415,28 +7500,28 @@ exports[`Storyshots Components/ProgressCard Progress 1`] = `
         </g>
       </svg>
     </div>
-    <h4
-      className="progress-card__title mt-3"
+  </div>
+  <div
+    className="mt-3"
+  >
+    Join us on
+    <a
+      className="progress-newuser__chatlink text-white"
+      href="https://discord.gg/c0d3"
+      rel="noopener noreferrer"
+      target="_blank"
     >
-      Keep up the great work!
-    </h4>
-    <div
-      className="mt-3"
-    >
-      Join us on
-      <a
-        className="progress-newuser__chatlink text-white"
-        href="https://discord.gg/c0d3"
-        rel="noopener noreferrer"
-        target="_blank"
+      <p
+        className="font-weight-bold d-inline"
       >
         Discord
-      </a>
-      to ask your questions.
-      <p>
-        Start by setting up your development environment and then follow the lessons in the course.
       </p>
-    </div>
+    </a>
+    to ask your questions. Start by setting up your development environment and then follow the lessons in the course.
+  </div>
+  <div
+    className="mt-4 d-flex flex-column"
+  >
     <a
       className="btn btn-light progress-card__button mt-2 text-primary"
       href="/docs/setup"
@@ -13777,33 +13862,29 @@ Array [
           className="d-xl-none"
         >
           <div
-            className="progress-card__container d-flex card shadow-sm mt-3 bg-primary text-white p-2 border-0"
+            className="progress-card__container card shadow-sm mt-3 bg-primary text-white px-3 px-xl-4 py-2 border-0"
           >
             <div
-              className="card-body"
+              className="mt-3"
             >
-              <h4
-                className="progress-card__title mt-3"
+              Join us on
+              <a
+                className="progress-newuser__chatlink text-white"
+                href="https://discord.gg/c0d3"
+                rel="noopener noreferrer"
+                target="_blank"
               >
-                Join C0D3 now and start your software engineering journey!
-              </h4>
-              <div
-                className="mt-3"
-              >
-                Join us on
-                <a
-                  className="progress-newuser__chatlink text-white"
-                  href="https://discord.gg/c0d3"
-                  rel="noopener noreferrer"
-                  target="_blank"
+                <p
+                  className="font-weight-bold d-inline"
                 >
                   Discord
-                </a>
-                to ask your questions.
-                <p>
-                  Start by setting up your development environment and then follow the lessons in the course.
                 </p>
-              </div>
+              </a>
+              to ask your questions. Start by setting up your development environment and then follow the lessons in the course.
+            </div>
+            <div
+              className="mt-4 d-flex flex-column"
+            >
               <a
                 className="btn btn-light progress-card__button mt-2 text-primary"
                 href="/docs/setup"
@@ -15017,33 +15098,29 @@ Array [
           className="d-none d-xl-block"
         >
           <div
-            className="progress-card__container d-flex card shadow-sm mt-3 bg-primary text-white p-2 border-0"
+            className="progress-card__container card shadow-sm mt-3 bg-primary text-white px-3 px-xl-4 py-2 border-0"
           >
             <div
-              className="card-body"
+              className="mt-3"
             >
-              <h4
-                className="progress-card__title mt-3"
+              Join us on
+              <a
+                className="progress-newuser__chatlink text-white"
+                href="https://discord.gg/c0d3"
+                rel="noopener noreferrer"
+                target="_blank"
               >
-                Join C0D3 now and start your software engineering journey!
-              </h4>
-              <div
-                className="mt-3"
-              >
-                Join us on
-                <a
-                  className="progress-newuser__chatlink text-white"
-                  href="https://discord.gg/c0d3"
-                  rel="noopener noreferrer"
-                  target="_blank"
+                <p
+                  className="font-weight-bold d-inline"
                 >
                   Discord
-                </a>
-                to ask your questions.
-                <p>
-                  Start by setting up your development environment and then follow the lessons in the course.
                 </p>
-              </div>
+              </a>
+              to ask your questions. Start by setting up your development environment and then follow the lessons in the course.
+            </div>
+            <div
+              className="mt-4 d-flex flex-column"
+            >
               <a
                 className="btn btn-light progress-card__button mt-2 text-primary"
                 href="/docs/setup"
@@ -15296,33 +15373,29 @@ Array [
           className="d-xl-none"
         >
           <div
-            className="progress-card__container d-flex card shadow-sm mt-3 bg-primary text-white p-2 border-0"
+            className="progress-card__container card shadow-sm mt-3 bg-primary text-white px-3 px-xl-4 py-2 border-0"
           >
             <div
-              className="card-body"
+              className="mt-3"
             >
-              <h4
-                className="progress-card__title mt-3"
+              Join us on
+              <a
+                className="progress-newuser__chatlink text-white"
+                href="https://discord.gg/c0d3"
+                rel="noopener noreferrer"
+                target="_blank"
               >
-                Join C0D3 now and start your software engineering journey!
-              </h4>
-              <div
-                className="mt-3"
-              >
-                Join us on
-                <a
-                  className="progress-newuser__chatlink text-white"
-                  href="https://discord.gg/c0d3"
-                  rel="noopener noreferrer"
-                  target="_blank"
+                <p
+                  className="font-weight-bold d-inline"
                 >
                   Discord
-                </a>
-                to ask your questions.
-                <p>
-                  Start by setting up your development environment and then follow the lessons in the course.
                 </p>
-              </div>
+              </a>
+              to ask your questions. Start by setting up your development environment and then follow the lessons in the course.
+            </div>
+            <div
+              className="mt-4 d-flex flex-column"
+            >
               <a
                 className="btn btn-light progress-card__button mt-2 text-primary"
                 href="/docs/setup"
@@ -16536,33 +16609,29 @@ Array [
           className="d-none d-xl-block"
         >
           <div
-            className="progress-card__container d-flex card shadow-sm mt-3 bg-primary text-white p-2 border-0"
+            className="progress-card__container card shadow-sm mt-3 bg-primary text-white px-3 px-xl-4 py-2 border-0"
           >
             <div
-              className="card-body"
+              className="mt-3"
             >
-              <h4
-                className="progress-card__title mt-3"
+              Join us on
+              <a
+                className="progress-newuser__chatlink text-white"
+                href="https://discord.gg/c0d3"
+                rel="noopener noreferrer"
+                target="_blank"
               >
-                Join C0D3 now and start your software engineering journey!
-              </h4>
-              <div
-                className="mt-3"
-              >
-                Join us on
-                <a
-                  className="progress-newuser__chatlink text-white"
-                  href="https://discord.gg/c0d3"
-                  rel="noopener noreferrer"
-                  target="_blank"
+                <p
+                  className="font-weight-bold d-inline"
                 >
                   Discord
-                </a>
-                to ask your questions.
-                <p>
-                  Start by setting up your development environment and then follow the lessons in the course.
                 </p>
-              </div>
+              </a>
+              to ask your questions. Start by setting up your development environment and then follow the lessons in the course.
+            </div>
+            <div
+              className="mt-4 d-flex flex-column"
+            >
               <a
                 className="btn btn-light progress-card__button mt-2 text-primary"
                 href="/docs/setup"
@@ -16815,33 +16884,29 @@ Array [
           className="d-xl-none"
         >
           <div
-            className="progress-card__container d-flex card shadow-sm mt-3 bg-primary text-white p-2 border-0"
+            className="progress-card__container card shadow-sm mt-3 bg-primary text-white px-3 px-xl-4 py-2 border-0"
           >
             <div
-              className="card-body"
+              className="mt-3"
             >
-              <h4
-                className="progress-card__title mt-3"
+              Join us on
+              <a
+                className="progress-newuser__chatlink text-white"
+                href="https://discord.gg/c0d3"
+                rel="noopener noreferrer"
+                target="_blank"
               >
-                Join C0D3 now and start your software engineering journey!
-              </h4>
-              <div
-                className="mt-3"
-              >
-                Join us on
-                <a
-                  className="progress-newuser__chatlink text-white"
-                  href="https://discord.gg/c0d3"
-                  rel="noopener noreferrer"
-                  target="_blank"
+                <p
+                  className="font-weight-bold d-inline"
                 >
                   Discord
-                </a>
-                to ask your questions.
-                <p>
-                  Start by setting up your development environment and then follow the lessons in the course.
                 </p>
-              </div>
+              </a>
+              to ask your questions. Start by setting up your development environment and then follow the lessons in the course.
+            </div>
+            <div
+              className="mt-4 d-flex flex-column"
+            >
               <a
                 className="btn btn-light progress-card__button mt-2 text-primary"
                 href="/docs/setup"
@@ -18055,33 +18120,29 @@ Array [
           className="d-none d-xl-block"
         >
           <div
-            className="progress-card__container d-flex card shadow-sm mt-3 bg-primary text-white p-2 border-0"
+            className="progress-card__container card shadow-sm mt-3 bg-primary text-white px-3 px-xl-4 py-2 border-0"
           >
             <div
-              className="card-body"
+              className="mt-3"
             >
-              <h4
-                className="progress-card__title mt-3"
+              Join us on
+              <a
+                className="progress-newuser__chatlink text-white"
+                href="https://discord.gg/c0d3"
+                rel="noopener noreferrer"
+                target="_blank"
               >
-                Join C0D3 now and start your software engineering journey!
-              </h4>
-              <div
-                className="mt-3"
-              >
-                Join us on
-                <a
-                  className="progress-newuser__chatlink text-white"
-                  href="https://discord.gg/c0d3"
-                  rel="noopener noreferrer"
-                  target="_blank"
+                <p
+                  className="font-weight-bold d-inline"
                 >
                   Discord
-                </a>
-                to ask your questions.
-                <p>
-                  Start by setting up your development environment and then follow the lessons in the course.
                 </p>
-              </div>
+              </a>
+              to ask your questions. Start by setting up your development environment and then follow the lessons in the course.
+            </div>
+            <div
+              className="mt-4 d-flex flex-column"
+            >
               <a
                 className="btn btn-light progress-card__button mt-2 text-primary"
                 href="/docs/setup"

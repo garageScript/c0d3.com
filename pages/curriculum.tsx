@@ -102,7 +102,9 @@ const ScrollArrow: React.FC<{ scrolledRight: boolean }> = ({
 }
 export const Curriculum: React.FC<Props> = ({ lessons, alerts }) => {
   //fallback in case if localStorage (which is used by persistent cache) is disabled
-  const { data } = useGetSessionQuery({ fetchPolicy: 'cache-and-network' })
+  const { data, loading } = useGetSessionQuery({
+    fetchPolicy: 'cache-and-network'
+  })
   const [state, setState] = useState<State>({
     session: { lessonStatus: [] },
     progress: -1,
@@ -188,6 +190,7 @@ export const Curriculum: React.FC<Props> = ({ lessons, alerts }) => {
             <ProgressCard
               progressCount={state.progress}
               loggedIn={!!state.session?.user}
+              loading={loading}
             />
           </div>
           {lessonsToRender}
@@ -198,6 +201,7 @@ export const Curriculum: React.FC<Props> = ({ lessons, alerts }) => {
             <ProgressCard
               progressCount={state.progress}
               loggedIn={!!state.session?.user}
+              loading={loading}
             />
           </div>
           <AnnouncementCard announcements={announcements} />

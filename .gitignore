@@ -116,3 +116,6 @@ dist
 
 #removing package-lock as the master branch has yarn.lock
 package-lock.json
+
+#sentry local environment
+.env.local

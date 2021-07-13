@@ -86,39 +86,40 @@ exports[`Curriculum Page Should render curriculum with no session 1`] = `
         class="col-12 col-xl-8 child-scroll"
       >
         <div
-          class="alerts-container col-12"
+          class="alerts-container col-12 p-0"
         />
         <div
           class="d-xl-none"
         >
           <div
-            class="progress-card__container d-flex card shadow-sm mt-3 bg-primary text-white p-2 border-0"
+            class="progress-card__container card shadow-sm mt-3 bg-primary text-white px-3 px-xl-4 py-2 border-0"
           >
-            <div
-              class="card-body"
+            <h4
+              class="progress-card__title mt-4 text-center "
             >
-              <h4
-                class="progress-card__title mt-3"
+              Join C0D3 now and start your software engineering journey!
+            </h4>
+            <div
+              class="mt-3"
+            >
+              Join us on
+              <a
+                class="progress-newuser__chatlink text-white"
+                href="https://discord.gg/c0d3"
+                rel="noopener noreferrer"
+                target="_blank"
               >
-                Join C0D3 now and start your software engineering journey!
-              </h4>
-              <div
-                class="mt-3"
-              >
-                Join us on
-                <a
-                  class="progress-newuser__chatlink text-white"
-                  href="https://discord.gg/c0d3"
-                  rel="noopener noreferrer"
-                  target="_blank"
+                <p
+                  class="font-weight-bold d-inline"
                 >
                   Discord
-                </a>
-                to ask your questions.
-                <p>
-                  Start by setting up your development environment and then follow the lessons in the course.
                 </p>
-              </div>
+              </a>
+              to ask your questions. Start by setting up your development environment and then follow the lessons in the course.
+            </div>
+            <div
+              class="mt-4 d-flex flex-column"
+            >
               <a
                 class="btn btn-light progress-card__button mt-2 text-primary"
                 href="/docs/setup"
@@ -1270,33 +1271,34 @@ exports[`Curriculum Page Should render curriculum with no session 1`] = `
           class="d-none d-xl-block"
         >
           <div
-            class="progress-card__container d-flex card shadow-sm mt-3 bg-primary text-white p-2 border-0"
+            class="progress-card__container card shadow-sm mt-3 bg-primary text-white px-3 px-xl-4 py-2 border-0"
           >
-            <div
-              class="card-body"
+            <h4
+              class="progress-card__title mt-4 text-center "
             >
-              <h4
-                class="progress-card__title mt-3"
+              Join C0D3 now and start your software engineering journey!
+            </h4>
+            <div
+              class="mt-3"
+            >
+              Join us on
+              <a
+                class="progress-newuser__chatlink text-white"
+                href="https://discord.gg/c0d3"
+                rel="noopener noreferrer"
+                target="_blank"
               >
-                Join C0D3 now and start your software engineering journey!
-              </h4>
-              <div
-                class="mt-3"
-              >
-                Join us on
-                <a
-                  class="progress-newuser__chatlink text-white"
-                  href="https://discord.gg/c0d3"
-                  rel="noopener noreferrer"
-                  target="_blank"
+                <p
+                  class="font-weight-bold d-inline"
                 >
                   Discord
-                </a>
-                to ask your questions.
-                <p>
-                  Start by setting up your development environment and then follow the lessons in the course.
                 </p>
-              </div>
+              </a>
+              to ask your questions. Start by setting up your development environment and then follow the lessons in the course.
+            </div>
+            <div
+              class="mt-4 d-flex flex-column"
+            >
               <a
                 class="btn btn-light progress-card__button mt-2 text-primary"
                 href="/docs/setup"
@@ -1548,16 +1550,39 @@ exports[`Curriculum Page Should render with basic dummy data 1`] = `
         class="col-12 col-xl-8 child-scroll"
       >
         <div
-          class="alerts-container col-12"
+          class="alerts-container col-12 p-0"
         />
         <div
           class="d-xl-none"
         >
           <div
-            class="progress-card__container d-flex card shadow-sm mt-3 bg-primary text-white p-2 border-0"
+            class="progress-card__container card shadow-sm mt-3 bg-primary text-white px-3 px-xl-4 py-2 border-0"
           >
+            <h4
+              class="progress-card__title mt-3 text-center"
+            >
+              You're off to a great start!
+            </h4>
             <div
-              class="card-body"
+              class="d-block d-xl-none"
+            >
+              <div
+                class="bg-white my-3 rounded"
+              >
+                <div
+                  class="progress-card__horizontal bg-primary d-flex rounded-left"
+                >
+                  <div
+                    class="align-self-center px-1 ml-auto font-weight-bold"
+                  >
+                    0
+                    %
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="d-none d-xl-flex justify-content-center"
             >
               <div
                 class="progress-card__wrapper d-flex align-items-center"
@@ -1604,28 +1629,28 @@ exports[`Curriculum Page Should render with basic dummy data 1`] = `
                   </g>
                 </svg>
               </div>
-              <h4
-                class="progress-card__title mt-3"
+            </div>
+            <div
+              class="mt-3"
+            >
+              Join us on
+              <a
+                class="progress-newuser__chatlink text-white"
+                href="https://discord.gg/c0d3"
+                rel="noopener noreferrer"
+                target="_blank"
               >
-                You're off to a great start!
-              </h4>
-              <div
-                class="mt-3"
-              >
-                Join us on
-                <a
-                  class="progress-newuser__chatlink text-white"
-                  href="https://discord.gg/c0d3"
-                  rel="noopener noreferrer"
-                  target="_blank"
+                <p
+                  class="font-weight-bold d-inline"
                 >
                   Discord
-                </a>
-                to ask your questions.
-                <p>
-                  Start by setting up your development environment and then follow the lessons in the course.
                 </p>
-              </div>
+              </a>
+              to ask your questions. Start by setting up your development environment and then follow the lessons in the course.
+            </div>
+            <div
+              class="mt-4 d-flex flex-column"
+            >
               <a
                 class="btn btn-light progress-card__button mt-2 text-primary"
                 href="/docs/setup"
@@ -2795,10 +2820,33 @@ exports[`Curriculum Page Should render with basic dummy data 1`] = `
           class="d-none d-xl-block"
         >
           <div
-            class="progress-card__container d-flex card shadow-sm mt-3 bg-primary text-white p-2 border-0"
+            class="progress-card__container card shadow-sm mt-3 bg-primary text-white px-3 px-xl-4 py-2 border-0"
           >
+            <h4
+              class="progress-card__title mt-3 text-center"
+            >
+              You're off to a great start!
+            </h4>
             <div
-              class="card-body"
+              class="d-block d-xl-none"
+            >
+              <div
+                class="bg-white my-3 rounded"
+              >
+                <div
+                  class="progress-card__horizontal bg-primary d-flex rounded-left"
+                >
+                  <div
+                    class="align-self-center px-1 ml-auto font-weight-bold"
+                  >
+                    0
+                    %
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="d-none d-xl-flex justify-content-center"
             >
               <div
                 class="progress-card__wrapper d-flex align-items-center"
@@ -2845,28 +2893,28 @@ exports[`Curriculum Page Should render with basic dummy data 1`] = `
                   </g>
                 </svg>
               </div>
-              <h4
-                class="progress-card__title mt-3"
+            </div>
+            <div
+              class="mt-3"
+            >
+              Join us on
+              <a
+                class="progress-newuser__chatlink text-white"
+                href="https://discord.gg/c0d3"
+                rel="noopener noreferrer"
+                target="_blank"
               >
-                You're off to a great start!
-              </h4>
-              <div
-                class="mt-3"
-              >
-                Join us on
-                <a
-                  class="progress-newuser__chatlink text-white"
-                  href="https://discord.gg/c0d3"
-                  rel="noopener noreferrer"
-                  target="_blank"
+                <p
+                  class="font-weight-bold d-inline"
                 >
                   Discord
-                </a>
-                to ask your questions.
-                <p>
-                  Start by setting up your development environment and then follow the lessons in the course.
                 </p>
-              </div>
+              </a>
+              to ask your questions. Start by setting up your development environment and then follow the lessons in the course.
+            </div>
+            <div
+              class="mt-4 d-flex flex-column"
+            >
               <a
                 class="btn btn-light progress-card__button mt-2 text-primary"
                 href="/docs/setup"
@@ -3118,16 +3166,40 @@ exports[`Curriculum Page Should render with lessonStatus data 1`] = `
         class="col-12 col-xl-8 child-scroll"
       >
         <div
-          class="alerts-container col-12"
+          class="alerts-container col-12 p-0"
         />
         <div
           class="d-xl-none"
         >
           <div
-            class="progress-card__container d-flex card shadow-sm mt-3 bg-primary text-white p-2 border-0"
+            class="progress-card__container card shadow-sm mt-3 bg-primary text-white px-3 px-xl-4 py-2 border-0"
           >
+            <h4
+              class="progress-card__title mt-3 text-center"
+            >
+              Keep up the great work!
+            </h4>
             <div
-              class="card-body"
+              class="d-block d-xl-none"
+            >
+              <div
+                class="bg-white my-3 rounded"
+              >
+                <div
+                  class="progress-card__horizontal bg-primary d-flex rounded-left"
+                  style="width: 42%;"
+                >
+                  <div
+                    class="align-self-center px-1 ml-auto font-weight-bold"
+                  >
+                    42
+                    %
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="d-none d-xl-flex justify-content-center"
             >
               <div
                 class="progress-card__wrapper d-flex align-items-center"
@@ -3174,28 +3246,28 @@ exports[`Curriculum Page Should render with lessonStatus data 1`] = `
                   </g>
                 </svg>
               </div>
-              <h4
-                class="progress-card__title mt-3"
+            </div>
+            <div
+              class="mt-3"
+            >
+              Join us on
+              <a
+                class="progress-newuser__chatlink text-white"
+                href="https://discord.gg/c0d3"
+                rel="noopener noreferrer"
+                target="_blank"
               >
-                Keep up the great work!
-              </h4>
-              <div
-                class="mt-3"
-              >
-                Join us on
-                <a
-                  class="progress-newuser__chatlink text-white"
-                  href="https://discord.gg/c0d3"
-                  rel="noopener noreferrer"
-                  target="_blank"
+                <p
+                  class="font-weight-bold d-inline"
                 >
                   Discord
-                </a>
-                to ask your questions.
-                <p>
-                  Start by setting up your development environment and then follow the lessons in the course.
                 </p>
-              </div>
+              </a>
+              to ask your questions. Start by setting up your development environment and then follow the lessons in the course.
+            </div>
+            <div
+              class="mt-4 d-flex flex-column"
+            >
               <a
                 class="btn btn-light progress-card__button mt-2 text-primary"
                 href="/docs/setup"
@@ -4587,10 +4659,34 @@ exports[`Curriculum Page Should render with lessonStatus data 1`] = `
           class="d-none d-xl-block"
         >
           <div
-            class="progress-card__container d-flex card shadow-sm mt-3 bg-primary text-white p-2 border-0"
+            class="progress-card__container card shadow-sm mt-3 bg-primary text-white px-3 px-xl-4 py-2 border-0"
           >
+            <h4
+              class="progress-card__title mt-3 text-center"
+            >
+              Keep up the great work!
+            </h4>
             <div
-              class="card-body"
+              class="d-block d-xl-none"
+            >
+              <div
+                class="bg-white my-3 rounded"
+              >
+                <div
+                  class="progress-card__horizontal bg-primary d-flex rounded-left"
+                  style="width: 42%;"
+                >
+                  <div
+                    class="align-self-center px-1 ml-auto font-weight-bold"
+                  >
+                    42
+                    %
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="d-none d-xl-flex justify-content-center"
             >
               <div
                 class="progress-card__wrapper d-flex align-items-center"
@@ -4637,28 +4733,28 @@ exports[`Curriculum Page Should render with lessonStatus data 1`] = `
                   </g>
                 </svg>
               </div>
-              <h4
-                class="progress-card__title mt-3"
+            </div>
+            <div
+              class="mt-3"
+            >
+              Join us on
+              <a
+                class="progress-newuser__chatlink text-white"
+                href="https://discord.gg/c0d3"
+                rel="noopener noreferrer"
+                target="_blank"
               >
-                Keep up the great work!
-              </h4>
-              <div
-                class="mt-3"
-              >
-                Join us on
-                <a
-                  class="progress-newuser__chatlink text-white"
-                  href="https://discord.gg/c0d3"
-                  rel="noopener noreferrer"
-                  target="_blank"
+                <p
+                  class="font-weight-bold d-inline"
                 >
                   Discord
-                </a>
-                to ask your questions.
-                <p>
-                  Start by setting up your development environment and then follow the lessons in the course.
                 </p>
-              </div>
+              </a>
+              to ask your questions. Start by setting up your development environment and then follow the lessons in the course.
+            </div>
+            <div
+              class="mt-4 d-flex flex-column"
+            >
               <a
                 class="btn btn-light progress-card__button mt-2 text-primary"
                 href="/docs/setup"

@@ -36,7 +36,7 @@ const AlertsDisplay: React.FC<Props> = ({ alerts = [], page }) => {
 
   const widthClass = page === 'curriculum' ? 'col-12' : ''
   return (
-    <div className={`alerts-container ${widthClass}`}>
+    <div className={`alerts-container ${widthClass} p-0`}>
       {alerts
         .filter(alert => !dismissedAlerts[alert.id])
         .map(alert => (

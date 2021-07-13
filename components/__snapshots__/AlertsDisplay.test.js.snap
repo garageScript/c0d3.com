@@ -3,7 +3,7 @@
 exports[`Alerts Display Component Should render properly when no props are passed in 1`] = `
 <div>
   <div
-    class="alerts-container "
+    class="alerts-container  p-0"
   />
 </div>
 `;

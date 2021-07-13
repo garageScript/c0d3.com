@@ -2,6 +2,21 @@
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.07);
 }
 
+.progress-card__horizontal {
+  min-height: 3rem;
+  min-width: 10px;
+  animation: scroll 100s linear infinite;
+  background: url('/assets/curriculum/zigZag.svg');
+  background-size: contain;
+  border: 1px solid #2649b0;
+}
+
+@keyframes scroll {
+  100% {
+    background-position: 3000px 0px;
+  }
+}
+
 .progress-card__spinner {
   width: 58px;
   height: 58px;
@@ -12,14 +27,11 @@
   min-height: 65px;
 }
 .progress-card__title {
-  line-height: 1.5;
-}
-
-.progress-card__button {
-  font-size: 13px;
+  font-size: 1.3rem;
+  font-weight: 700;
 }
 
 .progress-newuser__chatlink {
-  padding: 3px;
+  padding: 0.3em;
   text-decoration: underline;
 }

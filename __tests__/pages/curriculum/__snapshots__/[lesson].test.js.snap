@@ -138,7 +138,7 @@ exports[`Lesson Page Should correctly render challenges page for students who ha
             </div>
           </div>
           <div
-            class="alerts-container "
+            class="alerts-container  p-0"
           >
             <div
               class="alert d-flex justify-content-between mt-3 bg-primary text-white"
@@ -686,7 +686,7 @@ exports[`Lesson Page Should render correctly with valid lesson route 1`] = `
             </div>
           </div>
           <div
-            class="alerts-container "
+            class="alerts-container  p-0"
           >
             <div
               class="alert d-flex justify-content-between mt-3 bg-primary text-white"

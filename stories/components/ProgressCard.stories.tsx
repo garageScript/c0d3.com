@@ -7,12 +7,14 @@ export default {
 }
 
 export const LoggedOut: React.FC = () => (
-  <ProgressCard progressCount={-1} loggedIn={false} />
+  <ProgressCard progressCount={-1} loggedIn={false} loading={false} />
 )
-export const Basic: React.FC = () => <ProgressCard progressCount={0} loggedIn />
+export const Basic: React.FC = () => (
+  <ProgressCard progressCount={0} loggedIn loading={false} />
+)
 export const Progress: React.FC = () => (
-  <ProgressCard progressCount={40} loggedIn />
+  <ProgressCard progressCount={40} loggedIn loading={false} />
 )
 export const CompletedProgress: React.FC = () => (
-  <ProgressCard progressCount={100} loggedIn />
+  <ProgressCard progressCount={100} loggedIn loading={false} />
 )
