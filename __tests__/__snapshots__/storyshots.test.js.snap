@@ -235,80 +235,94 @@ exports[`Storyshots Components/AnnouncementCard Basic 1`] = `
 
 exports[`Storyshots Components/AppNav Logged In 1`] = `
 <nav
-  className="navbar navbar-expand-lg navbar-light justify-content-between bg-white"
+  className="navbar navbar-expand-lg navbar-light bg-white"
 >
   <div
     className="container"
   >
     <a
-      className="navbar-brand text-primary font-weight-bold"
+      className="navbar-brand"
       href="/"
-      onClick={[Function]}
-      onMouseEnter={[Function]}
-    >
-      C0D3
-    </a>
-    <div
-      id="navbarNav"
     >
       <div
-        className="navbar-nav collapse navbar-collapse"
+        className="navbar-brand text-primary font-weight-bold"
       >
-        <div
-          className="navbar-nav collapse navbar-collapse"
-        >
-          <a
-            className="nav-item nav-link"
-            href="/curriculum"
-            onClick={[Function]}
-            onMouseEnter={[Function]}
-          >
-            Curriculum
-          </a>
-          <a
-            className="nav-item nav-link"
-            href="https://github.com/garageScript/c0d3-app"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Repo
-          </a>
-          <a
-            className="nav-item nav-link"
-            href="/docs/learn"
-            onClick={[Function]}
-            onMouseEnter={[Function]}
-          >
-            Learn
-          </a>
-          <a
-            className="nav-item nav-link"
-            href="https://discord.gg/c0d3"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Community
-          </a>
-        </div>
+        C0D3
       </div>
-    </div>
-    <div>
-      <a
-        className="btn btn-secondary border mr-3"
-        href="/login"
-        onClick={[Function]}
-        onMouseEnter={[Function]}
+    </a>
+    <button
+      aria-controls="basic-navbar-nav"
+      aria-label="Toggle navigation"
+      className="navbar-toggler collapsed"
+      onClick={[Function]}
+      type="button"
+    >
+      <span
+        className="navbar-toggler-icon"
+      />
+    </button>
+    <div
+      aria-expanded={null}
+      className="text-center navbar-collapse collapse"
+      id="basic-navbar-nav"
+    >
+      <div
+        className="m-auto navbar-nav"
+        onKeyDown={[Function]}
       >
-        Login
-      </a>
-      <a
-        className="btn btn-secondary border mr-3"
-        href="/signup"
-        onClick={[Function]}
-        onMouseEnter={[Function]}
+        <a
+          className="nav-item nav-link"
+          href="/curriculum"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+        >
+          Curriculum
+        </a>
+        <a
+          className="nav-item nav-link"
+          href="https://github.com/garageScript/c0d3-app"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Repo
+        </a>
+        <a
+          className="nav-item nav-link"
+          href="/docs/learn"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+        >
+          Learn
+        </a>
+        <a
+          className="nav-item nav-link"
+          href="https://discord.gg/c0d3"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Community
+        </a>
+      </div>
+      <div
+        className="nav-buttons"
       >
-        Signup
-      </a>
+        <a
+          className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+          href="/login"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+        >
+          Login
+        </a>
+        <a
+          className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+          href="/signup"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+        >
+          Signup
+        </a>
+      </div>
     </div>
   </div>
 </nav>
@@ -316,80 +330,94 @@ exports[`Storyshots Components/AppNav Logged In 1`] = `
 
 exports[`Storyshots Components/AppNav Logged Out 1`] = `
 <nav
-  className="navbar navbar-expand-lg navbar-light justify-content-between bg-white"
+  className="navbar navbar-expand-lg navbar-light bg-white"
 >
   <div
     className="container"
   >
     <a
-      className="navbar-brand text-primary font-weight-bold"
+      className="navbar-brand"
       href="/"
-      onClick={[Function]}
-      onMouseEnter={[Function]}
-    >
-      C0D3
-    </a>
-    <div
-      id="navbarNav"
     >
       <div
-        className="navbar-nav collapse navbar-collapse"
+        className="navbar-brand text-primary font-weight-bold"
       >
-        <div
-          className="navbar-nav collapse navbar-collapse"
-        >
-          <a
-            className="nav-item nav-link"
-            href="/curriculum"
-            onClick={[Function]}
-            onMouseEnter={[Function]}
-          >
-            Curriculum
-          </a>
-          <a
-            className="nav-item nav-link"
-            href="https://github.com/garageScript/c0d3-app"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Repo
-          </a>
-          <a
-            className="nav-item nav-link"
-            href="/docs/learn"
-            onClick={[Function]}
-            onMouseEnter={[Function]}
-          >
-            Learn
-          </a>
-          <a
-            className="nav-item nav-link"
-            href="https://discord.gg/c0d3"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Community
-          </a>
-        </div>
+        C0D3
       </div>
-    </div>
-    <div>
-      <a
-        className="btn btn-secondary border mr-3"
-        href="/login"
-        onClick={[Function]}
-        onMouseEnter={[Function]}
+    </a>
+    <button
+      aria-controls="basic-navbar-nav"
+      aria-label="Toggle navigation"
+      className="navbar-toggler collapsed"
+      onClick={[Function]}
+      type="button"
+    >
+      <span
+        className="navbar-toggler-icon"
+      />
+    </button>
+    <div
+      aria-expanded={null}
+      className="text-center navbar-collapse collapse"
+      id="basic-navbar-nav"
+    >
+      <div
+        className="m-auto navbar-nav"
+        onKeyDown={[Function]}
       >
-        Login
-      </a>
-      <a
-        className="btn btn-secondary border mr-3"
-        href="/signup"
-        onClick={[Function]}
-        onMouseEnter={[Function]}
+        <a
+          className="nav-item nav-link"
+          href="/curriculum"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+        >
+          Curriculum
+        </a>
+        <a
+          className="nav-item nav-link"
+          href="https://github.com/garageScript/c0d3-app"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Repo
+        </a>
+        <a
+          className="nav-item nav-link"
+          href="/docs/learn"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+        >
+          Learn
+        </a>
+        <a
+          className="nav-item nav-link"
+          href="https://discord.gg/c0d3"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Community
+        </a>
+      </div>
+      <div
+        className="nav-buttons"
       >
-        Signup
-      </a>
+        <a
+          className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+          href="/login"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+        >
+          Login
+        </a>
+        <a
+          className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+          href="/signup"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+        >
+          Signup
+        </a>
+      </div>
     </div>
   </div>
 </nav>
@@ -3053,20 +3081,66 @@ exports[`Storyshots Components/DiffView Default 1`] = `
 `;
 
 exports[`Storyshots Components/DropdownMenu Basic 1`] = `
-<div
-  className="dropdown"
->
-  <button
-    aria-expanded={false}
-    aria-haspopup={true}
-    className="dropdown-toggle btn btn-none"
-    disabled={false}
-    onClick={[Function]}
-    type="button"
+Array [
+  <div
+    className="d-none d-lg-block"
   >
-    Admin
-  </button>
-</div>
+    <div
+      className="dropdown"
+    >
+      <button
+        aria-expanded={false}
+        aria-haspopup={true}
+        className="dropdown-toggle title title-none"
+        disabled={false}
+        onClick={[Function]}
+        type="button"
+      >
+        Admin
+      </button>
+    </div>
+  </div>,
+  <div
+    className="d-lg-none"
+  >
+    <div
+      className="text-center text-xl-left py-2 px-4"
+    >
+      <a
+        className="dropdown-item"
+        disabled={false}
+        href="/admin/lessons"
+        onClick={[Function]}
+      >
+        Lessons
+      </a>
+    </div>
+    <div
+      className="text-center text-xl-left py-2 px-4"
+    >
+      <a
+        className="dropdown-item"
+        disabled={false}
+        href="/admin/users"
+        onClick={[Function]}
+      >
+        Users
+      </a>
+    </div>
+    <div
+      className="text-center text-xl-left py-2 px-4"
+    >
+      <a
+        className="dropdown-item"
+        disabled={false}
+        href="/admin/alerts"
+        onClick={[Function]}
+      >
+        Alerts0
+      </a>
+    </div>
+  </div>,
+]
 `;
 
 exports[`Storyshots Components/DropdownMenu Colors 1`] = `
@@ -3079,18 +3153,62 @@ Array [
     }
   >
     <div
-      className="dropdown"
+      className="d-none d-lg-block"
     >
-      <button
-        aria-expanded={false}
-        aria-haspopup={true}
-        className="dropdown-toggle btn btn-primary"
-        disabled={false}
-        onClick={[Function]}
-        type="button"
+      <div
+        className="dropdown"
       >
-        Primary
-      </button>
+        <button
+          aria-expanded={false}
+          aria-haspopup={true}
+          className="dropdown-toggle title title-primary"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          Primary
+        </button>
+      </div>
+    </div>
+    <div
+      className="d-lg-none"
+    >
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/lessons"
+          onClick={[Function]}
+        >
+          Lessons
+        </a>
+      </div>
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/users"
+          onClick={[Function]}
+        >
+          Users
+        </a>
+      </div>
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/alerts"
+          onClick={[Function]}
+        >
+          Alerts0
+        </a>
+      </div>
     </div>
   </div>,
   <div
@@ -3101,18 +3219,62 @@ Array [
     }
   >
     <div
-      className="dropdown"
+      className="d-none d-lg-block"
     >
-      <button
-        aria-expanded={false}
-        aria-haspopup={true}
-        className="dropdown-toggle btn btn-success"
-        disabled={false}
-        onClick={[Function]}
-        type="button"
+      <div
+        className="dropdown"
       >
-        Success
-      </button>
+        <button
+          aria-expanded={false}
+          aria-haspopup={true}
+          className="dropdown-toggle title title-success"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          Success
+        </button>
+      </div>
+    </div>
+    <div
+      className="d-lg-none"
+    >
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/lessons"
+          onClick={[Function]}
+        >
+          Lessons
+        </a>
+      </div>
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/users"
+          onClick={[Function]}
+        >
+          Users
+        </a>
+      </div>
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/alerts"
+          onClick={[Function]}
+        >
+          Alerts0
+        </a>
+      </div>
     </div>
   </div>,
   <div
@@ -3123,18 +3285,62 @@ Array [
     }
   >
     <div
-      className="dropdown"
+      className="d-none d-lg-block"
     >
-      <button
-        aria-expanded={false}
-        aria-haspopup={true}
-        className="dropdown-toggle btn btn-danger"
-        disabled={false}
-        onClick={[Function]}
-        type="button"
+      <div
+        className="dropdown"
       >
-        Danger
-      </button>
+        <button
+          aria-expanded={false}
+          aria-haspopup={true}
+          className="dropdown-toggle title title-danger"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          Danger
+        </button>
+      </div>
+    </div>
+    <div
+      className="d-lg-none"
+    >
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/lessons"
+          onClick={[Function]}
+        >
+          Lessons
+        </a>
+      </div>
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/users"
+          onClick={[Function]}
+        >
+          Users
+        </a>
+      </div>
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/alerts"
+          onClick={[Function]}
+        >
+          Alerts0
+        </a>
+      </div>
     </div>
   </div>,
   <div
@@ -3145,18 +3351,62 @@ Array [
     }
   >
     <div
-      className="dropdown"
+      className="d-none d-lg-block"
     >
-      <button
-        aria-expanded={false}
-        aria-haspopup={true}
-        className="dropdown-toggle btn btn-info"
-        disabled={false}
-        onClick={[Function]}
-        type="button"
+      <div
+        className="dropdown"
       >
-        Info
-      </button>
+        <button
+          aria-expanded={false}
+          aria-haspopup={true}
+          className="dropdown-toggle title title-info"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          Info
+        </button>
+      </div>
+    </div>
+    <div
+      className="d-lg-none"
+    >
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/lessons"
+          onClick={[Function]}
+        >
+          Lessons
+        </a>
+      </div>
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/users"
+          onClick={[Function]}
+        >
+          Users
+        </a>
+      </div>
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/alerts"
+          onClick={[Function]}
+        >
+          Alerts0
+        </a>
+      </div>
     </div>
   </div>,
   <div
@@ -3167,18 +3417,62 @@ Array [
     }
   >
     <div
-      className="dropdown"
+      className="d-none d-lg-block"
     >
-      <button
-        aria-expanded={false}
-        aria-haspopup={true}
-        className="dropdown-toggle btn btn-warning"
-        disabled={false}
-        onClick={[Function]}
-        type="button"
+      <div
+        className="dropdown"
       >
-        Warning
-      </button>
+        <button
+          aria-expanded={false}
+          aria-haspopup={true}
+          className="dropdown-toggle title title-warning"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          Warning
+        </button>
+      </div>
+    </div>
+    <div
+      className="d-lg-none"
+    >
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/lessons"
+          onClick={[Function]}
+        >
+          Lessons
+        </a>
+      </div>
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/users"
+          onClick={[Function]}
+        >
+          Users
+        </a>
+      </div>
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/alerts"
+          onClick={[Function]}
+        >
+          Alerts0
+        </a>
+      </div>
     </div>
   </div>,
   <div
@@ -3189,18 +3483,62 @@ Array [
     }
   >
     <div
-      className="dropdown"
+      className="d-none d-lg-block"
     >
-      <button
-        aria-expanded={false}
-        aria-haspopup={true}
-        className="dropdown-toggle btn btn-none"
-        disabled={false}
-        onClick={[Function]}
-        type="button"
+      <div
+        className="dropdown"
       >
-        None
-      </button>
+        <button
+          aria-expanded={false}
+          aria-haspopup={true}
+          className="dropdown-toggle title title-none"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          None
+        </button>
+      </div>
+    </div>
+    <div
+      className="d-lg-none"
+    >
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/lessons"
+          onClick={[Function]}
+        >
+          Lessons
+        </a>
+      </div>
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/users"
+          onClick={[Function]}
+        >
+          Users
+        </a>
+      </div>
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/alerts"
+          onClick={[Function]}
+        >
+          Alerts0
+        </a>
+      </div>
     </div>
   </div>,
 ]
@@ -3223,18 +3561,62 @@ exports[`Storyshots Components/DropdownMenu Directions 1`] = `
     }
   >
     <div
-      className="dropleft"
+      className="d-none d-lg-block"
     >
-      <button
-        aria-expanded={false}
-        aria-haspopup={true}
-        className="dropdown-toggle btn btn-primary"
-        disabled={false}
-        onClick={[Function]}
-        type="button"
+      <div
+        className="dropleft"
       >
-        Left
-      </button>
+        <button
+          aria-expanded={false}
+          aria-haspopup={true}
+          className="dropdown-toggle title title-primary"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          Left
+        </button>
+      </div>
+    </div>
+    <div
+      className="d-lg-none"
+    >
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/lessons"
+          onClick={[Function]}
+        >
+          Lessons
+        </a>
+      </div>
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/users"
+          onClick={[Function]}
+        >
+          Users
+        </a>
+      </div>
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/alerts"
+          onClick={[Function]}
+        >
+          Alerts0
+        </a>
+      </div>
     </div>
   </div>
   <div
@@ -3243,6 +3625,205 @@ exports[`Storyshots Components/DropdownMenu Directions 1`] = `
         "display": "inline-block",
       }
     }
+  >
+    <div
+      className="d-none d-lg-block"
+    >
+      <div
+        className="dropdown"
+      >
+        <button
+          aria-expanded={false}
+          aria-haspopup={true}
+          className="dropdown-toggle title title-success"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          Down
+        </button>
+      </div>
+    </div>
+    <div
+      className="d-lg-none"
+    >
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/lessons"
+          onClick={[Function]}
+        >
+          Lessons
+        </a>
+      </div>
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/users"
+          onClick={[Function]}
+        >
+          Users
+        </a>
+      </div>
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/alerts"
+          onClick={[Function]}
+        >
+          Alerts0
+        </a>
+      </div>
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "display": "inline-block",
+      }
+    }
+  >
+    <div
+      className="d-none d-lg-block"
+    >
+      <div
+        className="dropup"
+      >
+        <button
+          aria-expanded={false}
+          aria-haspopup={true}
+          className="dropdown-toggle title title-danger"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          Up
+        </button>
+      </div>
+    </div>
+    <div
+      className="d-lg-none"
+    >
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/lessons"
+          onClick={[Function]}
+        >
+          Lessons
+        </a>
+      </div>
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/users"
+          onClick={[Function]}
+        >
+          Users
+        </a>
+      </div>
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/alerts"
+          onClick={[Function]}
+        >
+          Alerts0
+        </a>
+      </div>
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "display": "inline-block",
+      }
+    }
+  >
+    <div
+      className="d-none d-lg-block"
+    >
+      <div
+        className="dropright"
+      >
+        <button
+          aria-expanded={false}
+          aria-haspopup={true}
+          className="dropdown-toggle title title-info"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          Right
+        </button>
+      </div>
+    </div>
+    <div
+      className="d-lg-none"
+    >
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/lessons"
+          onClick={[Function]}
+        >
+          Lessons
+        </a>
+      </div>
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/users"
+          onClick={[Function]}
+        >
+          Users
+        </a>
+      </div>
+      <div
+        className="text-center text-xl-left py-2 px-4"
+      >
+        <a
+          className="dropdown-item"
+          disabled={false}
+          href="/admin/alerts"
+          onClick={[Function]}
+        >
+          Alerts0
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Components/DropdownMenu With Separators 1`] = `
+Array [
+  <div
+    className="d-none d-lg-block"
   >
     <div
       className="dropdown"
@@ -3250,156 +3831,197 @@ exports[`Storyshots Components/DropdownMenu Directions 1`] = `
       <button
         aria-expanded={false}
         aria-haspopup={true}
-        className="dropdown-toggle btn btn-success"
+        className="dropdown-toggle title title-none"
         disabled={false}
         onClick={[Function]}
         type="button"
       >
-        Down
+        Admin
       </button>
     </div>
-  </div>
+  </div>,
   <div
-    style={
-      Object {
-        "display": "inline-block",
-      }
-    }
+    className="d-lg-none"
   >
     <div
-      className="dropup"
+      className="text-center text-xl-left py-2 px-4"
     >
-      <button
-        aria-expanded={false}
-        aria-haspopup={true}
-        className="dropdown-toggle btn btn-danger"
+      <a
+        className="dropdown-item"
         disabled={false}
+        href="/admin/lessons"
         onClick={[Function]}
-        type="button"
       >
-        Up
-      </button>
+        Lessons
+      </a>
     </div>
-  </div>
-  <div
-    style={
-      Object {
-        "display": "inline-block",
-      }
-    }
-  >
     <div
-      className="dropright"
+      className="dropdown-divider"
+      role="separator"
+    />
+    <div
+      className="text-center text-xl-left py-2 px-4"
     >
-      <button
-        aria-expanded={false}
-        aria-haspopup={true}
-        className="dropdown-toggle btn btn-info"
+      <a
+        className="dropdown-item"
         disabled={false}
+        href="/admin/users"
         onClick={[Function]}
-        type="button"
       >
-        Right
-      </button>
+        Users
+      </a>
     </div>
-  </div>
-</div>
-`;
-
-exports[`Storyshots Components/DropdownMenu With Separators 1`] = `
-<div
-  className="dropdown"
->
-  <button
-    aria-expanded={false}
-    aria-haspopup={true}
-    className="dropdown-toggle btn btn-none"
-    disabled={false}
-    onClick={[Function]}
-    type="button"
-  >
-    Admin
-  </button>
-</div>
+    <div
+      className="dropdown-divider"
+      role="separator"
+    />
+    <div
+      className="text-center text-xl-left py-2 px-4"
+    >
+      <a
+        className="dropdown-item"
+        disabled={false}
+        href="/admin/alerts"
+        onClick={[Function]}
+      >
+        Alerts1
+      </a>
+    </div>
+    <div
+      className="text-center text-xl-left py-2 px-4"
+    >
+      <a
+        className="dropdown-item"
+        disabled={false}
+        href="/admin/alerts"
+        onClick={[Function]}
+      >
+        Alerts2
+      </a>
+    </div>
+    <div
+      className="text-center text-xl-left py-2 px-4"
+    >
+      <a
+        className="dropdown-item"
+        disabled={false}
+        href="/admin/alerts"
+        onClick={[Function]}
+      >
+        Alerts3
+      </a>
+    </div>
+    <div
+      className="dropdown-divider"
+      role="separator"
+    />
+    <div
+      className="text-center text-xl-left py-2 px-4"
+    >
+      <a
+        className="dropdown-item"
+        disabled={false}
+        href="/admin/alerts"
+        onClick={[Function]}
+      >
+        Alerts4
+      </a>
+    </div>
+  </div>,
+]
 `;
 
 exports[`Storyshots Components/Error Internal 1`] = `
 Array [
   <nav
-    className="navbar navbar-expand-lg navbar-light justify-content-between bg-white"
+    className="navbar navbar-expand-lg navbar-light bg-white"
   >
     <div
       className="container"
     >
       <a
-        className="navbar-brand text-primary font-weight-bold"
+        className="navbar-brand"
         href="/"
-        onClick={[Function]}
-        onMouseEnter={[Function]}
-      >
-        C0D3
-      </a>
-      <div
-        id="navbarNav"
       >
         <div
-          className="navbar-nav collapse navbar-collapse"
+          className="navbar-brand text-primary font-weight-bold"
         >
-          <div
-            className="navbar-nav collapse navbar-collapse"
-          >
-            <a
-              className="nav-item nav-link"
-              href="/curriculum"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Curriculum
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://github.com/garageScript/c0d3-app"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Repo
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="/docs/learn"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Learn
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://discord.gg/c0d3"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Community
-            </a>
-          </div>
+          C0D3
         </div>
-      </div>
-      <div>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/login"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+      </a>
+      <button
+        aria-controls="basic-navbar-nav"
+        aria-label="Toggle navigation"
+        className="navbar-toggler collapsed"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        aria-expanded={null}
+        className="text-center navbar-collapse collapse"
+        id="basic-navbar-nav"
+      >
+        <div
+          className="m-auto navbar-nav"
+          onKeyDown={[Function]}
         >
-          Login
-        </a>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/signup"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+          <a
+            className="nav-item nav-link"
+            href="/curriculum"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Curriculum
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://github.com/garageScript/c0d3-app"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Repo
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="/docs/learn"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Learn
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://discord.gg/c0d3"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Community
+          </a>
+        </div>
+        <div
+          className="nav-buttons"
         >
-          Signup
-        </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/login"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Login
+          </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/signup"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Signup
+          </a>
+        </div>
       </div>
     </div>
   </nav>,
@@ -3480,80 +4102,94 @@ Array [
 exports[`Storyshots Components/Error Not Found 1`] = `
 Array [
   <nav
-    className="navbar navbar-expand-lg navbar-light justify-content-between bg-white"
+    className="navbar navbar-expand-lg navbar-light bg-white"
   >
     <div
       className="container"
     >
       <a
-        className="navbar-brand text-primary font-weight-bold"
+        className="navbar-brand"
         href="/"
-        onClick={[Function]}
-        onMouseEnter={[Function]}
-      >
-        C0D3
-      </a>
-      <div
-        id="navbarNav"
       >
         <div
-          className="navbar-nav collapse navbar-collapse"
+          className="navbar-brand text-primary font-weight-bold"
         >
-          <div
-            className="navbar-nav collapse navbar-collapse"
-          >
-            <a
-              className="nav-item nav-link"
-              href="/curriculum"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Curriculum
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://github.com/garageScript/c0d3-app"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Repo
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="/docs/learn"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Learn
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://discord.gg/c0d3"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Community
-            </a>
-          </div>
+          C0D3
         </div>
-      </div>
-      <div>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/login"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+      </a>
+      <button
+        aria-controls="basic-navbar-nav"
+        aria-label="Toggle navigation"
+        className="navbar-toggler collapsed"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        aria-expanded={null}
+        className="text-center navbar-collapse collapse"
+        id="basic-navbar-nav"
+      >
+        <div
+          className="m-auto navbar-nav"
+          onKeyDown={[Function]}
         >
-          Login
-        </a>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/signup"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+          <a
+            className="nav-item nav-link"
+            href="/curriculum"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Curriculum
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://github.com/garageScript/c0d3-app"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Repo
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="/docs/learn"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Learn
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://discord.gg/c0d3"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Community
+          </a>
+        </div>
+        <div
+          className="nav-buttons"
         >
-          Signup
-        </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/login"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Login
+          </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/signup"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Signup
+          </a>
+        </div>
       </div>
     </div>
   </nav>,
@@ -4051,18 +4687,48 @@ exports[`Storyshots Components/FormCard Basic 1`] = `
             Swiggity swag
           </h5>
           <div
-            className="dropdown"
+            className="d-none d-lg-block"
           >
-            <button
-              aria-expanded={false}
-              aria-haspopup={true}
-              className="dropdown-toggle btn btn-none"
-              disabled={false}
-              onClick={[Function]}
-              type="button"
+            <div
+              className="dropdown"
             >
-              Lolzz
-            </button>
+              <button
+                aria-expanded={false}
+                aria-haspopup={true}
+                className="dropdown-toggle title title-none"
+                disabled={false}
+                onClick={[Function]}
+                type="button"
+              >
+                Lolzz
+              </button>
+            </div>
+          </div>
+          <div
+            className="d-lg-none"
+          >
+            <div
+              className="text-center text-xl-left py-2 px-4"
+            >
+              <button
+                className="dropdown-item"
+                disabled={false}
+                onClick={[Function]}
+              >
+                Lolzz
+              </button>
+            </div>
+            <div
+              className="text-center text-xl-left py-2 px-4"
+            >
+              <button
+                className="dropdown-item"
+                disabled={false}
+                onClick={[Function]}
+              >
+                pineApple bananozna
+              </button>
+            </div>
           </div>
         </div>
         <div
@@ -4862,80 +5528,94 @@ exports[`Storyshots Components/InputGroup Size Small 1`] = `
 exports[`Storyshots Components/Layout Logged In 1`] = `
 Array [
   <nav
-    className="navbar navbar-expand-lg navbar-light justify-content-between bg-white"
+    className="navbar navbar-expand-lg navbar-light bg-white"
   >
     <div
       className="container"
     >
       <a
-        className="navbar-brand text-primary font-weight-bold"
+        className="navbar-brand"
         href="/"
-        onClick={[Function]}
-        onMouseEnter={[Function]}
-      >
-        C0D3
-      </a>
-      <div
-        id="navbarNav"
       >
         <div
-          className="navbar-nav collapse navbar-collapse"
+          className="navbar-brand text-primary font-weight-bold"
         >
-          <div
-            className="navbar-nav collapse navbar-collapse"
-          >
-            <a
-              className="nav-item nav-link"
-              href="/curriculum"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Curriculum
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://github.com/garageScript/c0d3-app"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Repo
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="/docs/learn"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Learn
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://discord.gg/c0d3"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Community
-            </a>
-          </div>
+          C0D3
         </div>
-      </div>
-      <div>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/login"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+      </a>
+      <button
+        aria-controls="basic-navbar-nav"
+        aria-label="Toggle navigation"
+        className="navbar-toggler collapsed"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        aria-expanded={null}
+        className="text-center navbar-collapse collapse"
+        id="basic-navbar-nav"
+      >
+        <div
+          className="m-auto navbar-nav"
+          onKeyDown={[Function]}
         >
-          Login
-        </a>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/signup"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+          <a
+            className="nav-item nav-link"
+            href="/curriculum"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Curriculum
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://github.com/garageScript/c0d3-app"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Repo
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="/docs/learn"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Learn
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://discord.gg/c0d3"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Community
+          </a>
+        </div>
+        <div
+          className="nav-buttons"
         >
-          Signup
-        </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/login"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Login
+          </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/signup"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Signup
+          </a>
+        </div>
       </div>
     </div>
   </nav>,
@@ -4987,80 +5667,94 @@ Array [
 exports[`Storyshots Components/Layout Logged Out 1`] = `
 Array [
   <nav
-    className="navbar navbar-expand-lg navbar-light justify-content-between bg-white"
+    className="navbar navbar-expand-lg navbar-light bg-white"
   >
     <div
       className="container"
     >
       <a
-        className="navbar-brand text-primary font-weight-bold"
+        className="navbar-brand"
         href="/"
-        onClick={[Function]}
-        onMouseEnter={[Function]}
-      >
-        C0D3
-      </a>
-      <div
-        id="navbarNav"
       >
         <div
-          className="navbar-nav collapse navbar-collapse"
+          className="navbar-brand text-primary font-weight-bold"
         >
-          <div
-            className="navbar-nav collapse navbar-collapse"
-          >
-            <a
-              className="nav-item nav-link"
-              href="/curriculum"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Curriculum
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://github.com/garageScript/c0d3-app"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Repo
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="/docs/learn"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Learn
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://discord.gg/c0d3"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Community
-            </a>
-          </div>
+          C0D3
         </div>
-      </div>
-      <div>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/login"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+      </a>
+      <button
+        aria-controls="basic-navbar-nav"
+        aria-label="Toggle navigation"
+        className="navbar-toggler collapsed"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        aria-expanded={null}
+        className="text-center navbar-collapse collapse"
+        id="basic-navbar-nav"
+      >
+        <div
+          className="m-auto navbar-nav"
+          onKeyDown={[Function]}
         >
-          Login
-        </a>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/signup"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+          <a
+            className="nav-item nav-link"
+            href="/curriculum"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Curriculum
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://github.com/garageScript/c0d3-app"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Repo
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="/docs/learn"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Learn
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://discord.gg/c0d3"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Community
+          </a>
+        </div>
+        <div
+          className="nav-buttons"
         >
-          Signup
-        </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/login"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Login
+          </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/signup"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Signup
+          </a>
+        </div>
       </div>
     </div>
   </nav>,
@@ -13445,80 +14139,94 @@ exports[`Storyshots Components/UserInfoImage User Info Image 1`] = `
 exports[`Storyshots Pages/Contributors Contributors 1`] = `
 Array [
   <nav
-    className="navbar navbar-expand-lg navbar-light justify-content-between bg-white"
+    className="navbar navbar-expand-lg navbar-light bg-white"
   >
     <div
       className="container"
     >
       <a
-        className="navbar-brand text-primary font-weight-bold"
+        className="navbar-brand"
         href="/"
-        onClick={[Function]}
-        onMouseEnter={[Function]}
-      >
-        C0D3
-      </a>
-      <div
-        id="navbarNav"
       >
         <div
-          className="navbar-nav collapse navbar-collapse"
+          className="navbar-brand text-primary font-weight-bold"
         >
-          <div
-            className="navbar-nav collapse navbar-collapse"
-          >
-            <a
-              className="nav-item nav-link"
-              href="/curriculum"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Curriculum
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://github.com/garageScript/c0d3-app"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Repo
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="/docs/learn"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Learn
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://discord.gg/c0d3"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Community
-            </a>
-          </div>
+          C0D3
         </div>
-      </div>
-      <div>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/login"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+      </a>
+      <button
+        aria-controls="basic-navbar-nav"
+        aria-label="Toggle navigation"
+        className="navbar-toggler collapsed"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        aria-expanded={null}
+        className="text-center navbar-collapse collapse"
+        id="basic-navbar-nav"
+      >
+        <div
+          className="m-auto navbar-nav"
+          onKeyDown={[Function]}
         >
-          Login
-        </a>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/signup"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+          <a
+            className="nav-item nav-link"
+            href="/curriculum"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Curriculum
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://github.com/garageScript/c0d3-app"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Repo
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="/docs/learn"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Learn
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://discord.gg/c0d3"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Community
+          </a>
+        </div>
+        <div
+          className="nav-buttons"
         >
-          Signup
-        </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/login"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Login
+          </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/signup"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Signup
+          </a>
+        </div>
       </div>
     </div>
   </nav>,
@@ -13681,80 +14389,94 @@ Array [
 exports[`Storyshots Pages/Curriculum Basic 1`] = `
 Array [
   <nav
-    className="navbar navbar-expand-lg navbar-light justify-content-between bg-white"
+    className="navbar navbar-expand-lg navbar-light bg-white"
   >
     <div
       className="container"
     >
       <a
-        className="navbar-brand text-primary font-weight-bold"
+        className="navbar-brand"
         href="/"
-        onClick={[Function]}
-        onMouseEnter={[Function]}
-      >
-        C0D3
-      </a>
-      <div
-        id="navbarNav"
       >
         <div
-          className="navbar-nav collapse navbar-collapse"
+          className="navbar-brand text-primary font-weight-bold"
         >
-          <div
-            className="navbar-nav collapse navbar-collapse"
-          >
-            <a
-              className="nav-item nav-link"
-              href="/curriculum"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Curriculum
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://github.com/garageScript/c0d3-app"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Repo
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="/docs/learn"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Learn
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://discord.gg/c0d3"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Community
-            </a>
-          </div>
+          C0D3
         </div>
-      </div>
-      <div>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/login"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+      </a>
+      <button
+        aria-controls="basic-navbar-nav"
+        aria-label="Toggle navigation"
+        className="navbar-toggler collapsed"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        aria-expanded={null}
+        className="text-center navbar-collapse collapse"
+        id="basic-navbar-nav"
+      >
+        <div
+          className="m-auto navbar-nav"
+          onKeyDown={[Function]}
         >
-          Login
-        </a>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/signup"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+          <a
+            className="nav-item nav-link"
+            href="/curriculum"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Curriculum
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://github.com/garageScript/c0d3-app"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Repo
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="/docs/learn"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Learn
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://discord.gg/c0d3"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Community
+          </a>
+        </div>
+        <div
+          className="nav-buttons"
         >
-          Signup
-        </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/login"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Login
+          </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/signup"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Signup
+          </a>
+        </div>
       </div>
     </div>
   </nav>,
@@ -15200,80 +15922,94 @@ Array [
 exports[`Storyshots Pages/Curriculum Completed Lessons 1`] = `
 Array [
   <nav
-    className="navbar navbar-expand-lg navbar-light justify-content-between bg-white"
+    className="navbar navbar-expand-lg navbar-light bg-white"
   >
     <div
       className="container"
     >
       <a
-        className="navbar-brand text-primary font-weight-bold"
+        className="navbar-brand"
         href="/"
-        onClick={[Function]}
-        onMouseEnter={[Function]}
-      >
-        C0D3
-      </a>
-      <div
-        id="navbarNav"
       >
         <div
-          className="navbar-nav collapse navbar-collapse"
+          className="navbar-brand text-primary font-weight-bold"
         >
-          <div
-            className="navbar-nav collapse navbar-collapse"
-          >
-            <a
-              className="nav-item nav-link"
-              href="/curriculum"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Curriculum
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://github.com/garageScript/c0d3-app"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Repo
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="/docs/learn"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Learn
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://discord.gg/c0d3"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Community
-            </a>
-          </div>
+          C0D3
         </div>
-      </div>
-      <div>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/login"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+      </a>
+      <button
+        aria-controls="basic-navbar-nav"
+        aria-label="Toggle navigation"
+        className="navbar-toggler collapsed"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        aria-expanded={null}
+        className="text-center navbar-collapse collapse"
+        id="basic-navbar-nav"
+      >
+        <div
+          className="m-auto navbar-nav"
+          onKeyDown={[Function]}
         >
-          Login
-        </a>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/signup"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+          <a
+            className="nav-item nav-link"
+            href="/curriculum"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Curriculum
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://github.com/garageScript/c0d3-app"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Repo
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="/docs/learn"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Learn
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://discord.gg/c0d3"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Community
+          </a>
+        </div>
+        <div
+          className="nav-buttons"
         >
-          Signup
-        </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/login"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Login
+          </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/signup"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Signup
+          </a>
+        </div>
       </div>
     </div>
   </nav>,
@@ -16719,80 +17455,94 @@ Array [
 exports[`Storyshots Pages/Curriculum With Alerts 1`] = `
 Array [
   <nav
-    className="navbar navbar-expand-lg navbar-light justify-content-between bg-white"
+    className="navbar navbar-expand-lg navbar-light bg-white"
   >
     <div
       className="container"
     >
       <a
-        className="navbar-brand text-primary font-weight-bold"
+        className="navbar-brand"
         href="/"
-        onClick={[Function]}
-        onMouseEnter={[Function]}
-      >
-        C0D3
-      </a>
-      <div
-        id="navbarNav"
       >
         <div
-          className="navbar-nav collapse navbar-collapse"
+          className="navbar-brand text-primary font-weight-bold"
         >
-          <div
-            className="navbar-nav collapse navbar-collapse"
-          >
-            <a
-              className="nav-item nav-link"
-              href="/curriculum"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Curriculum
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://github.com/garageScript/c0d3-app"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Repo
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="/docs/learn"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Learn
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://discord.gg/c0d3"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Community
-            </a>
-          </div>
+          C0D3
         </div>
-      </div>
-      <div>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/login"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+      </a>
+      <button
+        aria-controls="basic-navbar-nav"
+        aria-label="Toggle navigation"
+        className="navbar-toggler collapsed"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        aria-expanded={null}
+        className="text-center navbar-collapse collapse"
+        id="basic-navbar-nav"
+      >
+        <div
+          className="m-auto navbar-nav"
+          onKeyDown={[Function]}
         >
-          Login
-        </a>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/signup"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+          <a
+            className="nav-item nav-link"
+            href="/curriculum"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Curriculum
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://github.com/garageScript/c0d3-app"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Repo
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="/docs/learn"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Learn
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://discord.gg/c0d3"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Community
+          </a>
+        </div>
+        <div
+          className="nav-buttons"
         >
-          Signup
-        </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/login"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Login
+          </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/signup"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Signup
+          </a>
+        </div>
       </div>
     </div>
   </nav>,
@@ -18238,80 +18988,94 @@ Array [
 exports[`Storyshots Pages/ForgotPassword Forgot Password 1`] = `
 Array [
   <nav
-    className="navbar navbar-expand-lg navbar-light justify-content-between bg-white"
+    className="navbar navbar-expand-lg navbar-light bg-white"
   >
     <div
       className="container"
     >
       <a
-        className="navbar-brand text-primary font-weight-bold"
+        className="navbar-brand"
         href="/"
-        onClick={[Function]}
-        onMouseEnter={[Function]}
-      >
-        C0D3
-      </a>
-      <div
-        id="navbarNav"
       >
         <div
-          className="navbar-nav collapse navbar-collapse"
+          className="navbar-brand text-primary font-weight-bold"
         >
-          <div
-            className="navbar-nav collapse navbar-collapse"
-          >
-            <a
-              className="nav-item nav-link"
-              href="/curriculum"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Curriculum
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://github.com/garageScript/c0d3-app"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Repo
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="/docs/learn"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Learn
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://discord.gg/c0d3"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Community
-            </a>
-          </div>
+          C0D3
         </div>
-      </div>
-      <div>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/login"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+      </a>
+      <button
+        aria-controls="basic-navbar-nav"
+        aria-label="Toggle navigation"
+        className="navbar-toggler collapsed"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        aria-expanded={null}
+        className="text-center navbar-collapse collapse"
+        id="basic-navbar-nav"
+      >
+        <div
+          className="m-auto navbar-nav"
+          onKeyDown={[Function]}
         >
-          Login
-        </a>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/signup"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+          <a
+            className="nav-item nav-link"
+            href="/curriculum"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Curriculum
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://github.com/garageScript/c0d3-app"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Repo
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="/docs/learn"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Learn
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://discord.gg/c0d3"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Community
+          </a>
+        </div>
+        <div
+          className="nav-buttons"
         >
-          Signup
-        </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/login"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Login
+          </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/signup"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Signup
+          </a>
+        </div>
       </div>
     </div>
   </nav>,
@@ -18879,80 +19643,94 @@ exports[`Storyshots Pages/Lesson With Alerts 1`] = `
 exports[`Storyshots Pages/Login Login 1`] = `
 Array [
   <nav
-    className="navbar navbar-expand-lg navbar-light justify-content-between bg-white"
+    className="navbar navbar-expand-lg navbar-light bg-white"
   >
     <div
       className="container"
     >
       <a
-        className="navbar-brand text-primary font-weight-bold"
+        className="navbar-brand"
         href="/"
-        onClick={[Function]}
-        onMouseEnter={[Function]}
-      >
-        C0D3
-      </a>
-      <div
-        id="navbarNav"
       >
         <div
-          className="navbar-nav collapse navbar-collapse"
+          className="navbar-brand text-primary font-weight-bold"
         >
-          <div
-            className="navbar-nav collapse navbar-collapse"
-          >
-            <a
-              className="nav-item nav-link"
-              href="/curriculum"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Curriculum
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://github.com/garageScript/c0d3-app"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Repo
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="/docs/learn"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Learn
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://discord.gg/c0d3"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Community
-            </a>
-          </div>
+          C0D3
         </div>
-      </div>
-      <div>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/login"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+      </a>
+      <button
+        aria-controls="basic-navbar-nav"
+        aria-label="Toggle navigation"
+        className="navbar-toggler collapsed"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        aria-expanded={null}
+        className="text-center navbar-collapse collapse"
+        id="basic-navbar-nav"
+      >
+        <div
+          className="m-auto navbar-nav"
+          onKeyDown={[Function]}
         >
-          Login
-        </a>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/signup"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+          <a
+            className="nav-item nav-link"
+            href="/curriculum"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Curriculum
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://github.com/garageScript/c0d3-app"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Repo
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="/docs/learn"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Learn
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://discord.gg/c0d3"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Community
+          </a>
+        </div>
+        <div
+          className="nav-buttons"
         >
-          Signup
-        </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/login"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Login
+          </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/signup"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Signup
+          </a>
+        </div>
       </div>
     </div>
   </nav>,
@@ -19196,80 +19974,94 @@ exports[`Storyshots Pages/Login Login Error 1`] = `
 exports[`Storyshots Pages/ResetPassword Reset Password 1`] = `
 Array [
   <nav
-    className="navbar navbar-expand-lg navbar-light justify-content-between bg-white"
+    className="navbar navbar-expand-lg navbar-light bg-white"
   >
     <div
       className="container"
     >
       <a
-        className="navbar-brand text-primary font-weight-bold"
+        className="navbar-brand"
         href="/"
-        onClick={[Function]}
-        onMouseEnter={[Function]}
-      >
-        C0D3
-      </a>
-      <div
-        id="navbarNav"
       >
         <div
-          className="navbar-nav collapse navbar-collapse"
+          className="navbar-brand text-primary font-weight-bold"
         >
-          <div
-            className="navbar-nav collapse navbar-collapse"
-          >
-            <a
-              className="nav-item nav-link"
-              href="/curriculum"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Curriculum
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://github.com/garageScript/c0d3-app"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Repo
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="/docs/learn"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Learn
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://discord.gg/c0d3"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Community
-            </a>
-          </div>
+          C0D3
         </div>
-      </div>
-      <div>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/login"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+      </a>
+      <button
+        aria-controls="basic-navbar-nav"
+        aria-label="Toggle navigation"
+        className="navbar-toggler collapsed"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        aria-expanded={null}
+        className="text-center navbar-collapse collapse"
+        id="basic-navbar-nav"
+      >
+        <div
+          className="m-auto navbar-nav"
+          onKeyDown={[Function]}
         >
-          Login
-        </a>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/signup"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+          <a
+            className="nav-item nav-link"
+            href="/curriculum"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Curriculum
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://github.com/garageScript/c0d3-app"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Repo
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="/docs/learn"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Learn
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://discord.gg/c0d3"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Community
+          </a>
+        </div>
+        <div
+          className="nav-buttons"
         >
-          Signup
-        </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/login"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Login
+          </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/signup"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Signup
+          </a>
+        </div>
       </div>
     </div>
   </nav>,
@@ -19351,80 +20143,94 @@ Array [
 exports[`Storyshots Pages/Signup Signup 1`] = `
 Array [
   <nav
-    className="navbar navbar-expand-lg navbar-light justify-content-between bg-white"
+    className="navbar navbar-expand-lg navbar-light bg-white"
   >
     <div
       className="container"
     >
       <a
-        className="navbar-brand text-primary font-weight-bold"
+        className="navbar-brand"
         href="/"
-        onClick={[Function]}
-        onMouseEnter={[Function]}
-      >
-        C0D3
-      </a>
-      <div
-        id="navbarNav"
       >
         <div
-          className="navbar-nav collapse navbar-collapse"
+          className="navbar-brand text-primary font-weight-bold"
         >
-          <div
-            className="navbar-nav collapse navbar-collapse"
-          >
-            <a
-              className="nav-item nav-link"
-              href="/curriculum"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Curriculum
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://github.com/garageScript/c0d3-app"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Repo
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="/docs/learn"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Learn
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://discord.gg/c0d3"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Community
-            </a>
-          </div>
+          C0D3
         </div>
-      </div>
-      <div>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/login"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+      </a>
+      <button
+        aria-controls="basic-navbar-nav"
+        aria-label="Toggle navigation"
+        className="navbar-toggler collapsed"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        aria-expanded={null}
+        className="text-center navbar-collapse collapse"
+        id="basic-navbar-nav"
+      >
+        <div
+          className="m-auto navbar-nav"
+          onKeyDown={[Function]}
         >
-          Login
-        </a>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/signup"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+          <a
+            className="nav-item nav-link"
+            href="/curriculum"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Curriculum
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://github.com/garageScript/c0d3-app"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Repo
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="/docs/learn"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Learn
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://discord.gg/c0d3"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Community
+          </a>
+        </div>
+        <div
+          className="nav-buttons"
         >
-          Signup
-        </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/login"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Login
+          </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/signup"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Signup
+          </a>
+        </div>
       </div>
     </div>
   </nav>,
@@ -20259,80 +21065,94 @@ Array [
 exports[`Storyshots mdx/BlockQuote Quote 1`] = `
 Array [
   <nav
-    className="navbar navbar-expand-lg navbar-light justify-content-between bg-white"
+    className="navbar navbar-expand-lg navbar-light bg-white"
   >
     <div
       className="container"
     >
       <a
-        className="navbar-brand text-primary font-weight-bold"
+        className="navbar-brand"
         href="/"
-        onClick={[Function]}
-        onMouseEnter={[Function]}
-      >
-        C0D3
-      </a>
-      <div
-        id="navbarNav"
       >
         <div
-          className="navbar-nav collapse navbar-collapse"
+          className="navbar-brand text-primary font-weight-bold"
         >
-          <div
-            className="navbar-nav collapse navbar-collapse"
-          >
-            <a
-              className="nav-item nav-link"
-              href="/curriculum"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Curriculum
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://github.com/garageScript/c0d3-app"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Repo
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="/docs/learn"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Learn
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://discord.gg/c0d3"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Community
-            </a>
-          </div>
+          C0D3
         </div>
-      </div>
-      <div>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/login"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+      </a>
+      <button
+        aria-controls="basic-navbar-nav"
+        aria-label="Toggle navigation"
+        className="navbar-toggler collapsed"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        aria-expanded={null}
+        className="text-center navbar-collapse collapse"
+        id="basic-navbar-nav"
+      >
+        <div
+          className="m-auto navbar-nav"
+          onKeyDown={[Function]}
         >
-          Login
-        </a>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/signup"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+          <a
+            className="nav-item nav-link"
+            href="/curriculum"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Curriculum
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://github.com/garageScript/c0d3-app"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Repo
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="/docs/learn"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Learn
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://discord.gg/c0d3"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Community
+          </a>
+        </div>
+        <div
+          className="nav-buttons"
         >
-          Signup
-        </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/login"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Login
+          </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/signup"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Signup
+          </a>
+        </div>
       </div>
     </div>
   </nav>,
@@ -22794,80 +23614,94 @@ exports[`Storyshots mdx/Codeblock  Component 1`] = `
 exports[`Storyshots mdx/Layout With Lesson 1`] = `
 Array [
   <nav
-    className="navbar navbar-expand-lg navbar-light justify-content-between bg-white"
+    className="navbar navbar-expand-lg navbar-light bg-white"
   >
     <div
       className="container"
     >
       <a
-        className="navbar-brand text-primary font-weight-bold"
+        className="navbar-brand"
         href="/"
-        onClick={[Function]}
-        onMouseEnter={[Function]}
-      >
-        C0D3
-      </a>
-      <div
-        id="navbarNav"
       >
         <div
-          className="navbar-nav collapse navbar-collapse"
+          className="navbar-brand text-primary font-weight-bold"
         >
-          <div
-            className="navbar-nav collapse navbar-collapse"
-          >
-            <a
-              className="nav-item nav-link"
-              href="/curriculum"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Curriculum
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://github.com/garageScript/c0d3-app"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Repo
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="/docs/learn"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Learn
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://discord.gg/c0d3"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Community
-            </a>
-          </div>
+          C0D3
         </div>
-      </div>
-      <div>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/login"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+      </a>
+      <button
+        aria-controls="basic-navbar-nav"
+        aria-label="Toggle navigation"
+        className="navbar-toggler collapsed"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        aria-expanded={null}
+        className="text-center navbar-collapse collapse"
+        id="basic-navbar-nav"
+      >
+        <div
+          className="m-auto navbar-nav"
+          onKeyDown={[Function]}
         >
-          Login
-        </a>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/signup"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+          <a
+            className="nav-item nav-link"
+            href="/curriculum"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Curriculum
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://github.com/garageScript/c0d3-app"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Repo
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="/docs/learn"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Learn
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://discord.gg/c0d3"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Community
+          </a>
+        </div>
+        <div
+          className="nav-buttons"
         >
-          Signup
-        </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/login"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Login
+          </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/signup"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Signup
+          </a>
+        </div>
       </div>
     </div>
   </nav>,
@@ -22983,80 +23817,94 @@ Array [
 exports[`Storyshots mdx/Layout With Text 1`] = `
 Array [
   <nav
-    className="navbar navbar-expand-lg navbar-light justify-content-between bg-white"
+    className="navbar navbar-expand-lg navbar-light bg-white"
   >
     <div
       className="container"
     >
       <a
-        className="navbar-brand text-primary font-weight-bold"
+        className="navbar-brand"
         href="/"
-        onClick={[Function]}
-        onMouseEnter={[Function]}
-      >
-        C0D3
-      </a>
-      <div
-        id="navbarNav"
       >
         <div
-          className="navbar-nav collapse navbar-collapse"
+          className="navbar-brand text-primary font-weight-bold"
         >
-          <div
-            className="navbar-nav collapse navbar-collapse"
-          >
-            <a
-              className="nav-item nav-link"
-              href="/curriculum"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Curriculum
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://github.com/garageScript/c0d3-app"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Repo
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="/docs/learn"
-              onClick={[Function]}
-              onMouseEnter={[Function]}
-            >
-              Learn
-            </a>
-            <a
-              className="nav-item nav-link"
-              href="https://discord.gg/c0d3"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Community
-            </a>
-          </div>
+          C0D3
         </div>
-      </div>
-      <div>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/login"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+      </a>
+      <button
+        aria-controls="basic-navbar-nav"
+        aria-label="Toggle navigation"
+        className="navbar-toggler collapsed"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        aria-expanded={null}
+        className="text-center navbar-collapse collapse"
+        id="basic-navbar-nav"
+      >
+        <div
+          className="m-auto navbar-nav"
+          onKeyDown={[Function]}
         >
-          Login
-        </a>
-        <a
-          className="btn btn-secondary border mr-3"
-          href="/signup"
-          onClick={[Function]}
-          onMouseEnter={[Function]}
+          <a
+            className="nav-item nav-link"
+            href="/curriculum"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Curriculum
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://github.com/garageScript/c0d3-app"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Repo
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="/docs/learn"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Learn
+          </a>
+          <a
+            className="nav-item nav-link"
+            href="https://discord.gg/c0d3"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Community
+          </a>
+        </div>
+        <div
+          className="nav-buttons"
         >
-          Signup
-        </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/login"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Login
+          </a>
+          <a
+            className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+            href="/signup"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+          >
+            Signup
+          </a>
+        </div>
       </div>
     </div>
   </nav>,

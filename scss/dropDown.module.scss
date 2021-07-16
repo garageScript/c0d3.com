@@ -1,0 +1,19 @@
+.item {
+  color: #838383;
+  &:hover {
+    color: #4c4c4c;
+    text-decoration: none;
+  }
+}
+
+.title {
+  color: #838383;
+  background: transparent;
+  border: none;
+  padding: 0.5em;
+  margin: 0 2em;
+  &:hover {
+    color: #4c4c4c;
+    text-decoration: none;
+  }
+}

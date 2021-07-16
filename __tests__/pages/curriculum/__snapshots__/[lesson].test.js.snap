@@ -4,84 +4,133 @@ exports[`Lesson Page Should correctly render challenges page for students who ha
 <div>
   <div>
     <nav
-      class="navbar navbar-expand-lg navbar-light justify-content-between bg-white"
+      class="navbar navbar-expand-lg navbar-light bg-white"
     >
       <div
         class="container"
       >
         <a
-          class="navbar-brand text-primary font-weight-bold"
+          class="navbar-brand"
           href="/"
         >
-          C0D3
+          <div
+            class="navbar-brand text-primary font-weight-bold"
+          >
+            C0D3
+          </div>
         </a>
+        <button
+          aria-controls="basic-navbar-nav"
+          aria-label="Toggle navigation"
+          class="navbar-toggler collapsed"
+          type="button"
+        >
+          <span
+            class="navbar-toggler-icon"
+          />
+        </button>
         <div
-          id="navbarNav"
+          class="text-center navbar-collapse collapse"
+          id="basic-navbar-nav"
         >
           <div
-            class="navbar-nav collapse navbar-collapse"
+            class="m-auto navbar-nav"
           >
-            <div
-              class="navbar-nav collapse navbar-collapse"
+            <a
+              class="nav-item nav-link"
+              href="/curriculum"
             >
-              <a
-                class="nav-item nav-link"
-                href="/curriculum"
-              >
-                Curriculum
-              </a>
-              <a
-                class="nav-item nav-link"
-                href="https://github.com/garageScript/c0d3-app"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Repo
-              </a>
-              <a
-                class="nav-item nav-link"
-                href="/docs/learn"
-              >
-                Learn
-              </a>
-              <a
-                class="nav-item nav-link"
-                href="https://discord.gg/c0d3"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Community
-              </a>
+              Curriculum
+            </a>
+            <a
+              class="nav-item nav-link"
+              href="https://github.com/garageScript/c0d3-app"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Repo
+            </a>
+            <a
+              class="nav-item nav-link"
+              href="/docs/learn"
+            >
+              Learn
+            </a>
+            <a
+              class="nav-item nav-link"
+              href="https://discord.gg/c0d3"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Community
+            </a>
+            <div
+              class="d-none d-lg-block"
+            >
               <div
                 class="dropdown"
               >
                 <button
                   aria-expanded="false"
                   aria-haspopup="true"
-                  class="dropdown-toggle btn btn-none"
+                  class="dropdown-toggle title title-none"
                   type="button"
                 >
                   Admin
                 </button>
               </div>
             </div>
+            <div
+              class="d-lg-none"
+            >
+              <div
+                class="text-center text-xl-left py-2 px-4"
+              >
+                <a
+                  class="dropdown-item"
+                  href="/admin/lessons"
+                >
+                  Lessons
+                </a>
+              </div>
+              <div
+                class="text-center text-xl-left py-2 px-4"
+              >
+                <a
+                  class="dropdown-item"
+                  href="/admin/users"
+                >
+                  Users
+                </a>
+              </div>
+              <div
+                class="text-center text-xl-left py-2 px-4"
+              >
+                <a
+                  class="dropdown-item"
+                  href="/admin/alerts"
+                >
+                  Alerts
+                </a>
+              </div>
+            </div>
           </div>
-        </div>
-        <div
-          class="d-flex"
-        >
-          <a
-            class="btn btn-secondary border overflow-hidden p-2 text-truncate"
-            href="/profile/fakeusername"
+          <div
+            class="nav-buttons"
           >
-             fakeusername
-          </a>
-          <button
-            class="btn border ml-2"
-            style="color: rgb(41, 41, 41);"
-          >
-            Logout
-          </button>
+            <a
+              class="btn btn-secondary border overflow-hidden text-truncate bg-light"
+              href="/profile/fakeusername"
+            >
+              Fakeusername
+            </a>
+            <button
+              class="btn border bg-light ml-2"
+              style="color: rgb(41, 41, 41);"
+            >
+              Logout
+            </button>
+          </div>
         </div>
       </div>
     </nav>
@@ -399,84 +448,133 @@ solution(a); // should return 50
 exports[`Lesson Page Should render correctly with invalid lesson route 1`] = `
 <div>
   <nav
-    class="navbar navbar-expand-lg navbar-light justify-content-between bg-white"
+    class="navbar navbar-expand-lg navbar-light bg-white"
   >
     <div
       class="container"
     >
       <a
-        class="navbar-brand text-primary font-weight-bold"
+        class="navbar-brand"
         href="/"
       >
-        C0D3
+        <div
+          class="navbar-brand text-primary font-weight-bold"
+        >
+          C0D3
+        </div>
       </a>
+      <button
+        aria-controls="basic-navbar-nav"
+        aria-label="Toggle navigation"
+        class="navbar-toggler collapsed"
+        type="button"
+      >
+        <span
+          class="navbar-toggler-icon"
+        />
+      </button>
       <div
-        id="navbarNav"
+        class="text-center navbar-collapse collapse"
+        id="basic-navbar-nav"
       >
         <div
-          class="navbar-nav collapse navbar-collapse"
+          class="m-auto navbar-nav"
         >
-          <div
-            class="navbar-nav collapse navbar-collapse"
+          <a
+            class="nav-item nav-link"
+            href="/curriculum"
           >
-            <a
-              class="nav-item nav-link"
-              href="/curriculum"
-            >
-              Curriculum
-            </a>
-            <a
-              class="nav-item nav-link"
-              href="https://github.com/garageScript/c0d3-app"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Repo
-            </a>
-            <a
-              class="nav-item nav-link"
-              href="/docs/learn"
-            >
-              Learn
-            </a>
-            <a
-              class="nav-item nav-link"
-              href="https://discord.gg/c0d3"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Community
-            </a>
+            Curriculum
+          </a>
+          <a
+            class="nav-item nav-link"
+            href="https://github.com/garageScript/c0d3-app"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Repo
+          </a>
+          <a
+            class="nav-item nav-link"
+            href="/docs/learn"
+          >
+            Learn
+          </a>
+          <a
+            class="nav-item nav-link"
+            href="https://discord.gg/c0d3"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Community
+          </a>
+          <div
+            class="d-none d-lg-block"
+          >
             <div
               class="dropdown"
             >
               <button
                 aria-expanded="false"
                 aria-haspopup="true"
-                class="dropdown-toggle btn btn-none"
+                class="dropdown-toggle title title-none"
                 type="button"
               >
                 Admin
               </button>
             </div>
           </div>
+          <div
+            class="d-lg-none"
+          >
+            <div
+              class="text-center text-xl-left py-2 px-4"
+            >
+              <a
+                class="dropdown-item"
+                href="/admin/lessons"
+              >
+                Lessons
+              </a>
+            </div>
+            <div
+              class="text-center text-xl-left py-2 px-4"
+            >
+              <a
+                class="dropdown-item"
+                href="/admin/users"
+              >
+                Users
+              </a>
+            </div>
+            <div
+              class="text-center text-xl-left py-2 px-4"
+            >
+              <a
+                class="dropdown-item"
+                href="/admin/alerts"
+              >
+                Alerts
+              </a>
+            </div>
+          </div>
         </div>
-      </div>
-      <div
-        class="d-flex"
-      >
-        <a
-          class="btn btn-secondary border overflow-hidden p-2 text-truncate"
-          href="/profile/fakeusername"
+        <div
+          class="nav-buttons"
         >
-           fakeusername
-        </a>
-        <button
-          class="btn border ml-2"
-          style="color: rgb(41, 41, 41);"
-        >
-          Logout
-        </button>
+          <a
+            class="btn btn-secondary border overflow-hidden text-truncate bg-light"
+            href="/profile/fakeusername"
+          >
+            Fakeusername
+          </a>
+          <button
+            class="btn border bg-light ml-2"
+            style="color: rgb(41, 41, 41);"
+          >
+            Logout
+          </button>
+        </div>
       </div>
     </div>
   </nav>
@@ -544,84 +642,133 @@ exports[`Lesson Page Should render correctly with valid lesson route 1`] = `
 <div>
   <div>
     <nav
-      class="navbar navbar-expand-lg navbar-light justify-content-between bg-white"
+      class="navbar navbar-expand-lg navbar-light bg-white"
     >
       <div
         class="container"
       >
         <a
-          class="navbar-brand text-primary font-weight-bold"
+          class="navbar-brand"
           href="/"
         >
-          C0D3
+          <div
+            class="navbar-brand text-primary font-weight-bold"
+          >
+            C0D3
+          </div>
         </a>
+        <button
+          aria-controls="basic-navbar-nav"
+          aria-label="Toggle navigation"
+          class="navbar-toggler collapsed"
+          type="button"
+        >
+          <span
+            class="navbar-toggler-icon"
+          />
+        </button>
         <div
-          id="navbarNav"
+          class="text-center navbar-collapse collapse"
+          id="basic-navbar-nav"
         >
           <div
-            class="navbar-nav collapse navbar-collapse"
+            class="m-auto navbar-nav"
           >
-            <div
-              class="navbar-nav collapse navbar-collapse"
+            <a
+              class="nav-item nav-link"
+              href="/curriculum"
             >
-              <a
-                class="nav-item nav-link"
-                href="/curriculum"
-              >
-                Curriculum
-              </a>
-              <a
-                class="nav-item nav-link"
-                href="https://github.com/garageScript/c0d3-app"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Repo
-              </a>
-              <a
-                class="nav-item nav-link"
-                href="/docs/learn"
-              >
-                Learn
-              </a>
-              <a
-                class="nav-item nav-link"
-                href="https://discord.gg/c0d3"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Community
-              </a>
+              Curriculum
+            </a>
+            <a
+              class="nav-item nav-link"
+              href="https://github.com/garageScript/c0d3-app"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Repo
+            </a>
+            <a
+              class="nav-item nav-link"
+              href="/docs/learn"
+            >
+              Learn
+            </a>
+            <a
+              class="nav-item nav-link"
+              href="https://discord.gg/c0d3"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Community
+            </a>
+            <div
+              class="d-none d-lg-block"
+            >
               <div
                 class="dropdown"
               >
                 <button
                   aria-expanded="false"
                   aria-haspopup="true"
-                  class="dropdown-toggle btn btn-none"
+                  class="dropdown-toggle title title-none"
                   type="button"
                 >
                   Admin
                 </button>
               </div>
             </div>
+            <div
+              class="d-lg-none"
+            >
+              <div
+                class="text-center text-xl-left py-2 px-4"
+              >
+                <a
+                  class="dropdown-item"
+                  href="/admin/lessons"
+                >
+                  Lessons
+                </a>
+              </div>
+              <div
+                class="text-center text-xl-left py-2 px-4"
+              >
+                <a
+                  class="dropdown-item"
+                  href="/admin/users"
+                >
+                  Users
+                </a>
+              </div>
+              <div
+                class="text-center text-xl-left py-2 px-4"
+              >
+                <a
+                  class="dropdown-item"
+                  href="/admin/alerts"
+                >
+                  Alerts
+                </a>
+              </div>
+            </div>
           </div>
-        </div>
-        <div
-          class="d-flex"
-        >
-          <a
-            class="btn btn-secondary border overflow-hidden p-2 text-truncate"
-            href="/profile/fakeusername"
+          <div
+            class="nav-buttons"
           >
-             fakeusername
-          </a>
-          <button
-            class="btn border ml-2"
-            style="color: rgb(41, 41, 41);"
-          >
-            Logout
-          </button>
+            <a
+              class="btn btn-secondary border overflow-hidden text-truncate bg-light"
+              href="/profile/fakeusername"
+            >
+              Fakeusername
+            </a>
+            <button
+              class="btn border bg-light ml-2"
+              style="color: rgb(41, 41, 41);"
+            >
+              Logout
+            </button>
+          </div>
         </div>
       </div>
     </nav>
@@ -967,84 +1114,133 @@ result = solution(0, "hello") // ""
 exports[`Lesson Page Should return Internal server Error if alerts or lessons are missing 1`] = `
 <div>
   <nav
-    class="navbar navbar-expand-lg navbar-light justify-content-between bg-white"
+    class="navbar navbar-expand-lg navbar-light bg-white"
   >
     <div
       class="container"
     >
       <a
-        class="navbar-brand text-primary font-weight-bold"
+        class="navbar-brand"
         href="/"
       >
-        C0D3
+        <div
+          class="navbar-brand text-primary font-weight-bold"
+        >
+          C0D3
+        </div>
       </a>
+      <button
+        aria-controls="basic-navbar-nav"
+        aria-label="Toggle navigation"
+        class="navbar-toggler collapsed"
+        type="button"
+      >
+        <span
+          class="navbar-toggler-icon"
+        />
+      </button>
       <div
-        id="navbarNav"
+        class="text-center navbar-collapse collapse"
+        id="basic-navbar-nav"
       >
         <div
-          class="navbar-nav collapse navbar-collapse"
+          class="m-auto navbar-nav"
         >
-          <div
-            class="navbar-nav collapse navbar-collapse"
+          <a
+            class="nav-item nav-link"
+            href="/curriculum"
           >
-            <a
-              class="nav-item nav-link"
-              href="/curriculum"
-            >
-              Curriculum
-            </a>
-            <a
-              class="nav-item nav-link"
-              href="https://github.com/garageScript/c0d3-app"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Repo
-            </a>
-            <a
-              class="nav-item nav-link"
-              href="/docs/learn"
-            >
-              Learn
-            </a>
-            <a
-              class="nav-item nav-link"
-              href="https://discord.gg/c0d3"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Community
-            </a>
+            Curriculum
+          </a>
+          <a
+            class="nav-item nav-link"
+            href="https://github.com/garageScript/c0d3-app"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Repo
+          </a>
+          <a
+            class="nav-item nav-link"
+            href="/docs/learn"
+          >
+            Learn
+          </a>
+          <a
+            class="nav-item nav-link"
+            href="https://discord.gg/c0d3"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Community
+          </a>
+          <div
+            class="d-none d-lg-block"
+          >
             <div
               class="dropdown"
             >
               <button
                 aria-expanded="false"
                 aria-haspopup="true"
-                class="dropdown-toggle btn btn-none"
+                class="dropdown-toggle title title-none"
                 type="button"
               >
                 Admin
               </button>
             </div>
           </div>
+          <div
+            class="d-lg-none"
+          >
+            <div
+              class="text-center text-xl-left py-2 px-4"
+            >
+              <a
+                class="dropdown-item"
+                href="/admin/lessons"
+              >
+                Lessons
+              </a>
+            </div>
+            <div
+              class="text-center text-xl-left py-2 px-4"
+            >
+              <a
+                class="dropdown-item"
+                href="/admin/users"
+              >
+                Users
+              </a>
+            </div>
+            <div
+              class="text-center text-xl-left py-2 px-4"
+            >
+              <a
+                class="dropdown-item"
+                href="/admin/alerts"
+              >
+                Alerts
+              </a>
+            </div>
+          </div>
         </div>
-      </div>
-      <div
-        class="d-flex"
-      >
-        <a
-          class="btn btn-secondary border overflow-hidden p-2 text-truncate"
-          href="/profile/fakeusername"
+        <div
+          class="nav-buttons"
         >
-           fakeusername
-        </a>
-        <button
-          class="btn border ml-2"
-          style="color: rgb(41, 41, 41);"
-        >
-          Logout
-        </button>
+          <a
+            class="btn btn-secondary border overflow-hidden text-truncate bg-light"
+            href="/profile/fakeusername"
+          >
+            Fakeusername
+          </a>
+          <button
+            class="btn border bg-light ml-2"
+            style="color: rgb(41, 41, 41);"
+          >
+            Logout
+          </button>
+        </div>
       </div>
     </div>
   </nav>

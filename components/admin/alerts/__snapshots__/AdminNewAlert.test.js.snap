@@ -74,16 +74,42 @@ exports[`AdminLewAlert component Should create new alert 1`] = `
                   Type
                 </h5>
                 <div
-                  class="dropdown"
+                  class="d-none d-lg-block"
                 >
-                  <button
-                    aria-expanded="false"
-                    aria-haspopup="true"
-                    class="dropdown-toggle btn btn-none"
-                    type="button"
+                  <div
+                    class="dropdown"
                   >
-                    info
-                  </button>
+                    <button
+                      aria-expanded="false"
+                      aria-haspopup="true"
+                      class="dropdown-toggle title title-none"
+                      type="button"
+                    >
+                      info
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="d-lg-none"
+                >
+                  <div
+                    class="text-center text-xl-left py-2 px-4"
+                  >
+                    <button
+                      class="dropdown-item"
+                    >
+                      info
+                    </button>
+                  </div>
+                  <div
+                    class="text-center text-xl-left py-2 px-4"
+                  >
+                    <button
+                      class="dropdown-item"
+                    >
+                      urgent
+                    </button>
+                  </div>
                 </div>
               </div>
               <div
@@ -223,16 +249,42 @@ exports[`AdminLewAlert component Should refuse creating new alert with incomplet
                   Type
                 </h5>
                 <div
-                  class="dropdown"
+                  class="d-none d-lg-block"
                 >
-                  <button
-                    aria-expanded="false"
-                    aria-haspopup="true"
-                    class="dropdown-toggle btn btn-none"
-                    type="button"
+                  <div
+                    class="dropdown"
                   >
-                    info
-                  </button>
+                    <button
+                      aria-expanded="false"
+                      aria-haspopup="true"
+                      class="dropdown-toggle title title-none"
+                      type="button"
+                    >
+                      info
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="d-lg-none"
+                >
+                  <div
+                    class="text-center text-xl-left py-2 px-4"
+                  >
+                    <button
+                      class="dropdown-item"
+                    >
+                      info
+                    </button>
+                  </div>
+                  <div
+                    class="text-center text-xl-left py-2 px-4"
+                  >
+                    <button
+                      class="dropdown-item"
+                    >
+                      urgent
+                    </button>
+                  </div>
                 </div>
               </div>
               <div

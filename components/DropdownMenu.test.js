@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent, screen } from '@testing-library/react'
 import { DropdownMenu } from './DropdownMenu'
 
 const dropdownMenuItems = [
@@ -24,12 +24,12 @@ describe('MdInput Component', () => {
 
   test('Should change value of testBtnOnClick upon click', () => {
     dropdownMenuItems[0].onClick = val => (testBtnOnClick = val)
-    const { container, queryByText } = render(
+    const { container } = render(
       <DropdownMenu title="Admin" items={dropdownMenuItems} />
     )
-    const btn = queryByText('Admin')
+    const btn = screen.queryByText('Admin')
     fireEvent.click(btn, { button: 1 })
-    const lessons = queryByText('Lessons')
+    const lessons = screen.queryAllByText('Lessons')[0]
     fireEvent.click(lessons, { button: 1 })
     expect(testBtnOnClick).toEqual('Lessons')
     expect(container).toMatchSnapshot()

@@ -8,7 +8,7 @@ export default {
 const dropdownMenuItems = [
   { title: 'Lessons', path: '/admin/lessons' },
   { title: 'Users', path: '/admin/users' },
-  { title: 'Alerts', path: '/admin/alerts' }
+  { title: 'Alerts0', path: '/admin/alerts' }
 ]
 
 const separatedMenu = [
@@ -16,11 +16,11 @@ const separatedMenu = [
   null,
   { title: 'Users', path: '/admin/users' },
   null,
-  { title: 'Alerts', path: '/admin/alerts' },
-  { title: 'Alerts', path: '/admin/alerts' },
-  { title: 'Alerts', path: '/admin/alerts' },
+  { title: 'Alerts1', path: '/admin/alerts' },
+  { title: 'Alerts2', path: '/admin/alerts' },
+  { title: 'Alerts3', path: '/admin/alerts' },
   null,
-  { title: 'Alerts', path: '/admin/alerts' }
+  { title: 'Alerts4', path: '/admin/alerts' }
 ]
 
 const variants: any[] = [

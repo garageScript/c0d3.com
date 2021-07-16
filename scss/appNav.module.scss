@@ -7,3 +7,21 @@
   margin-left: 2em;
   margin-right: 2em;
 }
+
+.nav-buttons {
+  flex-shrink: 0;
+  & > * {
+    min-width: 5em;
+    @media (min-width: 992px) {
+      background-color: white !important;
+    }
+  }
+}
+
+.dropdown-item {
+  color: #838383;
+  &:hover {
+    color: #4c4c4c;
+    text-decoration: none;
+  }
+}

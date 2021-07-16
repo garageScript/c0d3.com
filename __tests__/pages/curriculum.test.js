@@ -59,7 +59,7 @@ describe('Curriculum Page', () => {
       </MockedProvider>
     )
 
-    await waitFor(() => screen.getByRole('link', { name: 'fakeusername' }))
+    await screen.findByText('Fakeusername')
     await waitFor(() => screen.getAllByText(`You're off to a great start!`))
     await waitFor(() => expect(container).toMatchSnapshot())
   })
@@ -111,7 +111,7 @@ describe('Curriculum Page', () => {
       </MockedProvider>
     )
 
-    await waitFor(() => screen.getByRole('link', { name: 'fakeusername' }))
+    await screen.findByText('Fakeusername')
     await waitFor(() => screen.getAllByText('Keep up the great work!'))
 
     await waitFor(() => expect(container).toMatchSnapshot())

@@ -4,13 +4,10 @@ import { Button } from './theme/Button'
 import { useRouter } from 'next/router'
 import { DropdownMenu } from './DropdownMenu'
 import { useLogoutMutation, useGetAppQuery, GetAppQuery } from '../graphql'
+import Navbar from 'react-bootstrap/Navbar'
+import { Container, Nav } from 'react-bootstrap'
 import _ from 'lodash'
 import styles from '../scss/appNav.module.scss'
-
-type AuthButtonProps = {
-  initial: string
-  username: string
-}
 
 type AuthLinkProps = {
   session: any
@@ -44,10 +41,9 @@ const navItems: NavItem[] = [
 const NavBar: React.FC<AuthLinkProps> = ({ session }) => {
   const router = useRouter()
   const isAdmin = _.get(session, 'user.isAdmin', false) as boolean
-  const location = '/' + router.asPath.split('/')[1]
-
+  const location = router.asPath
   return (
-    <div className="navbar-nav collapse navbar-collapse">
+    <>
       {navItems.map(button => (
         <NavLink
           {...button}
@@ -58,12 +54,18 @@ const NavBar: React.FC<AuthLinkProps> = ({ session }) => {
           {button.name}
         </NavLink>
       ))}
-      {isAdmin && <DropdownMenu title="Admin" items={dropdownMenuItems} />}
-    </div>
+      {isAdmin && (
+        <DropdownMenu
+          title="Admin"
+          items={dropdownMenuItems}
+          bsPrefix={styles['dropdown-item']}
+        />
+      )}
+    </>
   )
 }
 
-const AuthButton: React.FC<AuthButtonProps> = ({ initial, username }) => {
+const AuthButton: React.FC<{ username: string }> = ({ username }) => {
   const router = useRouter()
   const [logoutUser] = useLogoutMutation({
     update(cache) {
@@ -81,17 +83,20 @@ const AuthButton: React.FC<AuthButtonProps> = ({ initial, username }) => {
       router.push('/')
     }
   })
+
+  const capitalized = username.charAt(0).toUpperCase() + username.slice(1)
+
   return (
-    <div className="d-flex">
+    <div className={`${styles['nav-buttons']}`}>
       <NavLink
         path="/profile/[username]"
         as={`/profile/${username}`}
-        className="btn btn-secondary border overflow-hidden p-2 text-truncate"
+        className="btn btn-secondary border overflow-hidden text-truncate bg-light"
       >
-        {`${initial} ${username}`}
+        {capitalized}
       </NavLink>
 
-      <Button border ml="2" onClick={logoutUser}>
+      <Button border ml="2" type="light" onClick={logoutUser}>
         Logout
       </Button>
     </div>
@@ -99,11 +104,17 @@ const AuthButton: React.FC<AuthButtonProps> = ({ initial, username }) => {
 }
 
 const UnAuthButton = () => (
-  <div>
-    <NavLink path="/login" className="btn btn-secondary border mr-3">
+  <div className={`${styles['nav-buttons']}`}>
+    <NavLink
+      path="/login"
+      className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+    >
       Login
     </NavLink>
-    <NavLink path="/signup" className="btn btn-secondary border mr-3">
+    <NavLink
+      path="/signup"
+      className="btn btn-secondary border m-2 mr-lg-3 bg-light"
+    >
       Signup
     </NavLink>
   </div>
@@ -124,30 +135,31 @@ const AppNav: React.FC<{}> = () => {
       return <UnAuthButton />
     }
 
-    const initial = ''
     // TODO: replace with typing
     const username = _.get(session, 'user.username', '')
 
-    return <AuthButton username={username} initial={initial} />
+    return <AuthButton username={username} />
   }
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light justify-content-between bg-white">
-      <div className="container">
-        <NavLink
-          path="/"
-          className={`${styles['navbar-brand']} text-primary font-weight-bold`}
-        >
-          C0D3
-        </NavLink>
-        <div id="navbarNav">
-          <div className="navbar-nav collapse navbar-collapse">
-            <NavBar session={session} />
+    <Navbar expand="lg" bg="white">
+      <Container>
+        <Navbar.Brand href="/">
+          <div
+            className={`${styles['navbar-brand']} text-primary font-weight-bold`}
+          >
+            C0D3
           </div>
-        </div>
-        {renderButtons()}
-      </div>
-    </nav>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav" className="text-center">
+          <Nav className="m-auto">
+            <NavBar session={session} />
+          </Nav>
+          {renderButtons()}
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   )
 }
 

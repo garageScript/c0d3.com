@@ -3,21 +3,67 @@
 exports[`MdInput Component Should change value of testBtnOnClick upon click 1`] = `
 <div>
   <div
-    class="dropdown"
+    class="d-none d-lg-block"
   >
-    <button
-      aria-expanded="false"
-      aria-haspopup="true"
-      class="dropdown-toggle btn btn-none"
-      type="button"
-    >
-      Admin
-    </button>
     <div
-      aria-labelledby=""
-      class="dropdown-menu"
-      style="position: absolute; top: 0px; left: 0px; opacity: 0; pointer-events: none; margin: 0px;"
-      x-placement="bottom-start"
+      class="dropdown"
+    >
+      <button
+        aria-expanded="false"
+        aria-haspopup="true"
+        class="dropdown-toggle title title-none"
+        type="button"
+      >
+        Admin
+      </button>
+      <div
+        aria-labelledby=""
+        class="dropdown-menu"
+        style="position: absolute; top: 0px; left: 0px; opacity: 0; pointer-events: none; margin: 0px;"
+        x-placement="bottom-start"
+      >
+        <div
+          class="text-center text-xl-left py-2 px-4"
+        >
+          <button
+            class="dropdown-item"
+            href="/admin/lessons"
+          >
+            Lessons
+          </button>
+        </div>
+        <div
+          class="dropdown-divider"
+          role="separator"
+        />
+        <div
+          class="text-center text-xl-left py-2 px-4"
+        >
+          <button
+            class="dropdown-item"
+            href="/admin/users"
+          >
+            Users
+          </button>
+        </div>
+        <div
+          class="text-center text-xl-left py-2 px-4"
+        >
+          <button
+            class="dropdown-item"
+            href="/admin/alerts"
+          >
+            Alerts
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="d-lg-none"
+  >
+    <div
+      class="text-center text-xl-left py-2 px-4"
     >
       <button
         class="dropdown-item"
@@ -25,16 +71,24 @@ exports[`MdInput Component Should change value of testBtnOnClick upon click 1`] 
       >
         Lessons
       </button>
-      <div
-        class="dropdown-divider"
-        role="separator"
-      />
+    </div>
+    <div
+      class="dropdown-divider"
+      role="separator"
+    />
+    <div
+      class="text-center text-xl-left py-2 px-4"
+    >
       <button
         class="dropdown-item"
         href="/admin/users"
       >
         Users
       </button>
+    </div>
+    <div
+      class="text-center text-xl-left py-2 px-4"
+    >
       <button
         class="dropdown-item"
         href="/admin/alerts"
@@ -49,16 +103,58 @@ exports[`MdInput Component Should change value of testBtnOnClick upon click 1`] 
 exports[`MdInput Component Should render divider when an item is null 1`] = `
 <div>
   <div
-    class="dropdown"
+    class="d-none d-lg-block"
   >
-    <button
-      aria-expanded="false"
-      aria-haspopup="true"
-      class="dropdown-toggle btn btn-none"
-      type="button"
+    <div
+      class="dropdown"
     >
-      Admin
-    </button>
+      <button
+        aria-expanded="false"
+        aria-haspopup="true"
+        class="dropdown-toggle title title-none"
+        type="button"
+      >
+        Admin
+      </button>
+    </div>
+  </div>
+  <div
+    class="d-lg-none"
+  >
+    <div
+      class="text-center text-xl-left py-2 px-4"
+    >
+      <button
+        class="dropdown-item"
+        href="/admin/lessons"
+      >
+        Lessons
+      </button>
+    </div>
+    <div
+      class="dropdown-divider"
+      role="separator"
+    />
+    <div
+      class="text-center text-xl-left py-2 px-4"
+    >
+      <button
+        class="dropdown-item"
+        href="/admin/users"
+      >
+        Users
+      </button>
+    </div>
+    <div
+      class="text-center text-xl-left py-2 px-4"
+    >
+      <button
+        class="dropdown-item"
+        href="/admin/alerts"
+      >
+        Alerts
+      </button>
+    </div>
   </div>
 </div>
 `;
