@@ -1,4 +1,5 @@
-export default [
+import { LessonMentorsQuery } from '../graphql'
+const dummyMentorsData: LessonMentorsQuery['getLessonMentors'] = [
   {
     username:
       'MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM',
@@ -20,3 +21,5 @@ export default [
   { username: '32bitsMin', name: 'long int', id: 4 },
   { username: '16bitsMin', name: 'signed int', id: 4 }
 ]
+
+export default dummyMentorsData

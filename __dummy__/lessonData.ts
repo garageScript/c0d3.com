@@ -1,4 +1,6 @@
-export default [
+import { Lesson } from '../graphql'
+
+const dummyLessonsData: Lesson[] = [
   {
     id: 5,
     title: 'Foundations of JavaScript',
@@ -901,3 +903,5 @@ export default [
     chatUrl: null
   }
 ]
+
+export default dummyLessonsData

@@ -1,4 +1,5 @@
-export default {
+import { Session } from '../graphql'
+const dummySessionData: Session = {
   user: {
     id: 1,
     username: 'fakeusername',
@@ -9,3 +10,5 @@ export default {
   submissions: [],
   lessonStatus: []
 }
+
+export default dummySessionData

@@ -32,7 +32,7 @@ const getAppMock = {
 const removeAlertMock = {
   request: {
     query: REMOVE_ALERT,
-    variables: { id: '0' }
+    variables: { id: 0 }
   },
   result: {
     data: {
