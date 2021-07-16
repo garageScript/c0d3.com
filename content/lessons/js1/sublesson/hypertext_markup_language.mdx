@@ -1,0 +1,799 @@
+---
+title: HyperText Markup Language
+order: 1
+---
+
+# Table of Contents
+
+# Preflight
+
+This section contains a few questions for you to answer to make sure you
+understand the concepts from the previous chapter.
+
+Before proceeding with the exercises, create a new branch in git
+
+- `git checkout -b JS1` where JS1 is the new branch name
+
+For the first 4 exercises, write a line of code that uses each function. Note
+that not all these functions exist, so you don’t need to try running them on
+your computer. Here's an example:
+
+**Example**
+
+Run the `includes` function, which takes in 1 argument, a string.
+
+<Spoiler>
+
+```js
+includes('hello')
+```
+
+</Spoiler>
+
+**Exercises**
+
+1. Run the `map` function, which takes in 1 argument, a function.
+
+<Spoiler>
+
+```jsx
+map(() => {})
+```
+
+</Spoiler>
+
+2. Run the `setTimeout` function, which takes in 2 arguments, a function and a
+   number.
+
+<Spoiler>
+
+```jsx
+setTimeout(() => {}, 500)
+```
+
+</Spoiler>
+
+3. Run the `app.get` function, which takes in 2 arguments, a string and a
+   function.
+
+<Spoiler>
+
+```jsx
+app.get('bonjour', () => {})
+```
+
+</Spoiler>
+
+4. Run the `fs.writeFile` function, which takes in 3 arguments: a string, a
+   string, and a function.
+
+<Spoiler>
+
+```jsx
+fs.writeFile('hola', 'aloha', () => {})
+```
+
+</Spoiler>
+
+5. Solve the following:
+
+   ```jsx
+   const lannister = input => {
+     return input
+   }
+   const stark = () => {
+     return 99
+   }
+   let res = stark // what is res?
+
+   res = lannister(stark) // what is res?
+
+   res = lannister(stark()) // what is res?
+   ```
+
+<Spoiler>
+
+```jsx
+const lannister = input => {
+  return input
+}
+const stark = () => {
+  return 99
+}
+let res = stark // function: stark
+
+res = lannister(stark) // function: stark
+
+res = lannister(stark()) // 99
+```
+
+</Spoiler>
+
+6. Solve the following:
+
+   ```jsx
+   const baratheon = run_me => {
+     return run_me() + 5
+   }
+   const tyrell = () => {
+     return 10
+   }
+
+   let res = tyrell // what is res?
+
+   res = baratheon(tyrell) // what is res?
+
+   res = baratheon(() => {
+     return 92
+   }, 3) // what is res?
+
+   res = baratheon(() => {
+     const b = 95
+     tyrell()
+   }) // what is res?
+   ```
+
+<Spoiler>
+
+```jsx
+const baratheon = run_me => {
+  return run_me() + 5
+}
+const tyrell = () => {
+  return 10
+}
+let res = tyrell // res is a function: tyrell
+
+res = baratheon(tyrell) // res has 15
+
+res = baratheon(() => {
+  return 92
+}, 3) // res has 97
+// The second argument is designed to trick you.
+// baratheon does not care about any other argument other
+//   than the first one.
+
+res = baratheon(() => {
+  const b = 95
+  tyrell()
+}) // res has NaN (Not a Number)
+// (undefined + 5 will be shown as NaN, Not a Number)
+// BEWARE! This error happens all the time, so be careful.
+// If a function has no return value, it will return undefined
+// no matter what the functions inside it returned.
+```
+
+</Spoiler>
+
+How did you do? If you had any issues solving any of the Preflight questions,
+please review the previous lesson by doing all the exercises and challenges
+again. When you're confident you have a strong foundation, let's move on!
+
+> In case you feel frustrated because it seems like we are deliberately putting
+> in trick questions... Truth is, we are. The reason why we made the exercises
+> so tricky that you have to step through it line by line is because when you
+> work as an engineer, you will frequently come across bugs / other people's
+> code that will force you to go through code line by line. This skill is a big
+> part of engineering and many students are not prepared for this if they only
+> focus on learning.
+
+# Overview
+
+In the last lesson, you learned the fundamental building blocks of JavaScript.
+
+This lesson will build on the foundations covered in the previous lesson and
+will introduce you to some core concepts of JavaScript (which are heavily tested
+in technical interviews!) in two parts:
+
+The first part is an introduction to web development so you can put your
+JavaScript knowledge to practical use and build simple web pages. You will be
+learning **HTML** (HyperText Markup Language) and how JavaScript comes into play
+on the web.
+
+The second part covers **closure**, **recursion**, and the **asynchronous**
+nature of JavaScript.
+
+Like the previous lesson, make sure you follow along by running the example code
+yourself. If the concept is new to you, do not copy and paste. You will learn
+better if you type out the code yourself.
+
+# HTML
+
+This section will teach you how to build a web page using **HTML**, which is
+simply text written a certain way so your browser (eg. Firefox, Chrome, Safari,
+etc.) can read it as a **set of instructions.**
+
+In HTML, we call each instruction an HTML tag**.**
+
+Tags consist of the tag name surrounded by angle brackets, namely the < and >
+characters.
+
+e.g. `<h1>` is a tag with tag name h1
+
+Some tags do not require a closing tag or content:
+
+```jsx
+<input type="text" />
+<br />
+```
+
+The `input` tag tells the browser to display an input box that the user can type
+into.
+
+So if you see a tag without closing tags, it is probably okay. This tag is
+called a self-closing tag, which ends with a `/>` instead of just `>`. You do
+not need to remember which tags should be closed or not, simply close all your
+tags and you will have no issues.
+
+Here's an example of how you would write an `h1` tag.
+
+`<h1> This is header line 1 </h1>`
+
+Both `<h1>` and `</h1>` are HTML tags: `<h1>` is called the opening tag whereas
+`</h1>` is called the closing tag.
+
+`h1` is the **tagname**
+
+Note: **h1** is a header tag and is usually the title of the HTML page. It has
+the largest text on the page. There are 6 header tags: h1 to h6.
+
+```html
+<h1>Welcome!</h1>
+```
+
+# How To Follow Along
+
+First, create a file with your favorite code editor (Vim, VSCode, Atom, etc.)
+and make sure the file name ends with a `.html` (eg. `index.html`). Write the
+following example into your file and save:
+
+```html
+<h1>Welcome!</h1>
+<input />
+```
+
+When you open the file (double click or right click → open with browser), you
+should see a _Welcome!_ heading and an _input_ box. The large _Welcome!_ text
+and the _input_ box that the browser displays from the `h1` and `input`
+elements.
+
+> Tips: If you are using VSCode, save the file and then right click on the code
+> and choose **View in Browser**. The default browser will be launched.
+
+An HTML element is everything from the opening tag to the closing tag:
+
+`<tagname> Content </tagname>`
+
+> Make sure you understand the difference between **tags** (`<h1>`) and
+> **elements** (the instructions that are displayed to the user).
+
+When you open an HTML file with a browser, the browser reads and interprets the
+HTML instructions (elements) and then displays the resulting web page.
+
+# HTML Example
+
+Here is an example of 7 HTML tags.
+
+Create a new HTML file, call it `challenge1.html`
+
+```html
+<h1>Welcome!</h1>
+<h2>JS1</h2>
+<h5>Challenge 1</h5>
+<input type="text" />
+<input type="text" />
+<button>Submit</button>
+<hr />
+```
+
+Save the file and open it in your browser, and try to match each tag instruction
+with its corresponding element!
+
+(Note that we're getting you started on a later exercise, in which you will
+write HTML instructions for Challenge 1 from the previous lesson.)
+
+FYI: `<hr />` creates a horizontal line.
+
+Your browser should render the following elements onto your page:
+
+<Image
+  src="/assets/curriculum/lessons/js1/welcome.png"
+  height="200"
+  width="759"
+/>
+
+<div></div>
+
+# Attributes
+
+Notice that in the above example, `input` tags are different from the rest. They
+have `type="text"`. These are called **attributes.**
+
+> Attributes provide more information about the tag to the browser.
+
+_For the example above, try changing the value of the input tag's `type`
+attribute from `text` to `password`, `number`, or `file` and see what happens
+(make sure to type into the input tag)._
+
+Tags can have multiple attributes and they are written in this format:
+
+```html
+<tagName attribute1="attribute1 value" attribute2="attribute2 value" ...>
+  content
+</tagName>
+```
+
+For example,
+
+```html
+<input class="c1input1" type="text" />
+```
+
+The `input` tag has 2 attributes, `class` and `type`.
+
+- `type` tells the browser what type of input box to display (number, text,
+  file, password etc.).
+- The `class` attribute will be covered in the section below.
+
+If you want to learn more details about a certain tag or element, information is
+readily available on the Internet.
+
+For example, if you want to find out more about the `input` tag and its
+attributes, open your favorite search engine and search `html input tag`. The
+search results on the first page should take you to documentation with
+everything you need to know about `input`.
+
+Examples of reputable sources are
+[w3schools.com](https://www.w3schools.com/tags/tag_input.asp),
+[mozilla.org](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input)
+
+# Browser JavaScript
+
+So far the web pages we've written have been **static**—the browser renders
+(displays) the page once, then doesn’t interact with us after that. The sites
+you’re used to probably have more interesting behavior. This is often done with
+JavaScript. JavaScript is used to manipulate the HTML elements on a page _after_
+the page has been rendered, depending on lots of factors such as what the user
+does, how much time has gone by, or even information the page receives from
+other websites.
+
+This is called **dynamic** behavior. To get started, we'll add a `<script>` tag,
+which tells the browser to treat the text inside as JavaScript and run the code.
+
+Example:
+
+```jsx
+<h1>Welcome!</h1>
+<h2>JS1</h2>
+<h5>Challenge 1</h5>
+<input type="text" />
+<input type="text" />
+<button>Submit</button>
+<hr/>
+<script>
+alert("Hello")
+</script>
+```
+
+When you put the above HTML into your `challenge1.html` file and reload it in
+your browser, you will notice a popup. This popup is created when the browser
+runs the `alert` JavaScript function.
+
+Note: The `alert()` function or method displays an alert window (or popup) with
+a specified message and an OK button.
+
+In addition to `alert`, the browser also provides you with many other cool
+functions that you can run (covered in the next section).
+
+What would happen if you ran the `alert` function twice, like in the example
+below?
+
+```jsx
+<script>alert("Zero") alert("Waste!") // What will happen?</script>
+```
+
+<Spoiler>
+  <p>Two alert windows are displayed</p> <p>1. "Zero"</p> <p> 2. "Waste!"</p>
+</Spoiler>
+
+<BlockQuote>
+
+<div>
+
+At this point, you should know that there are 2 ways to run JavaScript:
+
+- Run the JavaScript in the browser using (`<script>` tag).
+
+- Or run the JavaScript directly on your computer using `node`.
+
+</div>
+
+</BlockQuote>
+
+# Getting HTML Elements
+
+In the previous example we learned how to use the browser's `alert` function. As
+we keep going, follow along by editing your `challenge1.html` file.
+
+`document.querySelector` is another common JavaScript method (or function)
+supported by most browsers. It takes a string argument and returns the first
+element that matches the string:
+
+```html
+<h1>Welcome!</h1>
+<h2>JS0</h2>
+<h5>Challenge 1</h5>
+<input type="text" />
+<input type="text" />
+<button>Submit</button>
+<hr />
+<script>
+  const jon = document.querySelector('input') // jon is the first input element
+</script>
+```
+
+In the example above, we ran the `document.querySelector` method (or function)
+and passed in `'input'` as the argument. This method searches through all the
+elements on the page and returns the first element that matches the specified
+selectors (in this case an input element).
+
+There are 2 input elements—how do you get the second input element? or third?
+
+The simplest approach is to give each `input` a `class` attribute.
+
+When we run the `document.querySelector` method, we pass in `.` followed by the
+element's `class` name as a string argument. This argument tells the function to
+look up elements by their class attribute (aka **class name**). Note that the
+`.` in front of the class name tells the function to look for elements by class
+name rather than by element like we did before.
+
+```html
+<h1>Welcome!</h1>
+<h2>JS0</h2>
+<h5>Challenge 1</h5>
+<input class="input1" type="text" />
+<input class="input2" type="text" />
+<button class="submit1">Submit</button>
+<hr />
+<script>
+  const element1 = document.querySelector('.input1') // what is element1?
+  const element2 = document.querySelector('.input2') // what is element2?
+  const button1 = document.querySelector('.submit1') // what is button1?
+</script>
+```
+
+<Spoiler>
+
+```jsx
+const element1 = document.querySelector('.input1') // 1st input element
+const element2 = document.querySelector('.input2') // 2nd input element
+const button1 = document.querySelector('.submit1') // button element
+```
+
+</Spoiler>
+
+An element can have more than one class. To give an element multiple classes,
+add a space between each class name. In the example below, `input` element has 3
+classes: `input2`, `input`, and `hello` .
+
+```jsx
+<input class="input2 input hello" type="text" />
+<script>
+const element1 = document.querySelector('.input2')
+const element2 = document.querySelector('.input')
+const element3 = document.querySelector('.hello')
+
+const isOneTwoSame = element1 === element2   // what is isOneTwoSame?
+const isOneThreeSame = element1 === element3 // what is isOneThreeSame?
+const isTwoThreeSame = element2 === element3 // what is isTwoThreeSame?
+
+// You can also select elements with multiple classes
+const isSame = element1 === document.querySelector('.hello.input') // what is isSame?
+</script>
+```
+
+<Spoiler>
+
+```jsx
+<input class="input2 input hello" type="text" />
+<script>
+const element1 = document.querySelector('.input2')
+const element2 = document.querySelector('.input')
+const element3 = document.querySelector('.hello')
+
+// element1, element2, element3 variable are all the same elements
+const isOneTwoSame = element1 === element2   // true
+const isOneThreeSame = element1 === element3 // true
+const isTwoThreeSame = element2 === element3 // true
+
+// You can also select elements with multiple classes
+const isSame = element1 === document.querySelector('.hello.input') // true
+</script>
+```
+
+</Spoiler>
+
+## Element Properties
+
+Every HTML element has properties. This is sort of like attributes in HTML, but
+properties are a **JavaScript** concept, and they tell the browser what
+**dynamic** behavior to give the elements. Now that you've learned how to get
+elements from the page, you can do some really fun stuff using their properties.
+In this section we will go over two common properties, **onclick** and
+**value**, and how to use them.
+
+## onClick event
+
+Whenever you click on an element, the browser will try to run the element's
+`onclick` event function. Therefore, by assigning a function to an element's
+onclick event property, we can do something whenever the element is clicked.
+
+In the following example, when you click on the button a popup will show up. If
+you want to try it out, edit the `index.html` page you created in the beginning,
+or start a new one.
+
+```html
+<button class="submit1">Click Me</button>
+<script>
+  // make sure you put this JavaScript code inside the script tag!
+  const button1 = document.querySelector('.submit1')
+  button1.onclick = () => {
+    alert('Ouch!') // alert will display a popup when button is clicked
+  }
+</script>
+```
+
+**Exercise:** Create an HTML page with a button that reads 'House Lannister'.
+When you click on the button, alert `"Winter is coming"` two times.
+[Live example](https://songz.c0d3.com/js1/lanister.html)
+
+<Spoiler>
+
+Add a button and script tag.
+
+Select the button element, and set the button's `onclick` property to a
+function.
+
+When the button is clicked (onclick event is run), run the alert function twice.
+
+```html
+<button class="winter">House Lannister</button>
+<hr />
+<script>
+  const button1 = document.querySelector('.winter')
+  button1.onclick = () => {
+    alert('Winter is coming')
+    alert('Winter is coming')
+  }
+</script>
+```
+
+</Spoiler>
+
+## Value property
+
+Input elements have a `value` property that you can use to get the value of
+whatever the user typed in.
+
+Here is an example of how to show what the user has typed in the first input
+element. See if you can add this to your `challenge1.html` file.
+
+```jsx
+const inputButton = document.querySelector('.submit1')
+const firstInput = document.querySelector('.input1')
+inputButton.onclick = () => {
+  // this function runs when user clicks on the button
+  alert(firstInput.value)
+}
+```
+
+**Note:** You may notice that the input value is a string. To change it into a
+number, you can add an unary operator `+` in front of the string:
+`alert(+firstInput.value)`.
+
+```jsx
+const inputButton = document.querySelector('.submit1')
+const firstInput = document.querySelector('.input1')
+const secondInput = document.querySelector('.input2')
+inputButton.onclick = () => {
+  // this function runs when user clicks on the button
+  const firstInputValue = +firstInput.value
+  const secondInputValue = +secondInput.value
+  alert(firstInputValue + secondInputValue)
+}
+```
+
+**Note**: You can also set or change the input element's value! Here is a
+example: (remember that `=` means the left side stores the value of the right
+side)
+
+```jsx
+const inputButton = document.querySelector('.submit1')
+const firstInput = document.querySelector('.input1')
+inputButton.onclick = () => {
+  // this function runs when user clicks on the button
+  const val = +firstInput.value
+  firstInput.value = val > 10
+}
+```
+
+# Exercises
+
+For each of these exercises, implement and run your solution function from your
+submitted challenges in JS0!
+
+<twoColumns>
+
+<Image
+  src="/assets/curriculum/lessons/js1/exercises.png"
+  height="397"
+  width="620"
+/>
+To view the solutions to each numbered exercise, click the link, right-click anywhere
+on the page, and select `View Source or view page source`
+
+</twoColumns>
+
+**Debugging** - If your page is not doing what you want it to do, you can look
+at the `console`. This is where the browser will try to tell you where and what
+the error is if you've written your code in a way it can't understand.
+[Read this](/docs/setup#running-html-codes-on-the-browser) to learn how to open
+the browser's console.
+
+To solve this - First write down the steps. Compare your steps with the answer.
+Then write the code.
+
+> Get into the habit of thinking out what you will be doing completely before
+> writing any code.
+
+1. [Create an HTML page](https://songz.c0d3.com/js0/2.html) with an input box
+   and a button. When you click on the button, if the input value is divisible
+   by 2, set the value (contents) of the input box to 0. Otherwise, do nothing.
+
+<Spoiler>
+
+1. Add input and button tags
+2. When you click on the button, your `onclick` function should do this:
+   1. Get value from input element
+   2. If the value is even, change the input element's value property to `0`
+
+</Spoiler>
+
+2. [Create a UI (user interface) for JS0 challenge 1](https://songz.c0d3.com/js0/3.html) -
+   Add 2 input boxes and a button. When you click on the button, use alert to
+   display the sum of the values in the 2 input boxes. **Hint:** We've been
+   working on this in the examples!
+
+<Spoiler>
+
+1. Add 2 input and button tags. You may want to give them class attributes.
+2. Get the elements.
+3. When you click on the button, `onclick` function should do this:
+   - Get values from input elements (make sure to convert them to numbers!)
+   - Use alert to display the sum of value1 + value2
+
+</Spoiler>
+
+3. [Create a UI for JS1 challenge 2](https://songz.c0d3.com/js0/4.html) - Add an
+   input box and a button. When you click on the button, use alert to display
+   "Big" if the input number is greater than 5. Otherwise, nothing happens.
+
+<Spoiler>
+
+1. Add input and button tags. Select the elements.
+2. When you click on the button, `onclick` function should do this:
+   - Get the value from input element (make sure to convert it to a number)
+   - if the number is greater than 5, run the `alert` function!
+
+</Spoiler>
+
+4. [Create a UI for JS0 challenge 7](https://songz.c0d3.com/js0/5.html) - Add 2
+   input boxes and a button. When you click on the button, use alert to display
+   true if the sum of the 2 inputs is greater than 10. Otherwise, display false.
+
+<Spoiler>
+
+1. Add 2 input and button tags. You may want to give them class attributes.
+2. Get the elements
+3. When you click on the button, `onclick` function should do this:
+   - Get values from input elements (make sure to convert them to numbers!)
+   - Run alert and pass in: sum of the values is greater than 10 → This will be
+     a boolean
+
+</Spoiler>
+
+5. [Create a UI for JS0 challenge 8](https://songz.c0d3.com/js0/6.html) - Add 2
+   input boxes and 2 buttons (call them 'Generate' and 'Submit'). When the
+   'Generate' button is clicked, the function solution (for challenge 8) runs
+   and a function is returned. When 'Submit' button is clicked, run the returned
+   function and use alert to display its result.
+
+<Spoiler name = "Hint">
+Recall that challenge 8 takes in 2 numbers, and returns a function that returns the sum of the 2 numbers when the function is executed.
+
+Example
+
+```jsx
+const a = solution(5, 6) // a is a function, and a() will return 11
+```
+
+Your 2 buttons will each have different `onclick` behavior. The Generate
+button's `onclick` function should run the function solution and store the
+returned function in a variable that can be used later.
+
+</Spoiler>
+
+<Spoiler name = "Overview">
+
+1. (look at hint above) Create a `solution` function that takes in 2 numbers and
+   returns a function
+2. Create a variable (ie `runFun` ) - We will use this to store the result of
+   the `solution` function.
+3. Add 2 input and 2 button tags. You may want to give them class attributes.
+4. Get the elements
+5. When the generate button is clicked, the `onclick` function should do this:
+   - get 2 values from input elements (make sure to convert them to numbers!)
+   - Run `solution` function and pass in the 2 values as arguments. Store the
+     returned value into `runFun`
+6. When the submit button is clicked, the `onclick` function should do this:
+   - Run the `runFun` function. Alert the result.
+
+</Spoiler>
+<Spoiler name = "Debrief">
+The solutions have been similar up till now; they all got a result from running a function and displayed it immediately. This time, we had to get a result and store it until another button was clicked. The browser will store and remember JavaScript variables until the page is reloaded—but they have to be declared or defined in the right place!
+
+View the source for the exercise. Notice how we inserted `let fun1` in the
+middle of the `<script>`, right before defining gb's `onclick` function. This
+declares the `fun1` variable (it's OK that we didn't assign it any value) as a
+global variable since the declaration is outside of the `onclick` function and
+the variable fun1 will still exist after that function has completed running.
+What would happen if you only had `let fun1 = solution(+v1, +v2)` inside the
+function?
+
+</Spoiler>
+
+6. [Create a UI for JS0 challenge 9](https://songz.c0d3.com/js0/7.html) - Create
+   2 input boxes and one button (call it 'Generate'). When the Generate button
+   is clicked, run the function solution (for challenge 9) and a function is
+   returned. Add a 3rd input box and another button (call it 'Submit'). When the
+   Submit button is clicked, run the returned function with the third input and
+   alert the result. - Overview - Help
+
+<Spoiler name = 'Overview'>
+
+1. (Challenge 9) Create a `solution` function that takes in 2 numbers and
+   returns a function
+2. Create a variable (ie `runFun` ) - We will use this to store the result of
+   the `solution` function.
+3. Create 3 input and 2 button tags. You may want to give them class attributes.
+4. Get the elements
+5. When the generate button is clicked, the `onclick` function should do this:
+   - get 2 values from input elements (make sure to convert them to numbers!)
+   - Run `solution` function and pass in the 2 values as arguments. Store the
+     returned value into `runFun`
+6. When the submit button is clicked, the `onclick` function should do this:
+   - Get the value from the 3rd input element (make sure to convert it to a
+     number)
+   - Run the `runFun` function and pass in the value as an argument. Alert the
+     result.
+
+</Spoiler>
+
+<Spoiler name = "Help">
+For Challenge 9, write a function that takes in 2 numbers, and returns another function that takes in a number and returns the sum of all 3 numbers when called.
+
+Example
+
+```jsx
+const a = solution(1, 2) // a is a function
+// a(1) returns 4 because 1 + 2 + 1 = 4
+// a(5) returns 8 because 1 + 2 + 5 = 8
+```
+
+</Spoiler>
+
+<ChallengeBar
+  href="/curriculum/2"
+  description="Complete HTML challenges (TO-DO add HTML challenges)"
+  title="Master your skill by solving challenges"
+/>

@@ -1,0 +1,2057 @@
+---
+title: Interactive Elements
+order: 1
+---
+
+# Table of Contents
+
+# Test Driven Development (TDD)
+
+Usually the first section contains a few questions for you to answer to make
+sure you understand the concepts from the previous chapter. Starting from this
+chapter, there will be no more preflight questions. At this point, you should be
+mature enough to review previous concepts frequently. Instead, you'll warm up
+this time by learning more about testing and writing some functions that you'll
+use later.
+
+Because testing your code is so important, it has become common to practice
+**Test Driven Development (TDD)**.
+
+TDD is the concept of writing all your tests first and then writing your code.
+Writing with tests in mind helps you write code faster, more efficiently, and
+more cleanly by giving you a clear target of what you're developing towards.
+Additionally, it can be easier to write a more complete set of tests before
+you've started coding, because your mind is still focused on what the program
+_should_ do, not what it _can_ do.
+
+So far we've been providing tests for each exercise. Starting with this chapter
+you'll be writing your own tests! This section will walk you through the process
+of TDD for a few functions.
+
+<Spoiler name="If you need to make a new npm package">
+
+1. Create a new folder called `testDemo` and go into the new folder:
+
+   ```jsx
+   mkdir testDemo
+   cd testDemo
+   ```
+
+2. Initialize the folder as a new project by typing `npm init`. Answer the setup
+   questions or press `Enter` to accept the defaults.
+   - After your project is initialized, a `package.json` file will be created
+
+</Spoiler>
+
+1. Create a test file called `helpers.test.js`.
+2. Write the test code. You'll recognize the functions from the tests we've
+   written for you.
+
+   ```jsx
+   const helpers = require('./helpers')
+   /*
+    When we run our file with the jest framework, jest provides us
+       with a few functions. The function our tests will go inside
+       is describe, which takes in 2 arguments (string and function).
+   */
+   // First argument describes the function you are testing;
+   //   second argument is a function that contains all the tests.
+   describe('sumAll function', () => {
+     // For each test, you need to run the `it` function,
+     //    which takes in 2 arguments (string and function).
+
+     // First argument describes the test;
+     //    second argument is a function that runs the test.
+     it('should add numbers', () => {
+       // Run the function we want to test
+       const result = helpers.sumAll([9, 8, 7])
+
+       // Pass the result from the function into expect
+       // expect returns an object with a toEqual key;
+       //    pass what you expect into the `toEqual` function.
+       expect(result).toEqual(24)
+     })
+   })
+   ```
+
+   **Exercise: Write two more tests.** During interviews or at work try to have
+   at least 3 examples in each test.
+
+<Spoiler>
+
+```jsx
+const helpers = require('./helpers')
+
+describe('sumAll function', () => {
+  it('should add numbers', () => {
+    const result = helpers.sumAll([9, 8, 7])
+    expect(result).toEqual(24)
+  })
+
+  it('should add strings', () => {
+    const result = helpers.sumAll(['hello', 'happy', 'world'])
+    expect(result).toEqual('hellohappyworld')
+  })
+
+  it('should not change original array', () => {
+    const original = ['hello', 'happy', 'world']
+    const result = helpers.sumAll(original)
+    expect(result).toEqual('hellohappyworld')
+    expect(original).toEqual(['hello', 'happy', 'world'])
+  })
+
+  it('should return 0 if empty array', () => {
+    const result = helpers.sumAll([])
+    expect(result).toEqual(0) // This is arbitrary.
+    // You could have picked anything to address the empty array case.
+  })
+})
+```
+
+</Spoiler>
+
+3. Like you learned in JS2, create a solution file called `helpers.js` that
+   exports an object:
+
+   ```jsx
+   const allFuns = {}
+
+   allFuns.sumAll = arr => {
+     return 0
+   }
+
+   module.exports = allFuns
+   ```
+
+4. Now that you have all the files set up, you can run your test! You should see
+   some failures because your function is not yet returning the correct result.
+   As your code moves toward completion, you'll see more and more tests pass.
+5. **Exercise:** Write the function so that all the tests pass.
+
+<Spoiler>
+
+```jsx
+const allFuns = {}
+
+allFuns.sumAll = arr => {
+  if (!arr.length) {
+    return 0
+  }
+
+  const newArr = [...arr] // [...arr] creates a new array
+  const start = newArr.shift()
+  return newArr.reduce((acc, e) => {
+    return acc + e
+  }, start)
+}
+
+module.exports = allFuns
+```
+
+</Spoiler>
+
+<Spoiler name= "(Optional reading) Components of a testing framework">
+
+A testing framework is made up of the following components:
+
+- A **runner** to run the tests (e.g. Jest)
+- A **library** that gives you helper functions like `expect`, `it`, and
+  `describe` (e.g. Mocha, Chai, etc.)
+- A **reporter** that displays results, like how many tests passed or failed
+
+`Jest` is very popular because it has all of the above (and more) combined into
+one platform so it is easy to write tests for your function.
+
+</Spoiler>
+
+> **TDD** is a process where you write the test first, then write the function,
+> like the example above. TDD is very common practice among developers.
+
+It is best practice to have each function you want to test contained in its own
+`describe` code block. If you wanted to test another function (like
+`findLargest`), you can add it onto your test file:
+
+```jsx
+const helpers = require('./helpers')
+
+describe('sumAll function', () => {
+   ...
+})
+
+describe('findLargest number', () => {
+  it('should find the largest number from array with all negatives', () => {
+		const result = helpers.findLargest([-10, -1, -19])
+    expect(result).toEqual(-1)
+  })
+  ...
+})
+```
+
+**Exercise:** Write the `findLargest` function in `helpers.js`
+
+<Spoiler>
+
+```jsx
+const allFuns = {}
+
+allFuns.sumAll = (orig) => {
+  ...
+}
+
+allFuns.findLargest = (arr) => {
+  if (!arr.length) {
+    return null
+  }
+  return arr.reduce((acc, e) => {
+    if (e > acc) {
+      return e
+    }
+    return acc
+  }, arr[0])
+}
+
+module.exports = allFuns
+```
+
+</Spoiler>
+
+### Exercises
+
+Create a new project and write the following tests and functions into files
+called `lib.test.js` and `lib.js`. Make sure you are solving each problem by
+following the TDD approach:
+
+1. Add at least 3 tests for the first function to your test file, `lib.test.js`
+2. Write the function in your `lib.js` file.
+3. Repeat the above steps for the second function and then the third.
+
+Ready? Here are the exercises:
+
+1. Write a function called `lib.tokenize`. Given a string, split it into words
+   and return an object where each word is a key (capitalized) with value 1.
+   Ignore strings shorter than 3 characters and numbers.
+
+   ```jsx
+   const obj1 = lib.tokenize('hello world')
+   // obj1 is { HELLO: 1, WORLD: 1 }
+
+   const obj2 = lib.tokenize('I like (Korean)')
+   // obj2 is { 'LIKE': 1, '(KOREAN)': 1 }
+
+   const obj3 = lib.tokenize('')
+   // obj3 is {}
+
+   const obj4 = lib.tokenize('00')
+   // obj4 is {}
+   ```
+
+<Spoiler name="How to check if a string is a number">
+
+In the test case below, the `"2000"` in `"hello world 2000"` should be detected
+as a number and skipped. The way we checked if something is a number in the
+previous lesson won't work for this. You can use JavaScript's built-in
+`parseInt` function, though, which will try to convert the string to a number
+and return `NaN` if it cannot.
+
+Then, you can call `Number.isInteger( the number from parseInt )` to check if
+it's a number or not.
+
+Alternatively, you can use the `+` operator and a check for zero:
+
+```jsx
+const a = 'hello'
+if (+a || a === 0) {
+  console.log(`That was a number`)
+  // +a tries to convert a to a number. If this isn't possible,
+  //     +a will be NaN: Not a Number (falsey)
+  // The only other falsey number we know is 0,
+  //     so if +a is truthy, or a is 0, a is a number
+}
+```
+
+</Spoiler>
+
+<Spoiler>
+
+```jsx
+// lib.test.js
+const lib = require('./lib.js')
+
+describe('tokenize', () => {
+  it('should tokenize "hello world 2000"', () => {
+    const obj = lib.tokenize('hello world 2000')
+    expect(obj).toEqual({ HELLO: 1, WORLD: 1 })
+  })
+  it('should tokenize "I like (Korean)"', () => {
+    const obj = lib.tokenize('I like (Korean)')
+    expect(obj).toEqual({ LIKE: 1, '(KOREAN)': 1 })
+  })
+  it('should tokenize ""', () => {
+    const obj = lib.tokenize('')
+    expect(obj).toEqual({})
+  })
+  it('should tokenize "00" to an empty object', () => {
+    const obj = lib.tokenize('00')
+    expect(obj).toEqual({})
+  })
+})
+```
+
+```jsx
+// lib.js
+const fn = {}
+fn.tokenize = (str = '') => {
+  const tokens = str.split(' ')
+  return tokens.reduce((acc, e) => {
+    const num = parseInt(e)
+    if (e.length > 2 && !Number.isInteger(num)) {
+      acc[e.toUpperCase()] = 1
+    }
+    return acc
+  }, {})
+}
+module.exports = fn
+```
+
+</Spoiler>
+
+2. Write a function called `lib.makeTrainingData`. Given an object (keys are
+   item names and values are group names), return an array of objects. Each
+   object has an `input` key and an `output` key, and their values are the
+   tokenized key and value from the input object, respectively.
+
+   ```jsx
+   const result = lib.makeTrainingData({})
+   /* result is [] */
+
+   const result2 = lib.makeTrainingData({
+     'beef boneless 100': 'MEAT'
+   })
+   /* result2 is 
+     [{
+         input: {
+           BEEF: 1,
+           BONELESS: 1
+         },
+         output: {
+           MEAT: 1
+         }
+     }]
+   */
+
+   const result3 = lib.makeTrainingData({
+     'beef boneless 100': 'MEAT',
+     'pink apples': 'VEGGIE'
+   })
+   /* result3 is 
+   	[{
+       input: {
+         BEEF: 1,
+         BONELESS: 1
+       },
+       output: {
+         MEAT: 1
+       }
+     }, {
+       input: {
+         PINK: 1,
+         APPLES: 1
+       },
+       output: {
+         VEGGIE: 1
+       }
+   	}]
+   */
+   ```
+
+<Spoiler>
+
+```jsx
+// lib.test.js -- continued from previous answer
+describe('makeTrainingData', () => {
+  it('should turn {} to empty array', () => {
+    const result = lib.makeTrainingData({})
+    expect(result).toEqual([])
+  })
+  it('should turn 1 data to array of input/output', () => {
+    const result = lib.makeTrainingData({
+      'beef boneless 100': 'MEAT'
+    })
+    expect(result).toEqual([
+      {
+        input: {
+          BEEF: 1,
+          BONELESS: 1
+        },
+        output: {
+          MEAT: 1
+        }
+      }
+    ])
+  })
+  it('should turn 2 data to array of input/output', () => {
+    const result = lib.makeTrainingData({
+      'beef boneless 100': 'MEAT',
+      'pink apples': 'VEGGIE'
+    })
+    expect(result).toEqual([
+      {
+        input: {
+          BEEF: 1,
+          BONELESS: 1
+        },
+        output: {
+          MEAT: 1
+        }
+      },
+      {
+        input: {
+          PINK: 1,
+          APPLES: 1
+        },
+        output: {
+          VEGGIE: 1
+        }
+      }
+    ])
+  })
+})
+```
+
+```jsx
+// lib.js -- continued from previous answer
+fn.makeTrainingData = obj => {
+  return Object.entries(obj).map(data => {
+    const inputData = data[0]
+    const result = data[1].toUpperCase()
+    const output = {}
+    output[result] = 1
+    return {
+      input: fn.tokenize(inputData),
+      output: output
+    }
+  })
+}
+module.exports = fn
+```
+
+</Spoiler>
+
+3. Write a `lib.pushAll` function that pushes an array onto every array in an
+   object.
+
+   ```jsx
+   let data = {}
+   lib.pushAll(data, [9, 8, 7])
+   /* data is {} */
+
+   data = { blah: [['hello']] }
+   lib.pushAll(data, [9, 8, 7])
+   /* data is 
+   	{
+       blah: [ ['hello'], [9, 8, 7] ]
+     }
+   */
+
+   data = { blah: [] }
+   lib.pushAll(data, [9, 8, 7])
+   /* data is
+      {
+        blah: [ [9, 8, 7] ]
+      }
+   */
+
+   data = {
+     blah: [['hello']],
+     key2: []
+   }
+   lib.pushAll(data, [9, 8, 7])
+   /* data is
+     {
+       blah: [ ['hello'], [9, 8, 7] ],
+       key2: [[9, 8, 7]]
+     }
+   */
+   ```
+
+<Spoiler>
+
+```jsx
+// lib.test.js -- continued from previous answer
+describe('pushAll', () => {
+  it('should not push array into {}', () => {
+    const data = {}
+    lib.pushAll(data, [9, 8, 7])
+    expect(data).toEqual({})
+  })
+  it('should push array into object with 1 key, non-empty array', () => {
+    const data = { blah: [['hello']] }
+    lib.pushAll(data, [9, 8, 7])
+    expect(data).toEqual({
+      blah: [['hello'], [9, 8, 7]]
+    })
+  })
+  it('should push array into object with 1 key, empty array', () => {
+    const data = { blah: [] }
+    lib.pushAll(data, [9, 8, 7])
+    expect(data).toEqual({
+      blah: [[9, 8, 7]]
+    })
+  })
+  it('should push array into object with 2 keys with different array values', () => {
+    const data = {
+      blah: [['hello']],
+      key2: []
+    }
+    lib.pushAll(data, [9, 8, 7])
+    expect(data).toEqual({
+      blah: [['hello'], [9, 8, 7]],
+      key2: [[9, 8, 7]]
+    })
+  })
+})
+```
+
+```jsx
+// lib.js -- continued from previous answer
+fn.pushAll = (mapping, data) => {
+  Object.keys(mapping).forEach(e => {
+    mapping[e].push([...data])
+  })
+}
+module.exports = fn
+```
+
+</Spoiler>
+
+4. Write a `lib.getMostLikely` function that finds the key with the largest
+   value in an object.
+
+   ```jsx
+   const result = lib.getMostLikely({})
+   // result is null
+
+   const result2 = lib.getMostLikely({
+     meat: 0.987,
+     veggie: 0.187,
+     store: 0.287
+   })
+   // result2 is 'meat'
+
+   const result3 = lib.getMostLikely({
+     meat: 0.287,
+     veggie: 0.187,
+     store: 0.987
+   })
+   // result3 is 'store'
+   ```
+
+<Spoiler>
+
+```jsx
+// lib.test.js -- continued from previous answer
+describe('getMostLikely', () => {
+  it('should return null if {}', () => {
+    const result = lib.getMostLikely({})
+    expect(result).toEqual(null)
+  })
+  it('should return first key', () => {
+    const result = lib.getMostLikely({
+      meat: 0.987,
+      veggie: 0.187,
+      store: 0.287
+    })
+    expect(result).toEqual('meat')
+  })
+  it('should return last key', () => {
+    const result = lib.getMostLikely({
+      meat: 0.287,
+      veggie: 0.187,
+      store: 0.987
+    })
+    expect(result).toEqual('store')
+  })
+})
+```
+
+```jsx
+// lib.js -- continued from previous answer
+fn.getMostLikely = obj => {
+  return Object.entries(obj).reduce(
+    (ent, e) => {
+      if (e[1] > ent[1]) {
+        return e
+      }
+      return ent
+    },
+    [null, 0]
+  )[0]
+}
+module.exports = fn
+```
+
+</Spoiler>
+
+<Spoiler name = "Complete answers for all exercises above">
+
+```jsx
+//lib.test.js
+const lib = require('./lib.js')
+
+describe('tokenize', () => {
+  it('should tokenize "hello word 2000"', () => {
+    const obj = lib.tokenize('hello word')
+    expect(obj).toEqual({ HELLO: 1, WORD: 1 })
+  })
+  it('should tokenize "I like (Korean)"', () => {
+    const obj = lib.tokenize('I like (Korean)')
+    expect(obj).toEqual({ LIKE: 1, '(KOREAN)': 1 })
+  })
+  it('should tokenize,""', () => {
+    const obj = lib.tokenize('')
+    expect(obj).toEqual({})
+  })
+})
+
+describe('makeTrainingData', () => {
+  it('should turn {} to empty array', () => {
+    const result = lib.makeTrainingData({})
+    expect(result).toEqual([])
+  })
+  it('should turn 1 data to array of input output', () => {
+    const result = lib.makeTrainingData({
+      'beef boneless 100': 'MEAT'
+    })
+    expect(result).toEqual([
+      {
+        input: {
+          BEEF: 1,
+          BONELESS: 1
+        },
+        output: {
+          MEAT: 1
+        }
+      }
+    ])
+  })
+  it('should turn 2 data to array of input output', () => {
+    const result = lib.makeTrainingData({
+      'beef boneless 100': 'MEAT',
+      'pink apples': 'VEGGIE'
+    })
+    expect(result).toEqual([
+      {
+        input: {
+          BEEF: 1,
+          BONELESS: 1
+        },
+        output: {
+          MEAT: 1
+        }
+      },
+      {
+        input: {
+          PINK: 1,
+          APPLES: 1
+        },
+        output: {
+          VEGGIE: 1
+        }
+      }
+    ])
+  })
+})
+
+describe('pushAll', () => {
+  it('should not push array into {}', () => {
+    const data = {}
+    lib.pushAll(data, [9, 8, 7])
+    expect(data).toEqual({})
+  })
+  it('should push array into object with 1 key, non-empty array', () => {
+    const data = { blah: [['hello']] }
+    lib.pushAll(data, [9, 8, 7])
+    expect(data).toEqual({
+      blah: [['hello'], [9, 8, 7]]
+    })
+  })
+  it('should push array into object with 1 key, empty array', () => {
+    const data = { blah: [] }
+    lib.pushAll(data, [9, 8, 7])
+    expect(data).toEqual({
+      blah: [[9, 8, 7]]
+    })
+  })
+  it('should push array into object with 2 keys with different array values', () => {
+    const data = {
+      blah: [['hello']],
+      key2: []
+    }
+    lib.pushAll(data, [9, 8, 7])
+    expect(data).toEqual({
+      blah: [['hello'], [9, 8, 7]],
+      key2: [[9, 8, 7]]
+    })
+  })
+})
+
+describe('getMostLikely', () => {
+  it('should return null if {}', () => {
+    const result = lib.getMostLikely({})
+    expect(result).toEqual(null)
+  })
+  it('should return first key', () => {
+    const result = lib.getMostLikely({
+      meat: 0.987,
+      veggie: 0.187,
+      store: 0.287
+    })
+    expect(result).toEqual('meat')
+  })
+  it('should return last key', () => {
+    const result = lib.getMostLikely({
+      meat: 0.287,
+      veggie: 0.187,
+      store: 0.987
+    })
+    expect(result).toEqual('store')
+  })
+})
+```
+
+```jsx
+// lib.js
+
+const fn = {}
+fn.tokenize = (str = '') => {
+  const tokens = str.split(' ').filter(e => e && e.length > 2 && !parseInt(e))
+  return tokens.reduce((acc, e) => {
+    acc[e.toUpperCase()] = 1
+    return acc
+  }, {})
+}
+
+fn.makeTrainingData = obj => {
+  return Object.entries(obj).map(([key, val]) => {
+    const output = {}
+    output[val.toUpperCase()] = 1
+    return {
+      input: fn.tokenize(key),
+      output: output
+    }
+  })
+}
+
+fn.pushAll = (mapping, data) => {
+  Object.keys(mapping).forEach(e => {
+    mapping[e].push([...data])
+  })
+}
+
+fn.getMostLikely = obj => {
+  return Object.entries(obj).reduce(
+    (ent, e) => {
+      if (e[1] > ent[1]) {
+        return e
+      }
+      return ent
+    },
+    [null, 0]
+  )[0]
+}
+
+module.exports = fn
+```
+
+</Spoiler>
+
+# Overview
+
+In the last lesson, you learned about simple objects and how to manipulate them.
+In this lesson, you will learn some foundations of **front end software
+engineering.**
+
+We will cover:
+
+- The browser's more advanced multimedia features
+- Types of elements
+- CSS - a language that lets you fine-tune your layouts and create beautiful
+  websites
+
+Finally, we'll turn back to JavaScript to learn about more complex objects and
+how to use them to build intricate front end behavior.
+
+> Many of the exercises in this chapter mostly use HTML, you won't be able to
+> write tests for them yet. But over the next few chapters be sure to use TDD
+> whenever possible!
+
+# HTML: Interactive Elements
+
+Now that you know about objects and how to use them, we can explore more details
+about the functions and data that the browser provides us. We'll integrate
+audio, video, and drawing functionality into our applications, and use the data
+they provide to interact with them.
+
+## Event Listeners
+
+You learned way back in JS1 about setting an element's `onclick` attribute to
+assign a function to run when the user clicks on the element. A downside to this
+method is that you can only assign one function to each element. Best practice
+for our purposes is to add **event listeners**:
+`addEventListener('eventName', function)`. Let's see how our original example
+from JS1 would look with an event listener:
+
+```jsx
+<button class="submit1">Click Me</button>
+<script>
+const button1 = document.querySelector('.submit1')
+button1.addEventListener('click', () => {
+  alert("Ouch!")
+})
+</script>
+```
+
+Other events you can add functions for include `mouseenter`, `mouseleave`,
+`keyup`, and `mousemove`. When the browser runs your function for these events,
+it will pass in an object as an argument. This object will contain properties
+such as the mouse position or the key that was pressed. Let's look at a couple
+of examples:
+
+### mouseenter
+
+This event fires when the mouse cursor first moves onto the element.
+
+```jsx
+<h1 class="mainTitle"> Hello World </h1>
+<script>
+const title = document.querySelector('.mainTitle')
+title.addEventListener('mouseenter', (e) => {
+  // To see other properties this object has, console.log(e) and explore!
+  console.log(e)
+})
+</script>
+```
+
+### keyup
+
+There are few events you can use to respond to typing; `keyup` occurs once every
+time the user _releases_ a key. Other key events include `keydown` and
+`keypress`; exact implementations may vary by browser, but you can see how your
+browser handles each one on [this cool JSFiddle](http://jsfiddle.net/zG9MF/2/).
+In the following exercises, we'll be sticking with `keyup`.
+
+This event fires once when you release each key.
+
+```jsx
+<input class="bigInput" type="text" />
+<script>
+const input = document.querySelector('.bigInput')
+input.addEventListener('keyup', (e) => {
+  // To see other properties this object has, console.log(e) and explore!
+  console.log(e)
+})
+</script>
+```
+
+### Exercises
+
+1. Add a mouse event to an element and console.log the first parameter like in
+   the above examples. Examine the object and find the difference between the
+   object's `clientX/Y`, `screenX/Y`, and `pageX/Y` properties.
+
+<Spoiler name = "Overview">
+
+Steps:
+
+**HTML**
+
+1. Create a `div` container. Select it by giving it an inline class.
+
+**JavaScript**
+
+2. Add a click event listener to the document that passes in an event.
+
+- When the page is clicked add to the container’s innerHTML a string containing
+  the event’s clientX and clientY.
+
+<Image
+  src="/assets/curriculum/lessons/js4/clientXY.png"
+  height="480"
+  width="640"
+/>
+
+Same for pageX and clientX, respectively.
+
+screenX/Y gives the element's position relative to the top and left of your
+physical monitor or screen; you'll rarely use this in web development.
+
+[Source](https://stackoverflow.com/questions/6073505/what-is-the-difference-between-screenx-y-clientx-y-and-pagex-y)
+
+</Spoiler>
+
+2. [Display mouse position only on hover](https://songz.c0d3.com/js4/examples/mouse.html).
+   When the mouse leaves the element, the h1 reverts back to its original text.
+
+<Spoiler name = 'Overview'>
+
+**HTML**
+
+1. Create a `div` container that holds a `h1` tag which displays HELLO WORLD
+   inside of the `h1`. Select the container by giving it a class.
+
+**JavaScript**
+
+2. Add a mouse move event listener to the container that passes in an event.
+
+- Set the innerText of the container to a `h1` tag with the event's clientX and
+  clientY.
+
+3. Add a mouse leave event listener to the container.
+
+- Set the `h1` tag to HELLO WORLD.
+
+</Spoiler>
+
+3. [Build a typewriter](https://songz.c0d3.com/js4/examples/typewriter.html).
+   When the user hits enter, the words get added into an array and displayed,
+   most recent first.
+
+<Spoiler name = "Overview">
+
+**HTML**
+
+1. Create an `input`, typeDisplay `div` and display `div`. Select them.
+
+**JavaScript**
+
+2. Create a logs array to hold the input value.
+
+3. Create a `renderLogs()` function.
+
+- set the innerHTML of the display to every element inside the logs array
+  wrapped around `h1` tags.
+
+4. Create a type event listener keyup that passes in an event.
+
+- If the event's key in enter.
+- Grab the value of the input.
+- unshift it into the logs array.
+- call renderLogs function.
+- set the typeInput's value to an empty string.
+- set the innerText of the typeDisplay to typeInput's value (outside if
+  statement).
+
+</Spoiler>
+
+4. [Build a text hiding tool](https://songz.c0d3.com/js4/examples/encode.html)
+   to hide text behind a random number generated by calling `Math.random()`.
+
+<Spoiler name="Hint: HTMLElement.focus()">
+
+Targets a specific HTML element for events by default.
+
+</Spoiler>
+
+<Spoiler name = "Overview">
+
+**HTML**
+
+1. Create an type `input`, type display `div` and display `div`.
+
+**JavaScript**
+
+2. Create a logs array.
+
+3. Create a `getStr()` function that takes in a number and returns a string
+   containing that number X's.
+
+```jsx
+getXStr(2) // returns 'XX'
+getXStr(5) // returns 'XXXXX'
+getXStr(7) // returns 'XXXXXXX'
+```
+
+4. Create a display all keys function that grabs every element with a message
+   class.
+
+- iterate over that array and set the innerText if your `h1` elements to the
+  fakeText.
+
+5. Add a type Input event listener that checks keyup and passes in an event.
+
+- if the event's key is enter grab the input's value.
+- unshift fakeText (`Math.random()`) and realText (input value) as an object to
+  the logs array.
+- set the innerHTML of the display with all of the elements in between opening
+  and closing `h1` tags with a message class.
+
+6. Grab all of the elements with a message class.
+
+- Iterate over that array and add mouse enter event listener's to the elements.
+- call displayAllKeys function
+- set the innerText of the logs index real text.
+- set the input.value to an empty string after iterating.
+- set the innerText of the type display `div` to `getStr()` with the input
+  value's length.
+
+7. Call typeInput focus.
+
+</Spoiler>
+
+<Spoiler name= 'Debrief'>
+
+How did you do? You're probably starting to see problems like these and first
+ask yourself what types of event listeners you'll need, and what each one will
+do.
+
+In the above example, we needed a `keyup` event on the input box, and a
+`mouseover` event on each text element
+
+</Spoiler>
+
+<Spoiler name="Alternate answer (more complete)">
+
+In the linked solution, if you go off-screen the value stays shown. The
+following solution is a little bit longer but uses `mouseleave` as well as a
+swap function, so it makes sure hidden text is only shown when the mouse is over
+it. As an engineer you will be expected to consider every case that can happen
+when a user interacts with your app.
+
+```jsx
+<input type="text" class="writer"/>
+<p class="currentLine"></p>
+<div class="display"></div>
+
+<script>
+    const entries = []
+    let currentlyShown
+    const writer = document.querySelector('.writer')
+    const currentLine = document.querySelector('.currentLine')
+    const display = document.querySelector('.display')
+
+    const x = (n, i=0) => { // Same as getXStr in the other solution
+        return i >= n ? "" : "X"+x(n, ++i)
+    }
+
+    const swap = (obj) => {
+        const t = obj.shown
+        obj.shown = obj.hidden
+        obj.hidden = t
+    }
+
+    const show = (i) => {
+        if ( currentlyShown === undefined ) {
+            currentlyShown = i
+            swap(entries[i])
+            render()
+        }
+    }
+
+    const hide = (i) => {
+        currentlyShown = undefined
+        swap(entries[i])
+        render()
+    }
+
+    const render = () => {
+        display.innerHTML = entries.reduce((htmlOutput, thisEntry) =>
+              htmlOutput+"<h1 class='hidden'>"+thisEntry.shown+"</h1>"
+        , "")
+        const allLines = document.querySelectorAll('.hidden')
+        allLines.forEach((thisLine, i) => {
+            thisLine.addEventListener('mouseenter', () => show(i))
+            thisLine.addEventListener('mouseleave', () => hide(i))
+        })
+    }
+
+    writer.addEventListener('keyup', (e) => {
+        //If this key is Enter & the input isn't empty, add it to the h1s
+        if ( e.key === "Enter" && writer.value !== "" ) {
+            entries.unshift({shown: Math.random(), hidden: writer.value})
+            render()
+            currentLine.innerText = ""
+            writer.value = ""
+        }
+        //Otherwise we're just displaying XX for the currently typed text
+        else
+            currentLine.innerText = x(writer.value.length)
+    })
+</script>
+```
+
+</Spoiler>
+
+## Creating Elements
+
+Previously, every time our data changed, we set the container's `innerHTML`
+property. This meant everything had to be cleared out and re-added, even if only
+one more element needed to be added. There's a more efficient way to add
+content, which is:
+
+- `document.createElement('tagName')`: Creates an element with the given tag
+  name and returns the created element.
+- `element.append(element)`: After creating an element, you must **append** it
+  to its new parent element so it can be displayed by the browser. Appending
+  adds to the end; you can also use `prepend` to put the element at the
+  beginning of the parent.
+
+Let's see how we could rewrite our typewriter from exercise 3 to prepend the
+text
+[(here's a live example)](https://songz.c0d3.com/js4/examples/createh1.html).
+
+```jsx
+<input class="type" type="text" />
+<div class="typeDisplay"></div>
+<div class="display"></div>
+
+<script>
+  const typeDisplay = document.querySelector('.typeDisplay')
+  const typeInput = document.querySelector('.type')
+  const display = document.querySelector('.display')
+
+  typeInput.onkeyup = (e) => {
+    if (e.key === "Enter") {
+      const newElement = document.createElement('h1')
+      newElement.innerText = typeInput.value
+      display.prepend(newElement)
+      typeInput.value = ''
+    }
+    typeDisplay.innerText = typeInput.value
+  }
+
+</script>
+```
+
+### Exercises
+
+1. [Create a click recorder](https://songz.c0d3.com/js4/exercises/clickRecord.html).
+   Every time user clicks on the page, record the x and y coordinates.
+
+   To listen to every event on the page, you can add an event listener to the
+   whole document: `document.addEventListener('click', ....`
+
+<Spoiler name = "Overview">
+
+**HTML**
+
+1. Create a `div` container. Select it.
+
+**JavaScript**
+
+2. Add a click event listener to the document that passes in an event.
+
+- Add to the container's innerHTML a `h1` element wrapped around the event’s
+  clientX and clientY.
+
+</Spoiler>
+
+2. Build this
+   [counter clicker](https://songz.c0d3.com/js4/examples/counter.html). Click on
+   the button to create a new counter, and click on each counter to increase its
+   count.
+
+<Spoiler name = 'Overview'>
+
+**HTML**
+
+1. Create an add `button`, and a `div` container. Select them.
+
+**JavaScript**
+
+2. Add a click event listener to the add button.
+
+- Create a `div` and initialize a counter to zero.
+- Set the innerHTML of the `div` to an `h1` tag with 0 clicks.
+- Add a click event listener to the `div` counter that increases the counter and
+  sets the innerHTML of the `div` to the current counter.
+
+3. Append the `div` to the container.
+
+<Spoiler name = "Debrief">
+
+This solution makes use of what we know about closure. Each time the Add Counter
+button's click listener runs, a variable `i` is created and set to 0. The click
+listener of the created `h1` also gets access to this `i`—and even though its
+parent function isn't running anymore, `i` maintains its value through closure.
+So every time you click on a counter, the `i` created that time the Add button
+was clicked is what gets incremented.
+
+</Spoiler>
+
+</Spoiler>
+
+3. [Build this experience](https://songz.c0d3.com/js4/examples/register.html).
+   Every time the Add Person button is clicked, a set of inputs is displayed.
+   Each time a Register button is clicked, that set of inputs is removed (see
+   hint 2). New person is displayed.
+
+<Spoiler name = "Hint 1">
+
+When using `querySelectorAll`, you may want to search within one element instead
+of throughout the entire document:
+
+```jsx
+const element = document.createElement('div')
+element.innerHTML = `
+  <h1> hello </h1>
+  <h1> hello </h1>
+`
+const titles = element.querySelectorAll('h1') // returns [h1, h1]
+// titles is an array of h1 children elements of the div element.
+```
+
+</Spoiler>
+
+<Spoiler name = "Hint 2">
+
+An element can remove itself using the `.remove()` function. For example:
+
+```jsx
+const element = document.querySelector('.stuff')
+element.addEventListener('click', () => {
+  element.remove()
+})
+```
+
+</Spoiler>
+
+<Spoiler name = 'Overview'>
+
+**HTML**
+
+1. Create an add person `button`, container `div`, `hr` or horizontal line, `h3`
+   registered title and a registered container `div`. Select them.
+
+**JavaScript**
+
+2. Create a guestList array.
+
+3. Create an addToList function that passes in a new guest parameter.
+
+- push new guest into guest list array.
+- set the innerText to a string of every element inside the guestList array.
+
+4. Create a click event listener to the add button.
+
+- Create a div element
+- Set the innerHTML of the div to firstName input tag, lastName input tag and a
+  register button. Select them.
+- Add a click event listener to the register button that takes in a firstName,
+  lastName and adds the registered div container firstName and lastName values.
+- Remove the div.
+- Append the div to the names container.
+
+</Spoiler>
+
+## Media Elements
+
+Here are some more interactive elements that will let you add new kinds of
+experiences to your pages.
+
+### Audio
+
+Music on the browser or sounds from a website are played by the `audio` tag.
+
+- The `src` (source) attribute tells the browser where to get the audio file.
+- The `controls` attribute tells the browser to display the audio controls.
+
+```jsx
+<audio
+  src="https://songz.c0d3.com/js4/examples/0415.mp3"
+  class="aud"
+  controls
+></audio>
+```
+
+The `audio` tag has a separate closing tag because it's possible to give it
+children elements, such as multiple sources or backup content in case the
+browser doesn't support it. We won't be adding any of these in this lesson.
+
+Audio elements have helper functions such as `play()` and `pause()`. You can
+also set the `src` attribute using JavaScript.
+
+```jsx
+const audio = document.querySelector('.aud')
+audio.src = 'https://songz.c0d3.com/js4/examples/0347.mp3'
+audio.play() // to start playing
+audio.pause() // to pause the audio
+```
+
+### Video
+
+Video works very similarly to the audio element.
+
+```jsx
+<video src="" class="vid" controls></video>
+<script>
+const video = document.querySelector('.vid')
+video.src = "https://songz.c0d3.com/js4/examples/ankurBunny.mp4"
+video.play() // to start playing
+video.pause() // to pause the video
+</script>
+```
+
+Note that on newer versions of Chrome, `video.play()` won't do anything until
+you've interacted with the page in some way. This is to prevent videos from
+playing in tabs you're not ready to look at yet. You can change your Chrome
+settings to allow this, or just make a button for the user to click to start the
+video. You'll see us do this in the exercises.
+
+### Webcam
+
+Now that you know how to create a video element, you can use it to
+[display the video from your webcam](https://songz.c0d3.com/js4/examples/webcam.html)!
+(Note that is just getting the video from your webcam to your video element.
+This is not video chat.)
+
+Here are the steps to display your webcam video:
+
+1. Use `navigator.mediaDevices.getUserMedia` to get system devices. Notice how
+   this function returns a promise!
+2. After getting the video stream from the webcam, set the `srcObject` attribute
+   of the video element to the video stream. Note we are not using the `src`
+   attribute because it is used for URLs.
+3. Play the video.
+
+```jsx
+<video class="video"></video>
+
+<script>
+  navigator.mediaDevices.getUserMedia({
+    video: true, // webcam
+    audio: true, // microphone
+  }).then((stream) => {
+    videoElement.srcObject = stream
+    videoElement.play()
+  })
+  const videoElement = document.querySelector('.video')
+
+</script>
+```
+
+### Canvas
+
+The `[canvas` HTML tag](https://www.w3schools.com/graphics/canvas_intro.asp)
+creates an element that you can draw pictures and shapes in using JavaScript.
+First you must get the `canvas` element, then you get the **context** by running
+the canvas element's `getContext` function. The context is what lets you
+actually draw on the canvas; think of it like a paintbrush that you would use to
+paint onto a physical canvas.
+
+[In this example](https://songz.c0d3.com/js4/examples/canvas.html) we first
+create a rectangle, then create a circle, and then fill in the text `Hello`.
+
+[Documentation for context object and what it could do](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D).
+
+As you try it out, try building it yourself step by step (rectangle, then
+circle, then text)
+
+```jsx
+<canvas class="canvas" width=800 height=500></canvas>
+
+<script>
+  // Get canvas
+  const canvas = document.querySelector('.canvas')
+
+  // Use canvas to get context (brush)
+  const context = canvas.getContext('2d')
+
+  // Set brush color to yellow
+  context.fillStyle = "yellow"
+
+  // Create a background by painting a rectangle
+  //    that fills the entire canvas.
+  //    Start at coordinates (0, 0)
+  //    and give a width of 800 and height of 500
+  context.fillRect(0, 0, 800, 500)
+
+  // Start a circle path
+  context.beginPath()
+
+  // Start drawing at position (200, 100), radius 100px,
+  //    from 0 degrees to 360 degrees (full circle)
+  //    arc uses radians, so 360 degrees = 2pi radians
+  context.arc(200, 100, 100, 0, 2 * Math.PI)
+
+  // Paint it with stroke color (black)
+  context.stroke()
+
+  // Set font properties and change color to black
+  context.font = "30px Comic Sans MS"
+  context.fillStyle = "black"
+
+  // Fill text at positon (10, 50)
+  context.fillText("Hello World", 10, 50)
+</script>
+```
+
+You can also pass a video element into the canvas context to draw a picture of
+what is in the video element. In the following example we will take a picture
+from the webcam every 5 seconds and draw it into the canvas.
+
+```jsx
+<video class="video"></video>
+<canvas class="canvas"></canvas>
+
+<script>
+  const canvas = document.querySelector('.canvas')
+  const context = canvas.getContext('2d')
+  const videoElement = document.querySelector('.video')
+
+  const delayPicture = () => {
+    setTimeout(() => {
+      canvas.width = videoElement.videoWidth
+      canvas.height = videoElement.videoHeight
+      context.drawImage(videoElement, 0, 0)
+      delayPicture()
+    }, 5000)
+  }
+
+  navigator.mediaDevices.getUserMedia({
+    video: true, // webcam
+    audio: true, // microphone
+  }).then((stream) => {
+    videoElement.srcObject = stream
+    videoElement.play()
+    delayPicture()
+  })
+</script>
+```
+
+To draw the video into the canvas, we took the canvas's `context` object and ran
+the `drawImage` function. `drawImage` takes in 3 arguments:
+
+1. (Object) element to draw (videoElement, for example)
+2. (Number) x position to start drawing
+3. (Number) y position to start drawing
+
+You'll get to try this yourself in one of the exercises. Notice that because
+this program takes a picture every 5 seconds, we wrapped this functionality up
+in the `delayPicture` function, called it at the end of the script, and also had
+it call itself after another 5 seconds.
+
+### Exercises
+
+For the exercises below, feel free to use these two MP3 files of old Korean folk
+songs:
+
+- https://songz.c0d3.com/js4/examples/0415.mp3
+- https://songz.c0d3.com/js4/examples/0347.mp3
+
+1. [Build an audio hover player](https://songz.c0d3.com/js4/examples/audio.html):
+   Paste in a URL to a song, and the audio should start playing. When you move
+   your mouse out of the text, the music should stop playing.
+
+<Spoiler name = "Overview">
+
+**HTML**
+
+1. Create an `input`, `h1` tag and a `audio` tag. Select them.
+
+**JavaScript**
+
+2. Create a isStarted variable and set it to false.
+
+3. Create a keyup event listener to the `input` tag that passes in an event.
+
+- If the event's key is Enter set the source of the audio.
+- play the audio and set the innerText of the h1 to 'Playing'.
+- set isStarted to true.
+
+4. Add a mouseenter event listener to the `h1` element.
+
+- If isStarted is false return.
+- Otherwise set the innerText of `h1` to 'Playing' and play the audio.
+
+5. Add a mouseleave event listener to the `h1` element.
+
+- If isStarted is false return.
+
+6. Create a mouse enter event listener to the `h1` tag.
+
+- Set the h1 tag innerText to playing.
+- Play the video.
+
+7. Create a mouse leave event listener to the `h1` tag.
+
+- Set the innerText to pause.
+- Pause the video.
+
+</Spoiler>
+
+2. [Change the above display](https://songz.c0d3.com/js4/examples/audio2.html)
+   to show the play status. Look at the
+   [events available](https://www.w3schools.com/tags/ref_av_dom.asp) for the
+   `audio` element to see if you can figure out which event to look for! (Note
+   that you'll also have to write a function to convert the given time into the
+   more readable minutes:seconds format.)
+
+<Spoiler name = "Correct event">
+
+**timeupdate**
+
+```jsx
+const audioElement = document.querySelector('.audio')
+audioElement.addEventListener('timeupdate', () => {
+  console.log(Math.floor(audioElement.currentTime))
+})
+```
+
+</Spoiler>
+
+A few other things you'll need to know:
+
+- `audioElement.currentTime` gives you where the position is (in seconds)
+- `Math.floor` gets rid of the decimals (for example, turns `2.933` into `2`)
+- `inputElement.focus()` makes the input box selected and ready to type in
+
+<Spoiler name = 'Overview'>
+
+**HTML**
+
+1. Create an `input` tag, `h1` tag and an `audio` tag. Select them.
+
+**JavaScript**
+
+2. Call HTMLElement.focus() on the input element.
+
+3. Create a timeupdate event listener to the `audio` element that passes in an
+   event.
+
+- use `Math.floor()` to create a seconds variable that is the audio element's
+  current time.
+- use `Math.floor()` to create a min variable that is the seconds divided by 60.
+- set the seconds variable to modulo 60.
+- set the seconds variable to a template string of seconds.
+- if second's length is less than two, assign seconds to a template string of
+  zero and seconds.
+- set the innerText of the h1 element to a template string of min and seconds.
+
+4. Create an isStarted variable that is set to false.
+
+5. Add a keyup event listener to the `input` tag that passes in an event.
+
+- if the event's key is enter set the audio's source to the input's value.
+- play the audio element.
+- set the inner text to four zeros.
+- set isStarted to true.
+
+6. Add a mouse enter event listener to the `h1` element.
+
+- if the isStarted variable is false return.
+- otherwise play the `audio` element.
+
+7. Add a mouse leave event listener to the `h1` element.
+
+- if the isStarted variable is false return.
+- otherwise pause the `audio` element.
+
+</Spoiler>
+
+3. [Build a hover-to-play video](https://songz.c0d3.com/js4/examples/video.html):
+   Mouse over the video to play it and display a timer.
+
+- Video URL:
+  [https://songz.c0d3.com/js4/examples/ankurBunny.mp4](https://songz.c0d3.com/js4/examples/ankurBunny.mp4)
+
+<Spoiler name = "Overview">
+
+**HTML**
+
+1. Create an app `div` and inside of that add a start app `button`. Select them.
+
+**JavaScript**
+
+2. Create a get minutes and seconds function that passes in an element.
+
+- use `Math.floor()` to create a seconds variable that is the element's current
+  time.
+- use `Math.floor()` to create a min variable that is the seconds divided by 60.
+- set the seconds variable to modulo 60.
+- set the seconds variable to a template string of seconds.
+- if second's length is less than two, assign seconds to a template string of
+  zero and seconds.
+- return a template string of min and seconds.
+
+3. Create a start app function.
+
+- set the innerHTML of the app element to a string an `h1` element with a class
+  of display and a video element. Select them.
+
+4. Create a timeupdate event listener for the video element.
+
+- set the innerText of the display element to your get minutes and seconds
+  function with your video element from step 3.
+
+5. Create a mouse enter event listener for the video element.
+
+- play the video element.
+
+6. Create a mouse leave event listener for the video element.
+
+- pause the video element.
+
+</Spoiler>
+
+4. [Build a meme image generator](https://songz.c0d3.com/js4/examples/meme.html):
+   When the user hits enter, take a picture and display the text near the bottom
+   of the picture.
+
+<Spoiler name = "Overview">
+
+**HTML**
+
+1. Create a text `input`, a `video` element, and a `canvas`. Select them all and
+   get the context of canvas.
+
+**JavaScript**
+
+2. call HTMLElement.focus() on the `input` element.
+
+3. all a keyup event listener to the `input` element that passes in an event.
+
+- If the event's key is enter, grab the `input` element's value.
+- Set the canvas's width and height to the video element's width and height.
+- use context to draw and image of the video element, with two other zero
+  paramters.
+- set the context font to 50 pixels of comic sans.
+- fill the style of context to red.
+- fill the text of context with the `input` element's value, thirty and canvas's
+  height minus one hundered and 50.
+
+4. Get the webcam using `navigator.mediaDevices.getUserMedia()` function.
+
+- set video and audio to true.
+- then catch the stream and set the source of the video to the stream.
+- then play the video element.
+
+</Spoiler>
+
+5. [Exploding text](https://songz.c0d3.com/js4/examples/explode.html): When you
+   hit enter, the characters explode.
+
+- Use the `.split('')` function from the last section to a string into an array
+  of letters.
+
+  ```jsx
+  const a = 'hello'
+  a.split('') // returns ["h", "e", "l", "l", "o"]
+  ```
+
+- To generate a random number from 0 to 800, you must use a combination of
+  `Math.floor` and `Math.random`:
+
+  ```jsx
+  const rand = Math.floor(Math.random() * 800)
+  // rand is a random number between 0 (inclusive) and 800 (not inclusive)
+  ```
+
+<Spoiler name = 'Overview'>
+
+**HTML**
+
+1. Create a `input` tag and a `canvas` tag, get the context of canvas. Select
+   them and get the context of `canvas`.
+
+**JavaScript**
+
+2. Focus on the HTML input element.
+
+3. Set the font of context and fill the style of context to yellow and fill the
+   context with a rectangle.
+
+4. Create an explode function that passes in a string.
+
+- Fill the style of context to yellow and fill the context with a rectangle.
+- Split the string and iterate over that array.
+- fill the context with each character then call `Math.floor()` and
+  `Math.random()` twice on the width and height.
+
+5. Create a keyup event listener to the input tag. That grabs the input tag’s
+   value and splits it into an array.
+
+- if the event's key is enter call the explode function on the input's value.
+- then clear the input value by setting it to an empty string.
+- **Cycle through colors**
+
+6. Initialize a counter variable to zero.
+
+7. Create an array of strings that contain different colors.
+
+8. Check if the index is the length of the colors array - 1.
+
+- If it is assign it to zero otherwise increment the index.
+
+9. Fill the style of context to an array of the current index.
+
+</Spoiler>
+
+## External JS Libraries
+
+You can import JavaScript libraries that other people have written into your
+HTML. To use someone else's JavaScript file, just give your `script` tag a `src`
+attribute with the URL value so the browser can send a request to get the file.
+
+**[Chance JS](https://chancejs.com/index.html)**: Helps you generate random
+data! In the example below, we
+[generate a random bio for a random person](https://songz.c0d3.com/js4/examples/chance.html).
+Refresh the page to generate a new bio!
+
+```jsx
+<h1 class="name"></h1>
+<p class="story"></p>
+<script src="https://chancejs.com/chance.min.js"></script>
+<script>
+const randomName = `${chance.first()} ${chance.last()}`
+document.querySelector('.name').innerText = `The story of ${randomName}`
+
+const types = ['child', 'teen', 'adult', 'senior']
+const randomTypeIndex = Math.floor(Math.random()*types.length)
+const randomType = types[randomTypeIndex]
+const randomAddress = chance.address()
+
+document.querySelector('.story').innerText = `
+${randomName} is a ${chance.age({type: randomType})} year old ${chance.gender()} ${randomType}
+who lives at ${randomAddress} in ${chance.country({full: true})}
+`
+
+</script>
+```
+
+**[Rough JS](https://github.com/pshihn/rough):** Helps you draw
+[sketches](https://songz.c0d3.com/js4/examples/popper.html) on your website.
+
+```jsx
+<canvas class="canvas" width=800 height=500></canvas>
+<script src="https://cdn.jsdelivr.net/npm/roughjs@3.1.0/dist/rough.min.js"></script>
+<script>
+  const rc = rough.canvas(document.querySelector('.canvas'))
+  rc.rectangle(10, 10, 200, 200) // x, y, width, height
+  rc.ellipse(300, 100, 150, 80) // centerX, centerY, width, height
+  rc.line(80, 120, 300, 100) // x1, y1, x2, y2
+  rc.circle(50, 50, 80, { fill: 'red' }) // fill with red hachure
+
+  rc.rectangle(120, 105, 80, 80, {
+      fill: 'rgba(255,0,200,0.2)',
+      fillStyle: 'solid' // solid fill
+  })
+</script>
+```
+
+### Exercises
+
+1. [Markdown to HTML](https://songz.c0d3.com/js4/examples/md.html): Use the
+   [MarkedJS](https://github.com/markedjs/marked) Library to provide an input
+   area for users to write Markdown syntax and display the result as the user
+   types.
+
+<Spoiler name = "Note">
+
+Markdown is very important in the developer ecosystem—it is common for all
+readme files, documentation, etc. in tech companies to be written in Markdown.
+You may want to spend some time learning it!
+
+</Spoiler>
+
+<Spoiler name = "Hint">
+
+It helps to look at the [documentation](https://github.com/markedjs/marked)
+
+- Under the **Browser** section
+
+</Spoiler>
+
+- Type the following into the input box to see how it works. Each symbol in
+  Markdown means something; the below text gives you a few examples:
+
+  ```markdown
+  # hello world
+
+  ## Hello world2
+
+  Today, you need to learn these
+
+  1. Functions
+  2. Objects
+  3. Blah blah blah
+  4. HAHAHAH
+
+  # CAT!
+
+  ![](https://placekitten.com/200/300)
+  ```
+
+- Use the [markedjs](https://github.com/markedjs/marked) library. Import the
+  library like this:
+
+  ```jsx
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  ```
+
+- This library gives you a function called `marked` that takes in one argument,
+  a Markdown string, and returns an HTML string generated from the Markdown.
+- Note: use the `textarea` element instead of the `input` element you used
+  previously. This element allows you to write multiple lines of text. You get
+  the value from the `textarea` element from the `value` property the same way
+  as from the `input` element:
+
+  ```jsx
+  const value = textAreaElement.value
+  ```
+
+<Spoiler name = "Overview">
+
+**HTML**
+
+1. Create a `textarea` and `div` container. Select them.
+
+**JavaScript**
+
+2. Add a keyup event listener to the input tag that grabs the input value.
+
+- Set the innerHTML to a function call of the input tag’s value: `marked(value)`
+
+</Spoiler>
+
+2. Build an [accent reader](https://songz.c0d3.com/js4/exercises/accent.html)
+   using the [ResponsiveVoice](https://responsivevoice.org/api/) library.
+
+<Spoiler name = "Hint">
+
+You may have sign in to link your email to get a unique key accessing the API.
+
+</Spoiler>
+
+- Library link:
+
+  ```jsx
+  <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
+  ```
+
+- First step: use the `getVoices()` function to get an array of possible voices
+  and populate the `select` HTML element with options for each. Note that your
+  `select` element should look like this:
+
+  ```jsx
+  <select class="selector">
+    ...
+    <option value="Japanese Female">Japanese Female</option>
+    ...
+  </select>
+  ```
+
+- Second step: `console.log` the selected option whenever it changes. You need
+  to listen for a `change` event from the `select` element, which will have a
+  `value` key to tell you the selected value.
+- Third step: run the `speak` function and pass in the selected voice!
+
+<Spoiler name = "Overview">
+
+**HTML**
+
+1. Create a `textarea` and `select` tag. Select them.
+
+**JavaScript**
+
+2. Create a voicelist variable that gets voices from responsiveVoice.
+
+- Iterate through the list and create an option for each element, set the
+  innerText to the element’s name.
+- Add a click event listener to the option that sets the responsiveVoice default
+  voice to the element’s name.
+- Append the option to the select tag.
+
+3. Add a keyup event listener to the input tag that grabs the value from the
+   input tag.
+
+- Call the `responsiveVoice.speak()` Function on the input tag’s value.
+
+</Spoiler>
+
+### Writing your own library
+
+You can very easily create your own library for your other HTML files to use so
+you don't have to write the same code over and over again. To do this, simply
+create a file in the same folder such as `lib.js`.
+
+```jsx
+// lib.js
+const app = {}
+app.alert3 = () => {
+  alert('hello')
+  alert('hello')
+  alert('hello')
+}
+```
+
+Now any HTML file can use that JavaScript file:
+
+```jsx
+<script src="./lib.js"></script>
+<script>
+  console.log(app) // app variable exists since it's defined in lib.js
+  app.alert3()
+</script>
+```
+
+- Notice `./lib.js` in the `src` attribute. `./` means the current folder.
+
+  - Sometimes developers have a folder called `js` to contain their javascript
+    files
+
+    ```jsx
+    <script src="./js/lib.js" />
+    ```
+
+Software engineers almost never write JavaScript into the `script` tag directly.
+They usually write their JavaScript into a file. This file then gets compressed
+by a minifier (all the spaces in the code are removed, variable names are
+shortened, etc.) and saved into another file. The `script` tag in the HTML will
+have a `src` attribute to the minified file.
+
+> When providing a library, you will find yourself updating and changing your
+> code over time. If 1000 people are depending on your library, you should not
+> simply update the existing library. Otherwise, if you introduce bugs or change
+> features, 1000 people will have your bug or changed feature. For this reason,
+> when we name libraries we usually put a version decimal in the file name and
+> (very rarely) change the file after that (e.g. `lib.v2.0.1.js`).
+
+# HTML Theory
+
+In the previous section we explored a few HTML tags such as `input`, `button`,
+`div`, `h1`, and `script`. In this section we will learn about some fundamentals
+of web design that you should know as a software engineer.
+
+## Inline vs Block
+
+Every HTML element that the browser displays is either an `inline` element or a
+`block` element.
+
+(There are also two other types, `inline-block` and `flex`, which can only be
+specified using CSS. These will be covered in the CSS section.)
+
+### Inline
+
+Inline elements only take up the width of their inner contents. Examples of
+inline elements are `input`, `a`, `img`, `button`, and `select`.
+
+<twoColumns>
+
+```jsx
+<input type="text">
+<button>Hello</button>
+<img src="http://placekitten.com/50/50" />
+<input type="text">
+<button>Button2</button>
+<a href="https://c0d3.com">Go To Link</a>
+<select>
+  <option value="1">Hello</option>
+</select>
+<button>Button3</button>
+```
+
+<Image
+  src="/assets/curriculum/lessons/js4/inline.png"
+  height="162"
+  width="515"
+/>
+
+</twoColumns>
+
+Since each element only takes up the space it needs, the elements will fill the
+page side by side until there is no more space, then the browser will continue
+onto the next line.
+
+<Spoiler name="The `a` (link) tag">
+
+This might be your first time seeing the `a` tag in HTML, but you've seen it
+before—it's a link. "a" stands for anchor, meaning this tag can be used as a
+link to go somewhere else _or_ as an anchor point that other pages can use to
+link to that specific place on the page. The `href` attribute stands for
+"hypertext reference," and tells the browser where to go when the link is
+clicked. The text inside the tags is what gets displayed.
+
+Example: `<a href="https://c0d3.com">Click me</a>`.
+
+</Spoiler>
+
+### Block
+
+Block elements take up 100% of the width available to them. This is the width of
+their container, or of the page (body) if they don't have a container. Block
+elements will stack up on top of each other vertically. Examples of block
+elements are `div`, all headings (`h1`, `h2`, etc.) and `p`.
+
+<twoColumns>
+
+```jsx
+<h1>Hello</h1>
+<div>
+  <input type="text">
+  <button>Hello</button>
+</div>
+<h1>Another Title</h1>
+<div>
+  <img src="http://placekitten.com/50/50" />
+  <input type="text">
+  <button>Button2</button>
+</div>
+<h1>3rd Title</h1>
+<div>
+  <a href="https://c0d3.com">Go To Link</a>
+  <select>
+    <option value="1">Hello</option>
+  </select>
+  <button>Button3</button>
+</div>
+```
+
+<Image
+  src="/assets/curriculum/lessons/js4/block.png"
+  height="389"
+  width="508"
+/>
+
+</twoColumns>
+
+Notice how the block elements all take up 100% of the width and stack on each
+other vertically.
+
+- The children elements inside the `div` element are inline elements positioned
+  **inside** the block element.
+
+> **Block elements** take up 100% of the width of their container. **Inline
+> elements** take up only the width of their content.
+
+## Multiple Classes
+
+The HTML class attribute allows you to specify multiple classes for every
+element. You separate each class with a space:
+
+```jsx
+<div class="block div1 section1"></div>
+<div class="block div2 section1"></div>
+<div class="block div3 section1"></div>
+<div class="block div4 section2"></div>
+<div class="block div5 section2"></div>
+<div class="block div6 section2"></div>
+<script>
+const blocks = document.querySelectorAll('.block')
+// blocks is an array with 6 elements
+
+const blocks2 = document.querySelectorAll('.section1')
+// blocks2 is an array with 3 elements
+
+const blocks3 = document.querySelectorAll('.div4')
+// blocks3 is an array with 1 elements
+</script>
+```
+
+You'll see why this is essential in the next section, when we learn how to apply
+styles to elements based on their class(es)
+
+<ChallengeBar
+  href="/curriculum/24"
+  description="Add a few testing challenges?"
+  title="Master your skill by solving challenges"
+/>

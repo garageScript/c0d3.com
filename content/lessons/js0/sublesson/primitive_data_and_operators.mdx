@@ -1,0 +1,708 @@
+---
+title: Primitive data and operations
+order: 1
+---
+
+# Table of Contents
+
+# Overview
+
+Why Learn JS? JavaScript is the only language that lets you build applications
+for any technology platform. The goal of the curriculum is to give you exercises
+to help you understand technology at a conceptual level first, end to end:
+
+1. Client side - mobile apps, websites, terminal UI, etc.
+2. Server side - Database interactions, system design and optimizations
+3. Batch - ML models and scripting
+
+Once you understand these moving parts conceptually, you will be well prepared
+to specialize in domain specific languages that optimizes for each task as you
+gain more experience as a software engineer.
+
+Before starting, please make sure you know some math!
+
+[Numbers Math](/docs/numbers)
+
+This will be the extent of how much you will need to know math. If you find any
+of the exercises challenging, ask in person at a meetup group or in the
+chatroom!
+
+In this lesson, you will learn the fundamental building blocks of coding:
+
+- First, we will cover **variables**, which is how computers store information.
+- Then, we will cover some simple data (**primitive** **data types**) that
+  computers can store into variables.
+- Armed with some knowledge about data, we will talk about a data's **truthy**
+  and **falsy** properties and when these matter.
+- Lastly, we will dive into more complex data types like **functions**.
+
+There will be many exercises; be sure to solve each problem by yourself first
+before looking at the answer! If these concepts are new to you, please go
+through the exercises in this lesson over and over again until you are confident
+before continuing to the next lesson.
+
+## How to Follow Along
+
+**For experienced coders** - If you already know some JavaScript and wish to
+skip directly to the challenges, please at least glance through the materials
+covered to make sure you are not missing anything.
+
+The instructions for submitting challenges are at the end of this document.
+
+### Setup Instructions
+
+Before starting, make sure you successfully follow the steps in
+[**Setup Instructions**](/docs/setup).
+
+For all the code examples provided, you should be writing and running the code
+yourself to help you understand what the computer is doing. If the concept is
+new to you, do not copy and paste. You will learn better if you write out the
+code. Write the code into a file, then run the file with `node` (Node is an
+application that understands your JavaScript file and runs it).
+
+# Variables
+
+If you imagine yourself doing inventory work and you have to count 20,000 items,
+you will need to take a break at some point and write down where you stopped,
+right? The act of storing information into your notes is equivalent to storing
+data into a variable in the computer world. To do this in JavaScript, we use the
+`=` assignment operator which assigns a value to the variable.
+
+An **operator** is a symbol or a set of symbols that does something to the data
+on either side of it. The assignment operator, `=`, means the left side takes
+the value of the right side.
+
+Examples:
+
+```jsx
+marvin = 0 // marvin is a variable, which stores the number 0
+// console.log(marvin)
+marvin = 42 // what is the value of marvin?
+// console.log(marvin)
+
+/*
+The computer will ignore
+EVERYTHING 
+in here!
+*/
+
+hands = 89 // what is the value of hands?
+// console.log(hands)
+```
+
+<Spoiler>
+
+```jsx
+marvin = 0
+marvin = 42 // marvin is 42
+hands = 89 // hands is 89
+```
+
+</Spoiler>
+
+The computer will ignore everything that comes after the `//` symbol and
+everything within the `/*... */` symbol. Software engineers use these symbols to
+write **comments** in their code. Comments explain complicated code so that
+other engineers can read and understand the code better.
+
+> If you want to check a variable's value, you can use `console.log`. Remove the
+> comment from the `console.log` lines in the example above and you will be able
+> to see the output when you run the file. There's no need to understand
+> `console.log` now; it is explained later.
+
+## Best Practice
+
+Good practice means practicing good habits to become a good software engineer.
+Bad practice means practicing bad habits that will negatively impact you as a
+software engineer. Best practice means that you should **always** practice this
+habit because all good software engineers have this habit.
+
+In the above example, we are creating variables like this: `marvin = 0`. Even
+though it works, it is considered **bad practice** because the variable
+overwrites the global scope (you will naturally understand why after you start
+coding, so don't worry if the reason does not make sense). Instead, you should
+use `const` or `let` (explained below).
+
+### const
+
+`const` stands for **constant**. Use `const` to declare a variable when you
+never need to change its value, like the following example:
+
+```jsx
+const points = 5
+const res = points + 2
+```
+
+**Incorrect**: If you use `const` to declare a variable and then try to change
+its value, you will get an error.
+
+```jsx
+const points = 5
+points = 7 // ERROR
+// TypeError: invalid assignment to const 'points'
+```
+
+### let
+
+If you need to declare a variable and you might need to change its value later,
+you should use `let`.
+
+```jsx
+let points = 5
+points = 7
+```
+
+As a rule of thumb, always use `const` until you can't!
+
+# Primitive Data
+
+Variables can store all kinds of data. In this section we will be exploring 3
+types of primitive data: **Number, String,** and **Boolean**. If you are
+wondering why they are called primitive data, it will make complete sense when
+you learn about non-primitive data (in lesson 2 about Arrays). For now, just
+know that **Number, String,** and **Boolean** are primitive data.
+
+## Number
+
+Number allows you to work with numbers and can be manipulated using operators
+such as
+
+`+, - , *, /` (addition, subtraction, multiplication or division). Let's start
+with a few examples:
+
+```jsx
+const fi = 5 // what is the value of fi?
+const mission = fi + 1 // what is the value of mission?
+const deed = fi + mission // what is the value of deed?
+const space = 8 * 8 // what is the value of space?
+const ship = space / 4 // what is the value of ship?
+```
+
+<Spoiler>
+
+```jsx
+const fi = 5 // 5
+const mission = fi + 1 // 6
+const deed = fi + mission // 11
+const space = 8 * 8 // 64
+const ship = space / 4 // 16
+```
+
+</Spoiler>
+
+One commonly used operator is `%` (Modulus or Division Remainder), which gives
+you the remainder when you divide 2 numbers. For example: `14 % 7` is `0`
+because 14 divided by 7 has a remainder of 0. `13 % 7` is `6` because 13 divided
+by 7 is 1 with a remainder of 6.
+
+_If it has been a long time since you did division, there is an easy way to get
+the correct result. When you see `a % b`, simply keep subtracting `b` from `a`
+until you get a result smaller than `b`. For example:_
+
+`towel = 18 % 7`: towel is the remainder
+
+18 - 7 is 11, which is greater than 7, so we subtract again!
+
+11 - 7 is 4, which is smaller than 7, so we have arrived at our answer. `18 % 7`
+is 4.
+
+`towel` has the value 4.
+
+```jsx
+let rem = 15 % 3 // What is the value of rem?
+rem = 15 % 7 // What is the value of rem?
+```
+
+<Spoiler>
+
+```jsx
+let rem = 15 % 3 // 0
+rem = 15 % 7 // 1
+```
+
+ </Spoiler>
+
+## Strings
+
+A string can be words, sentences, or a bunch of characters. To make a string,
+you can use double quotes `"` , single quotes `'`, or backticks `` ` ``(the key
+to the left of 1 on most keyboards). It does not matter which of these 3 symbols
+you use to create a string, but you cannot mix the symbols, like`"xxx'`. You
+must terminate the string with the same symbol you started it with: `"xxx"`.
+
+> Make sure you never confuse yourself between strings and variables!
+
+```jsx
+const hello = 'I have 500 bucks'
+let a = 'hello' // what is the value of a?
+a = hello // What is the value of a since we didn't use quotes?
+```
+
+<Spoiler>
+
+```jsx
+const hello = 'I have 500 bucks'
+let a = 'hello' // "hello"
+a = hello // "I have 500 bucks"
+```
+
+Strings without quotes are variables!
+
+</Spoiler>
+
+For now, you only need to know one operator for strings, which is `+`, used to
+join strings together. For example, `'End ' + 'Game'` results in `'End Game'`.
+
+If you encounter a variable, make sure you don't treat it like a string.
+
+```jsx
+const a = 'hello'
+const message = a + 'world' // what is value of message?
+const c = 5
+const d = c + message // what is the value of d?
+const e = '<h1>' + a + '</h1>' // what is the value of e?
+```
+
+<Spoiler>
+
+```jsx
+const a = 'hello'
+const message = a + 'world' // "helloworld"
+const c = 5
+const d = c + message // "5helloworld"
+const e = '<h1>' + a + '</h1>' // "<h1>hello</h1>"
+
+// Explanation for the previous example: d = c + message
+/* 
+Let's try to think from a computer's perspective:
+
+c has a value of 5
+message has a value of "helloworld"
+
+so const d = c + message means
+d takes the value of c joined with the value of message
+Hence, d gets the value of 5 + "helloworld" which is "5helloworld".
+
+What is 5 + "helloworld"?
+The computer knows how to add number + number, or string + string.
+
+Can I convert "helloworld" to a number? No.
+Can I convert 5 to a string? Yes. "5"
+
+Therefore, let's convert and add: "5" + "helloworld"
+
+"5helloworld"
+*/
+```
+
+</Spoiler>
+
+Sometimes, you might find yourself adding many variables together with strings.
+For example, imagine this scenario:
+
+```jsx
+const firstName = 'Tony'
+const lastName = 'Stark'
+const location = 'Paris'
+const message =
+  'Welcome to ' + location + ', ' + firstName + ' ' + lastName + '!'
+// the variable message takes the value: "Welcome to Paris, Tony Stark!"
+```
+
+## Template Literals (Template Strings)
+
+Try typing the variable message out like the example above, and you will realize
+how painful it is. Therefore, using `+` with strings is not common.
+
+We can use `` ` `` (backticks) and`${expression}` (placeholder) instead, which
+allows us to put the variables directly into the string:
+
+```jsx
+const message = `Welcome to ${location}, ${firstName} ${lastName}!`
+// Notice how much shorter it is than:
+//    message = "Welcome to " + location + ', ' + firstName + ' ' + lastName + '!'
+```
+
+**Exercise:** Rewrite the `story` variable to use `` ` ``
+
+```jsx
+const actor = 'We'
+const location = "farmers' market"
+
+const story = actor + ' plan to go to a ' + location + ' tomorrow'
+
+// task: Rewrite the above story variable using ` (backticks) or template literals.
+```
+
+<Spoiler>
+
+```jsx
+const actor = 'We'
+const location = "farmers' market"
+const story = `${actor} plan to go to a ${location} tomorrow`
+```
+
+</Spoiler>
+
+## Boolean
+
+Booleans can be either of 2 values: `true` or `false`. **Operators** like `===`
+(is equal to), `!==` (is not equal to), `>` (is greater than), and `<` (is
+smaller than) are used to compare the left side with the right side.
+
+The **comparison operators** compare two pieces of data and give a boolean value
+of true or false. For example:
+
+- `"hello" === "hello"` is `true`
+- `5 > 2` is `true`, because 5 is greater than 2
+- `9 < 2` is `false`, because 9 is not smaller than 2
+
+```jsx
+const lupin = 5 === 5 // what is the value of lupin?
+const harry = 2
+const ron = 4
+const ginny = harry + 2 === ron // what is the value of ginny?
+const dumbledore = ginny + 'hello' // what is the value of dumbledore?
+const theSame = harry !== 'harry' // what is the value of theSame?
+```
+
+<Spoiler>
+
+```jsx
+const lupin = 5 === 5 // true
+const harry = 2
+const ron = 4
+const ginny = harry + 2 === ron // true
+const dumbledore = ginny + 'hello' // "truehello"
+const theSame = harry !== 'harry' // true, because 2 does not equal "harry"
+
+/* 
+If the dumbledore = ginny + 'hello' answer is confusing for you,
+review the previous exercise answer for "5helloworld"
+*/
+```
+
+</Spoiler>
+
+# Truthy / falsy
+
+Now that you have learned a few data types, you should know that every data in
+JavaScript is either truthy or falsy.
+
+> **Every data is either truthy or falsy.**
+
+**falsy:** There are only **six falsy values** in JavaScript. (For now, just
+remember the first 3. The others you will naturally get used to with
+experience):
+
+`false`, `0`, `""` (empty string), `undefined`, `null`, `NaN` (Not a Number)
+
+**Truthy: EVERYTHING ELSE** is truthy!
+
+To illustrate, let's go over each data type we've learned:
+
+| Data type | Falsy                 | Truthy                                               |
+| --------- | :-------------------- | :--------------------------------------------------- |
+| Number    | 0, NaN (Not a Number) | Everything else, like -50, 100, 1999999, 0.1, etc.   |
+| String    | "" (empty string)     | Everything else, like "hellofalse", "1234", "hello5" |
+| Boolean   | false                 | true                                                 |
+
+## What's the Point?
+
+Truthy and falsy properties are required for the following operators: `!`, `||`,
+and `&&`.
+
+## Not Operator: !
+
+This operator looks at the value's truthy/falsy property and then returns the
+opposite boolean.
+
+```jsx
+const josh = !0 // Since 0 is falsy, the opposite boolean is true
+// Therefore, josh takes the value of true
+
+const hannah = 0 // Keep in mind that 0 is a falsy value
+const sirius = !hannah // sirius is a boolean, with value true
+const charity = !'' // what is the value of charity?
+const funny = !!'' // What is the value of funny?
+const bone = !!!'hello world' // what is the value of bone?
+const tricks = 'hello' + !!0 // what is the value of tricks?
+const zach = false
+const final = zach === tricks // what is the value of final?
+const semi = zach === !tricks // what is the value of semi?
+```
+
+<Spoiler>
+
+```jsx
+const josh = !0 // true
+const hannah = 0
+const sirius = !hannah // true
+const charity = !'' // true
+const funny = !!'' //false
+const bone = !!!'hello world' // false
+const tricks = 'hello' + !!0 // "hellofalse"
+const zach = false
+const final = zach === tricks // false
+const semi = zach === !tricks // true
+```
+
+</Spoiler>
+
+## And Operator: &&
+
+The 'and' logical operator `&&` evaluates the left and right side's truthy and
+falsy values in the following order:
+
+1. If the left side is falsy, return that value.
+
+   ```jsx
+   const c = '' && 'hello' // c will be "" because the left side is falsy
+   ```
+
+2. If the left side is truthy, return the value on the right side.
+
+   ```jsx
+   let c = 'hello' && false // c is false
+   c = 'hello' && 5 // What is the value of c?
+   c = 5 && 'hello' // what is the value of c?
+   c = true && '' // what is the value of c?
+   c = 0 && 'hello' // what is the value of c?
+   ```
+
+<Spoiler>
+
+```jsx
+let c = 'hello' && false // c is false
+c = 'hello' && 5 // 5
+c = 5 && 'hello' // hello
+c = true && '' //
+c = 0 && 'hello' // 0
+
+// fyi, when printing an empty string in the terminal/console,
+// it prints a blank line. You won't be able to see the actual empty string
+```
+
+</Spoiler>
+
+## Or Operator: ||
+
+(In case you cannot find the `|` symbol, it usually shares the same key as `\`
+and is located above the return key.)
+
+The 'or' operator `||` evaluates the left and right side's truthy and falsy
+values in the following order:
+
+1. If the left side is truthy, return that value.
+
+   ```jsx
+   const c = 'happy' || 'day' // c will be "happy" because the left side is truthy
+   ```
+
+2. If the left side is falsy, return the value on the right side.
+
+   ```jsx
+   const c = '' || 'hello' // c will be "hello"
+   ```
+
+## Exercises
+
+```jsx
+let a = 7 || false // what is the value of a?
+a = false || 'hello' // what is the value of a?
+a = 0 || 'world' // what is the value of a?
+a = 7 || 9 // what is the value of a?
+
+a = 7 && 9 // what is the value of a?
+a = 0 && '' // what is the value of a?
+```
+
+<Spoiler>
+
+```jsx
+let a = 7 || false // 7
+a = false || 'hello' // "hello"
+a = 0 || 'world' // "world"
+a = 7 || 9 // 7  (first truthy value)
+
+a = 7 && 9 // 9  (last truthy value)
+a = 0 && '' // 0
+```
+
+</Spoiler>
+
+```jsx
+let cedric = 5 && 'hello' // what is the value of cedric?
+cedric = 5 && !'hello' // what is the value of cedric?
+const albus = 5 + 5 || 0 // what is the value of albus?
+const dumbledore = 0 || 10 // what is the value of dumbledore?
+const harry = albus > 5 && albus < 10 // what is the value of harry?
+```
+
+<Spoiler>
+
+```jsx
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment     // @ts-ignore
+let cedric = 5 && 'hello' // "hello"
+cedric = 5 && !'hello' // false
+const albus = 5 + 5 || 0 // 10
+const dumbledore = 0 || 10 // 10
+const harry = albus > 5 && albus < 10 //false
+```
+
+</Spoiler>
+
+> `&&` and `||` is **not** associated with boolean `true / false`. It is more
+> about choosing the left value or the right value.
+
+## Conditional Statement: The if statement
+
+Sometimes we might want our code to change its behavior based on certain
+conditions. This happens all the time in life!
+
+> **If** you work hard at coding, you will become a software engineer.
+
+To tell the computer to do this, we use an `if` statement, which looks like the
+following:
+
+```jsx
+if (*condition*) {
+// block of code to be executed if the condition is true
+}
+```
+
+Since everything in JavaScript is either truthy or falsy, you can put anything
+inside the parentheses.
+
+The code inside the curly brackets will execute if the value inside the
+parentheses is truthy. Below are a few examples:
+
+```jsx
+let a = 100 // a takes the value of 100
+if (a % 2) {
+  // a % 2 is 0, which is falsy,
+  a = 90 // so everything inside { } will not be executed
+}
+const b = a + 1 // b takes the value of 101
+```
+
+```jsx
+let a = 9 || 4 // 9 is truthy, so a takes the value 9 which is truthy
+if (a > 5) {
+  // 9 > 5 is truthy
+  a = 90
+}
+const b = a + 1 // b takes the value of 91
+```
+
+## The else statement
+
+Use the **else** statement to specify a block of code to be executed if the
+condition is false.
+
+```jsx
+Syntax:
+
+if ( *condition* ) {
+// block of codes to be executed if the condition is true
+} else {
+// block of codes to be executed if the condition is false
+}
+```
+
+```jsx
+const total = 6
+let result = ""          // declare and initialize result to empty string
+if ( total < 5) {
+  result = "Fail"
+} else {
+  result = "Pass"
+*}*
+```
+
+As with coding in general, if you don't need it, don't use it!
+
+Many engineers make the mistake of using `else` whenever they use `if`. Only use
+`else` if you need to use it. You will slowly build an intuition over time, just
+pay attention to your code review feedback from people reviewing your code.
+
+# Objects
+
+> This section (Objects) is moved here from JS3. If this section is too
+> complicated, please ask for help in the chatroom
+
+The last data type you will need to know is **Objects** and in the next section
+we will start with the most important object: the `Function` Object. Other
+objects will be covered in JS2-3.
+
+Objects in JavaScript can be compared to objects in real life. The concept of
+objects in JavaScript can be understood with real life, tangible objects like
+cars, house, and people.
+
+In JavaScript, an object is a standalone entity, with properties and type.
+Compare it with a car, for example. A car is an object, with properties. A car
+has color, design, weight, material it is made of, etc. In the same way, a
+JavaScript object is a collection of properties where each property has a name
+(also known as key) and a value, similar to a dictionary. The name of a property
+can be any string, including an empty string. The value can be any value type,
+such as a string, Boolean, number, and null, but it cannot be undefined.
+
+So far, we have worked on the 3 types of primitive data types: number, string,
+and boolean. These are called primitive data types because their values contain
+only one single thing like a string, number, Boolean, or null. In contrast,
+objects are used to store collections of data and more complex entities, and as
+such, the object data type is classified as a complex data type.
+
+To create an object, you use the `new` keyword. Here's an example:
+
+```jsx
+// create a Person Object
+const a = new Person()
+
+// create an Array Object
+const b = new Array()
+```
+
+Some of the Objects in the above example and the exercises below may not exist
+in real life so if you try them out in the browser you may get an error.
+
+**Exercises**
+
+1. Create a Date object
+2. Create a Function object
+3. Create an Array object
+4. Create an Object object
+5. Create a EventEmitter object
+
+<Spoiler>
+
+```jsx
+let a = new Date()
+a = new Function()
+a = new Array()
+a = new Object()
+a = new EventEmitter()
+```
+
+</Spoiler>
+
+<ChallengeBar
+  href="/curriculum/5"
+  description="Complete the first seven of JS0 challenges"
+  title="Master your skill by solving challenges"
+/>
+
+export default ({ children }) => (
+  <Layout
+    lessonCoverUrl={`js-0-cover.svg`}
+    title="Foundations of JavaScript"
+    lessonUrl="/curriculum/lessons/js0/primitive_data_and_operators"
+    lessonId="5"
+    subLessons={[
+      'Primitive data and operators',
+      'Functions and execution context'
+    ]}
+  >
+    {children}
+  </Layout>
+)

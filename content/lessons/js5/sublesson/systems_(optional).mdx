@@ -1,0 +1,580 @@
+---
+title: Systems (optional)
+order: 3
+---
+
+# Table of Contents
+
+# Production Systems
+
+If your website is going to have 1000s of requests every minute, you will need
+to have more than one server. 1 server will simply not be able to handle that
+many requests. To solve this problem, you need a proxy that forwards the
+requests to multiple servers. **A Load Balancer** is a proxy that forwards
+requests to different server to divide the load for each server.
+
+<Image
+  src="/assets/curriculum/lessons/js5/browserProxy.png"
+  height="233"
+  width="536"
+/>
+
+<Spoiler name="Graph Markdown">
+
+```jsx
+graph LR
+A[Browser] -->|send request| C{Proxy}
+C -->|first request| D[Server1]
+C -->|2nd request| E[Server2]
+C -->|3rd request| F[Server3]
+```
+
+</Spoiler>
+
+> When the server receives the request from the proxy, `request.ip` will be the
+> address of the Proxy. The actual request of the original sender will be in the
+> `X-Forwarded-For` request header. Your server send a response directly to that
+> IP Address.
+
+Example library you can use for proxying request:
+[node-http-proxy](https://github.com/http-party/node-http-proxy)
+
+In the example:
+
+- `GET` requests to `/hello` are forwarded to `192.168.1.87`
+- `GET` requests to `/world` are forwarded to `192.168.1.88`
+
+```jsx
+const express = require('express')
+const httpProxy = require('http-proxy')
+
+const proxy = httpProxy.createProxyServer({})
+const app = express()
+
+app.get('/hello', (req, res) => {
+  proxy.web(req, res, {
+    target: 'http://192.168.1.87:3001'
+  })
+})
+
+app.get('/world', (req, res) => {
+  proxy.web(req, res, {
+    target: 'http://192.168.1.88:3001'
+  })
+})
+
+app.listen(80)
+```
+
+Use cases of a proxy:
+
+- HTTPS Certificates
+- Load balancing
+- Securing servers so the real servers cannot be directly accessible
+
+## HTTPS
+
+You can no longer serve traffic on `http` for security reasons. Browsers will
+only allow `https` requests to go through by default. To enable https, you must
+provide a certificate to prove that you own the domain name. This certificate
+comes in two parts: Key and Cert. There are many tools like
+[acme.sh](https://github.com/acmesh-official/acme.sh) to help you generate
+certificates quickly for free, powered by
+[Let's Encrypt](https://letsencrypt.org/).
+
+Let's Encrypt signs the certificates for you to verify the authenticity of these
+certificates. All browsers trust certificates signed by Let's Encrypt, but if
+you are behind a corporate network, your company may not allow access to
+websites signed by Let's Encrypt.
+
+Once you have your certificate files, you can start your app like this
+
+```jsx
+const express = require('express')
+const fs = require('fs')
+const https = require('https')
+const app = express()
+
+const server = https.createServer(
+  {
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert')
+  },
+  app
+)
+
+server.listen(443, function () {
+  console.log('Example app listening on port 443! Go to https://localhost:443/')
+})
+```
+
+Listening to port `443` may require you to run your application with `sudo`.
+Since only 1 application can run on a port, if you need more servers handling
+your traffic, you need a proxy that listens to port `443` and sends back the
+HTTPS certificates, then proxies the request to the server.
+
+[MyProxy](https://dev.to/wolfy64/myproxy-how-to-easily-setup-free-ssl-on-your-server-1j8f)
+is an application that helps you setup a proxy server, gets you a HTTPS
+certificate, and helps you deploy your code quickly!
+
+## Containers
+
+In challenge #2: Did you see a security issue? What if someone puts in the
+following command:
+
+`rm -rf ~/`
+
+All the files for every application would be removed. Services like
+[freedomains.dev](http://freedomains.dev) hosts many people's applications. If a
+user executed the command above into their app, every application would be
+deleted.
+
+This is why we need containers, so each application runs as its own virtual
+machine. This way, a malicious application will not be able to affect other
+applications running on the server.
+
+[Docker](https://www.docker.com/) is a well known company that helps manage
+containers. When you create a container, you may want to specify which
+applications your application may need to run. Examples:
+
+- Database like MySQL, CockroachDB, Neo4J, etc. and their version.
+- NodeJS and the version that your app needs.
+
+### Kubernetes
+
+Containers are not only good for security, with containers, you can deploy your
+application to multiple servers and make sure every server has the same code and
+system setup.
+
+If you have 1000 servers and you need to make updates, do you manually update
+each one? No.
+
+[Kubernetes](https://kubernetes.io/) is an application that allows you to upload
+a container configuration, and it will deploy the container to every single
+server.
+
+## Caching
+
+In the above examples, you stored data in both `memory` and `files`. Whenever
+you create an array or object, the data is stored in `memory`. Computer access
+the memory immediately.
+
+```jsx
+const data = {...data...}
+const a = data.name // instant
+
+// The slower your hard drive, the longer `fs.readFile` will take to finish
+fs.readFile('...file path...', (content) => {
+  ... // content is the data from the file...
+})
+```
+
+In contrast, files are stored in hard drives. To get data from a file, the
+computer must first find where the file is located in the hard drive and then
+put the data into the memory.
+
+In the example above, `data.name` is instant, whereas `fs.readFile` takes awhile
+so you have to pass in a function to run when the reading is complete.
+
+Some example of hard drives:
+
+<twoColumns>
+
+<div>
+Cassette tapes: These are specialized data usually for audio recording music
+
+<Image
+  src="/assets/curriculum/lessons/js5/cassette.jpeg"
+  width="500"
+  height="334"
+/>
+
+</div>
+
+<div>
+DVDs: These store data!
+
+<Image src="/assets/curriculum/lessons/js5/dvd.jpeg" width="334" height="334" />
+
+</div>
+
+</twoColumns>
+
+Harddrives: Internally, it looks like a bunch of shiny DVDs stacked together.
+
+<Image src="/assets/curriculum/lessons/js5/hdd.jpeg" width="360" height="270" />
+
+SSD: These hard drives are FAST. It doesn't have a spinning disk (unlike hard
+drives) so finding and storing files on these can be up to many times faster
+than the hard drive.
+
+<Image src="/assets/curriculum/lessons/js5/ssd.png" width="350" height="250" />
+
+Since it takes time to lookup files on hard drives, `fs.readFile` function
+requires you to pass in a function that gets run when the file is found and
+loaded into memory.
+
+# The Internet
+
+When you type a url into the browser and hit enter, your browser is sending a
+request to another computer (server). When your browser receives the response
+from the server (usually HTML), it follows the instructions in the HTML to
+display the website.
+
+This section will go over some theory about what happens behind the scenes and
+the relationship between your computer, router, modem, and the internet.
+
+By the end of this section, you will know enough to turn your computer into a
+server and make it publicly accessible by anybody with in the world with
+uncensored internet access.
+
+## Router (Intranet)
+
+**The router** provides WIFI / ethernet ports that your computer and other
+electronics gadgets can connect to. If you go to an electronics store and buy a
+wireless router, you can bring it home and immediately setup a WIFI network for
+your devices to connect to.
+
+Whenever a device connects to a router, the router gives the device an **IP
+Address**. An IP Address specifies the device's address. Since the router keeps
+track of all devices connected to it via the IP Address, the router helps
+facilitate communication between all devices.
+
+<Image
+  src="/assets/curriculum/lessons/js5/router.png"
+  width="983"
+  height="153"
+/>
+
+<Spoiler name= "MermaidJS Markdown (Markdown text to generate the chart above. Not important,
+  feel free to ignore)">
+
+```jsx
+graph TD
+A[Router] --> B(Mom's Computer 192.168.1.104)
+A --> C(Dad's Computer 192.168.1.105)
+A --> D(Dad's Phone 192.168.1.106)
+A --> E(Your Computer 192.168.1.107)
+```
+
+[https://mermaidjs.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiZ3JhcGggVERcbkFbUm91dGVyXSAtLT4gQihNb20ncyBDb21wdXRlciAxOTIuMTY4LjEuMTA0KVxuQSAtLT4gQyhEYWQncyBDb21wdXRlciAxOTIuMTY4LjEuMTA1KVxuQSAtLT4gRChEYWQncyBQaG9uZSAxOTIuMTY4LjEuMTA2KVxuQSAtLT4gRShZb3VyIENvbXB1dGVyIDE5Mi4xNjguMS4xMDcpIiwibWVybWFpZCI6eyJ0aGVtZSI6ImRlZmF1bHQifX0](https://mermaidjs.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiZ3JhcGggVERcbkFbUm91dGVyXSAtLT4gQihNb20ncyBDb21wdXRlciAxOTIuMTY4LjEuMTA0KVxuQSAtLT4gQyhEYWQncyBDb21wdXRlciAxOTIuMTY4LjEuMTA1KVxuQSAtLT4gRChEYWQncyBQaG9uZSAxOTIuMTY4LjEuMTA2KVxuQSAtLT4gRShZb3VyIENvbXB1dGVyIDE5Mi4xNjguMS4xMDcpIiwibWVybWFpZCI6eyJ0aGVtZSI6ImRlZmF1bHQifX0)
+
+</Spoiler>
+
+In the above example, since all devices are connected to the same router, any
+device can send a request to your computer using your computer's IP Address.
+
+## Server
+
+This section will show you how to create an app so your computer can start
+accepting incoming requests. The most popular library to do this is `express`.
+Create a JavaScript file and add the following code:
+
+<Spoiler name="If you have problems running the app">
+
+If the error says `express not found`, make sure you run `npm i express` to
+download the `express` library and then run the app again.
+
+</Spoiler>
+
+After you run the app, open up a browser (on the same computer running the app)
+and send a request to yourself! `http://127.0.0.1:8123`
+
+- When your computer sees this IP Address `127.0.0.1`, it will send the request
+  directly to the application listening to the specified port (`8123`)
+
+Other devices can send a request to your application if they know your IP
+Address.
+
+### How To Find Your Device's IP Address
+
+<Spoiler name = "MacOS">
+
+<Image src="/assets/curriculum/lessons/js5/mac.png" height="552" width="1165" />
+
+</Spoiler>
+
+If your ip address is `192.168.1.107`, any device that is connected to the same
+router can send a request to `192.168.1.107:8123` and receive a response,
+**Hello There** . Try it with your phone or any other devices connected to the
+same router.
+
+### Intranet
+
+In our examples above, all devices are connected to your router but the router
+is not connected to a modem (explained below). Therefore, even though devices
+connected to the router can send requests to each other, none of the devices has
+access to the internet. This connectivity to each other, not the internet, is
+called an **Intranet**.
+
+For security reasons, most financial companies have user's data in an intranet,
+inaccessible to hackers outside the company. Only employees connected to the
+company's internal network can have access to the data.
+
+### Exercises
+
+1. Create a server that listens to port `8124`
+
+   <Spoiler>
+
+   ```jsx
+   const express = require('express')
+   const app = express()
+
+   app.get('/', (req, res) => {
+     res.send('<h1>Hello!</h1>')
+   })
+
+   app.listen(8124)
+   ```
+
+   </Spoiler>
+
+2. Create a server that supports 2 paths (`/message`, `/greeting`) and listens
+   to port `8125`.
+
+    <Spoiler>
+
+   ```jsx
+   const express = require('express')
+   const app = express()
+
+   app.get('/message', (req, res) => {
+     res.send('<h1>Hello! You have a message!</h1>')
+   })
+
+   app.get('/greeting', (req, res) => {
+     res.send('<h1>Greetings!</h1>')
+   })
+
+   app.listen(8125)
+   ```
+
+    </Spoiler>
+
+3. Create a folder called `public`. Put some files in there. Then create a
+   server that support a path `/files`. When your server receives a request,
+   send back the names of all the files in the `public` folder.
+
+    <Spoiler name = "Hint">
+
+   When you receive a request, use `fs.readdir` to read the `public` folder
+   directory.
+
+   ```jsx
+   fs.readdir('./public', (err, files) => {
+     // Create your html string from the `files` array
+     // Send back the response!
+   })
+   ```
+
+    </Spoiler>
+
+    <Spoiler>
+
+   ```jsx
+   const express = require('express')
+   const fs = require('fs')
+   const app = express()
+
+   app.get('/files', (req, res) => {
+     fs.readdir('./public', (err, files) => {
+       const str = files.reduce((acc, fileName) => {
+         return acc + `<h1>${fileName}</h1>`
+       })
+       res.send(str)
+     })
+   })
+
+   app.listen(8123)
+   ```
+
+    </Spoiler>
+
+4. Let's slow down your path! Support 2 paths (`/normal`, `/slow`). When `/slow`
+   receives a request, send back a response after waiting 2 seconds. Make the
+   user wait!
+
+    <Spoiler>
+
+   ```jsx
+   const express = require('express')
+   const app = express()
+
+   app.get('/normal', (req, res) => {
+     res.send('<h1>Hello! Normal Speed</h1>')
+   })
+
+   app.get('/slow', (req, res) => {
+     setTimeout(() => {
+       res.send('<h1>Hello! Normal Speed</h1>')
+     }, 2000)
+   })
+
+   app.listen(8125)
+   ```
+
+    </Spoiler>
+
+5. After you run `express` function to create a server object, you can serve any
+   files you want if you run `app.use( express.static('myFiles') )`
+
+   In the same folder that you wrote the code for the server, create a folder
+   called `myFiles` and then add some files in there (for example, `song.mp3` as
+   a music file)
+
+   ```jsx
+   const express = require('express')
+   const app = express()
+   app.use( express.static('myFiles') )
+   ...
+   app.listen(8998)
+   ```
+
+   With the code above, you can go to
+   `[http://127.0.0.1:8998/song.mp3](http://127.0.0.1:8998/song.mp3)` and the
+   browser should play the music file
+
+   Exercise: Create a folder called `public`. Build a website so that when
+   someone goes to your website, the can see all the files inside `public`. When
+   they click on the file, they view the file on the browser. (Hint: You can
+   [use the `a` tag to link to files](https://www.w3schools.com/tags/tag_a.asp))
+
+## Modem
+
+# Authentication
+
+Company → Company (Facebook + Oauth)
+
+User → Company (Facebook)
+
+# System Design
+
+DNS name resolution
+
+<Image src="/assets/curriculum/lessons/js5/dns.jpg" width="1000" height="750" />
+
+# Cookies and Privacy
+
+Example of Google as an add tracker under the false pretense of giving merchants
+free analytics data.
+
+But unfortunately, google is building a profile of everything about you, without
+you knowing Google is even doing that in the background. WTF. Good thing is,
+there are companies fighting back already! DDG and apple.com.
+
+Links to read more
+
+- How to protect yourself
+- Why would I care?
+  - Negative stats attributed towards you
+
+# Web Performance
+
+How to make your websites FAST
+
+[Performant front-end architecture](https://www.debugbear.com/blog/performant-front-end-architecture)
+
+# Concepts
+
+<br />
+
+## HTML
+
+<br />
+
+### Critical Rendering Path
+
+<br />
+
+### Header
+
+<br />
+
+### Accessibility
+
+<br />
+
+### Mobile Friendly
+
+<br />
+
+# AWS
+
+<br />
+
+# AWS
+
+<br />
+
+# AWS
+
+<br />
+
+## S3
+
+Stores files. When you put files into your server (or `public`) folder, you get
+url. S3 does the same thing.
+
+## Lambda
+
+Upload a `npm` project. And then you can click on a button (like `play`) to run
+that function.
+
+## SES
+
+Service that handles incoming and outgoing email requests
+
+# System Design
+
+A list of steps to tackle system design problems. System design means to design
+a system that works for the use case. We will list the steps by order:
+
+1. **User experience** - Its important to 100% understand how the user will be
+   using your app. Think about what data is needed to power their app and when.
+2. **APIs** - You need to design APIs to power the user experience in step 1.
+   Think about making it fast for the user. What data is static? The data that
+   are not volatile can be cached locally on the browser.
+3. **Scaling** - What if suddenly you have 1000 users? 1 million? 1 billion?
+   1. The first thing you should always mention on the server is caching.
+      Fetching from the database is the most expensive because you can easily
+      have 100s of servers, but only a few databases. The more databases you
+      have, the more syncing headaches you have.
+      1. Eventually, you will get to the point where you need to update memory
+         first, then update the database.
+   2. Eventually, you will need to shard your database (split the database up).
+      There are many ways to split the data. You can split by geo-location,
+      time, etc. This depends on the use case (which is why #1 is so important).
+   3. DNS - You need your own nameserver so that during DNS resolution, you can
+      set split the request to different ip addresses so your server don't
+      accidentally get overloaded.
+
+How much load can one server handle?
+
+1 server, 1 core, 5M readers a month. That's 160k / day, 7k / hour, around 116 /
+minute.
+
+_From HN admin - It's hard to count active users because you have to define them
+in order to count them, and we make a point of not tracking people that much. We
+can count accounts and unique IPs, and that's about it. But it's basically about
+5M readers a month, give or take, as far as we can tell. It grows linearly, with
+large swings. If you step back 10 feet from the graphs and squint, it's
+basically a straight line for the last 10 years. We like it that way; we
+wouldn't want to go full Haskell and avoid success at all costs, but we don't
+want hockey-stick growth either. HN is not a startup!_
+
+**_It runs on one server. Actually the app server (written in Arc) runs on one
+core. But we have some caching in front of that for logged-out users._**
+
+_Reddit is 100x bigger. It's not just that we aren't in their league...our
+league is not in their league. So the comparison is a little embarrassing. It's
+hard to count active users because you have to define them in order to count
+them, and we make a point of not tracking people that much. We can count
+accounts and unique IPs, and that's about it. But it's basically about 5M
+readers a month, give or take, as far as we can tell. It grows linearly, with
+large swings. If you step back 10 feet from the graphs and squint, it's
+basically a straight line for the last 10 years. We like it that way; we
+wouldn't want to go full Haskell and avoid success at all costs, but we don't
+want hockey-stick growth either. HN is not a startup! It runs on one server.
+Actually the app server (written in Arc) runs on one core. But we have some
+caching in front of that for logged-out users._

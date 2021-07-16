@@ -1,0 +1,1322 @@
+---
+title: Server
+order: 2
+---
+
+# Table of Contents
+
+# Setting up a project
+
+This section will teach you the steps you need to setup a project and review
+some `node` basics that you may already know. Make sure you are in a terminal.
+
+> If in any steps you are stuck because of a running program in the terminal,
+> try pressing `Control c` or `Control d` or `Control z` to terminate the
+> process.
+
+1. Create a folder. `mkdir project1`
+2. Go into the folder and initialize the project.
+   1. `cd project1`
+   2. `npm init`
+      1. If you find the questions irrelevant, type `Control c` to quit and type
+         `npm init -y` to autofill the questions asked.
+3. After initializing the project, you will see a file called `package.json`.
+
+If you are unfamiliar with the 3 steps above, it may help to delete the folder
+and then repeat the steps until you are completely comfortable creating a new
+project.
+
+## Package.json
+
+Package.json contains information about your project. This is a big JSON string
+(not a javascript object) so you must make sure you pay attention to your format
+if you modify the file.
+
+We will only go over the important aspects properties of this file. Feel free to
+play and explore, if you mess up you can delete the project folder and create a
+new one.
+
+To start, create a file (in this example, we will use `index.js`). Open the file
+and run a few `console.log` statements:
+
+```jsx
+console.log('hello')
+console.log('world')
+```
+
+Run your file to make sure it works: `node index.js`
+
+### Scripts
+
+`scripts` section allows you to define commands. By default, you should have a
+`test` property. Let's create our own script called `start` that runs our file:
+
+<Image
+  src="/assets/curriculum/lessons/js5/scripts.png"
+  width="513"
+  height="258"
+/>
+
+Since this is a JSON string, make sure you are always using double quotes and
+don't put comma for the last property in the object.
+
+After saving the file, you should be able to run your file by typing
+`npm run start` to execute the command. When your project gets bigger, it can
+get pretty complicated to run your files, so writing scripts makes it easy for
+developers working on the project. You can write as many scripts as you want.
+[Here is an example of the scripts](https://github.com/garageScript/c0d3-app/blob/master/package.json#L4)
+in C0D3's codebase.
+
+<Image
+  src="/assets/curriculum/lessons/js5/scriptList.png"
+  width="642"
+  height="256"
+/>
+
+<br />
+
+### Adding libraries
+
+If you want to add a library (`moment` for example) to your project, type
+`npm i --save moment`
+
+You will notice 3 things when you do that:
+
+1. A new folder `node_modules` will be created if it did not already exist.
+   Within that folder, you will see a folder called `moment` that contains all
+   the files for moment. You may notice other folders, these folders contains
+   the libraries that `moment` may need to run.
+2. Your `package.json` file will have a `dependencies` section containing
+   `moment`. This section will contain all the libraries that your project
+   depend on.
+   [Here is an example of the libraries](https://github.com/garageScript/c0d3-app/blob/master/package.json#L15)
+   that C0D3 depends on.
+3. A `package-lock.json` file will be created. This file not only contains the
+   libraries that your project depend on, it also contains all the dependent
+   libraries that the libraries themselves depend on. It also lists the specific
+   version of each library. This way, everyone who works on your project will
+   have exactly the same libraries.
+
+> When you work on other people's projects, first download the code onto your
+> computer. Then run `npm i` to install all the libraries (specified in
+> `package-lock.json`) that the applications need. All the libraries will be
+> installed into `node_modules` folder.
+
+At this point, you should have `moment` library installed and ready to use.
+
+1. Add `const moment = require('moment')` into your `index.js` file.
+2. Run a few commands and print them out
+
+```jsx
+// index.js
+const moment = require('moment')
+
+console.log('hello')
+console.log('world')
+
+const a = moment().startOf('day').fromNow()
+const b = moment().startOf('week').fromNow()
+
+console.log('a is ', a)
+console.log('b is ', b)
+```
+
+# Server
+
+In the previous todo list exercise, you sent requests to our API to create user
+session, create user accounts, and manage todo lists. In this section, you will
+learn how to build your own server so you can accept requests and send back
+responses.
+
+First, create a project and add a library called `express`. There are many
+libraries that can help us accept requests and `express` is the most popular.
+Add the following code
+
+```jsx
+// index.js
+const express = require('express') // Import the express library
+const app = express() // Use the express library to create an app
+
+app.listen(3000) // Your app needs to listen to a port number.
+```
+
+`app.listen` keeps your application running so you can listen to incoming
+requests. If your application stops running, then nothing will be listening to
+incoming requests. Your server is down when the application stops running. To
+shut down your server type `CTRL c`
+
+In order to listen to incoming requests, you need to provide a port number. You
+can make this number up and as long as no other applications (like games, email,
+messages, etc) running in your computer is already listening on the same port.
+Usually it is safe to pick a number 3000 and higher.
+
+> **Only one application** may listen to a certain port at any given time.
+
+Using the `app` object, you can also listen for specific request method and
+path.
+
+<Image
+  src="/assets/curriculum/lessons/js5/requestResponse.png"
+  width="667"
+  height="226"
+/>{' '}
+
+> The image below says the request handler function will be called with 2
+> arguments, a request and a response object, for simplicity. There is actually
+> a third argument which is a function. This third argument will be covered in
+> the section below about middleware.
+
+**Request Handler** - The function that runs when a request comes into the
+function.
+
+- When your request handler sends back a response, the data (like the string
+  '<h1>....</h1>' in the example above), will be in the response body.
+
+Putting it together, let's run your first server!
+
+```jsx
+// index.js
+const express = require('express') // Import the express library
+const app = express() // Use the express library to create an app
+
+// Whenever a request comes in at the path `/hello`, you send back some HTML!
+app.get('/hello', (req, res) => {
+  res.send('<h1> Hello world </h1>')
+})
+
+app.listen(3000) // Your app needs to listen to a port number.
+```
+
+To send a request, open your browser. In the url, type in:
+[http://localhost:3000/hello](http://localhost:3000/hello)
+
+> Remember to restart your application each time you make changes to your code
+> so that your change is reflected.
+
+For now, the only request methods you can experiment with are requests without a
+body: `GET` and `DELETE` .
+
+Sample code to send back 'ok' when we receive a `DELETE` request at the path
+'/hello', and sends back HTML when we receive `GET` request at the path
+'/hello'.
+
+```jsx
+// index.js
+const express = require('express') // Import the express library
+const app = express() // Use the express library to create an app
+
+app.get('/hello', (req, res) => {
+  res.send('<h1> Hello world </h1>')
+})
+
+app.delete('/hello', (req, res) => {
+  res.send('ok')
+})
+
+app.listen(3000) // Your app needs to listen to a port number.
+```
+
+The first argument specifies a url path string. It also accepts other data types
+and the most common url patterns are:
+
+- `/hello` - Request handler will run specifically when the request path matches
+  `/hello`
+- `['/hello', '/world']` - Request handler will run when the request path
+  matches either `/hello` or `/world`
+- `/*` - Request handler will run for all paths
+
+> To create a request handler for all request methods, you can use `app.use` >
+> `app.use(path, requestHandler)`
+
+### Exercises
+
+The answers use a different variable name. Instead of `app`, you could have used
+any variable.
+
+1. [Create a get path called `/count`](https://js5.c0d3.com/examples/count) that
+   will tell users how many times that path has been visited.
+
+   <Spoiler>
+
+   ```jsx
+   let visitorCount = 0
+   router.get('/count', async (req, res) => {
+     visitorCount = visitorCount + 1
+     return res.send(`
+     <h1>Welcome, this page has been visited ${visitorCount} times</h1>
+     `)
+   })
+   ```
+
+   </Spoiler>
+
+2. [Create a get path called](https://js5.c0d3.com/examples/delay) `/delay` that
+   will send back a response only after 5 seconds (We are simulating a really
+   slow response).
+
+   <Spoiler>
+
+   ```jsx
+   router.get('/delay', async (req, res) => {
+     setTimeout(() => {
+       return res.send(`
+       <h1>Your request has been delayed by 5 seconds</h1>
+     `)
+     }, 5000)
+   })
+   ```
+
+   </Spoiler>
+
+3. [GetFile:](https://js5.c0d3.com/examples/getfile) Create a file with the file
+   name `hello`. Create a get path called `/getfile` that sends back the file.
+   Hint: you need to use node's `fs` and then `fs.readFile` to read the contents
+   of the file.
+
+   <Spoiler>
+
+   ```jsx
+   router.get('/getfile', async (req, res) => {
+     fs.readFile('./hello', (err, data) => {
+       if (err) return res.status(500).send('Error: Error reading file')
+       res.send(`<div>${data}</div>`)
+     })
+   })
+   ```
+
+   If you don't enclose `data` variable inside an HTML string, then `res.send`
+   will send back the literal file contents, which serves a different purpose. A
+   better way to send actual files is to simply call `res.sendFile` .
+
+   </Spoiler>
+
+4. [Easy AB Testing](https://js5.c0d3.com/examples/abtest). Create a path called
+   `/abtest`. It will display "Hello World" in green 1 in 5 times. The rest of
+   the times, it will display in red.
+
+   <Spoiler>
+
+   ```jsx
+   let visitorCount2 = 0
+   router.get('/abtest', (req, res) => {
+     let color = '#2a2'
+     visitorCount2 = visitorCount2 + 1
+     if (visitorCount2 % 5 === 0) {
+       // happens 1 every 5 times
+       color = '#a22'
+     }
+     res.send(`
+     <style>
+     h1 {
+     color: ${color};
+     }
+     </style>
+     <h1>Hello World</h1>
+     `)
+   })
+   ```
+
+   </Spoiler>
+
+## Request & Response Headers
+
+Now you know how to send requests using the browser url or `fetch` as well as
+listening to incoming requests and sending responses. In this section you will
+explore a few important response headers and how it affects the browser.
+
+To set a response header, we run the `set` function in the response object
+before sending back a response. `set` takes in an object of the properties we
+want to set.
+
+To read a request header, we can run the `get` function in the request object
+and pass in the string of the header we want.
+
+### Cookies
+
+In the request below, the first path is sending back a `set-cookie` response
+header to tell the browser to set a header.
+
+The second path tells the user what cookie they have.
+
+```jsx
+// index.js
+const express = require('express') // Import the express library
+const app = express() // Use the express library to create an app
+
+app.get('/set', (req, res) => {
+  res.set({
+    'set-cookie': 'name=c0d3js5' // For cookies, you must set a key / value pair
+  })
+  res.send('<h1> Cookie has been set </h1>')
+})
+
+app.get('/', (req, res) => {
+  // You may notice that cookie is a long string of cookies
+  // split by ;
+  // You may need to parse out the cookie key / value to
+  // get the correct value.
+  res.send(`
+    <h1>Welcome ${req.get('cookie')}</h1>
+  `)
+})
+
+app.listen(3000) // Your app needs to listen to a port number.
+```
+
+If you go to the `/set` path, you should notice that the response has a
+set-cookie header.
+
+<Image
+  src="/assets/curriculum/lessons/js5/setCookieResponse.png"
+  width="1220"
+  height="404"
+/>
+
+All requests that your browser sends to your domain will have a `cookie` header
+in the request.
+
+<Image
+  src="/assets/curriculum/lessons/js5/setCookieRequest.png"
+  width="1059"
+  height="549"
+/>
+
+### Cache-Control
+
+If you want to tell the browser to save the response for a period of time so it
+does not send a request to you, you can send back a `Cache-Control` header with
+a value of `max-age=120`. This will tell the browser to save the response for
+120 seconds.
+
+If you have a website that millions of people use daily, your application will
+receive millions of requests every day. Setting `cache-control` headers in your
+response can help you reduce the number of requests you receive.
+
+When you first load the `url` in the code below, you will notice it will take a
+long time before receiving the response. The response would have a
+`cache-control` header. If you open a new tab to the same url, you will notice
+that the page loads instantly, meaning the browser did not send the request.
+
+You can also send a `fetch` request to the url and see that the network request
+gets the response instantly.
+
+```jsx
+app.get('/ignore', (req, res) => {
+  // This helps you see if your server actually recieved a request or not.
+  console.log('ouch', Date.now())
+  res.set('Cache-Control', 'max-age=120')
+  setTimeout(() => {
+    res.send('<h1>Cached page</h1>')
+  }, 3000)
+})
+```
+
+### Exercises
+
+1. [Depending on which browser, display hello world in red or blue (chrome vs firefox)](https://js5.c0d3.com/examples/browser)
+
+   <Spoiler>
+
+   ```jsx
+   const browserHTML = (browser = 'Unknown') => {
+     let color = '#aaa'
+     if (browser === 'firefox') {
+       color = '#a22'
+     }
+     if (browser === 'chrome') {
+       color = '#22a'
+     }
+     if (browser === 'safari') {
+       color = '#2a2'
+     }
+     return `
+     <style>
+     h1 {
+     color: ${color};
+     }
+     </style>
+     <h1>Welcome ${browser} user</h1>
+     `
+   }
+
+   router.get('/browser', (req, res) => {
+     const ua = req.get('user-agent').toLowerCase()
+     if (ua.includes('firefox/')) {
+       return res.send(browserHTML('firefox'))
+     }
+     if (ua.includes('chrome/')) {
+       return res.send(browserHTML('chrome'))
+     }
+     if (ua.includes('safari/')) {
+       return res.send(browserHTML('safari'))
+     }
+     return res.send(browserHTML())
+   })
+   ```
+
+   </Spoiler>
+
+2. CORS: Allow browsers in other domains to send a request to your server for
+   all `/api/*` paths. Remember, this would be an options request described in
+   the above section.
+
+   <Spoiler>
+
+   ```jsx
+   router.options('/api/*', (req, res) => {
+     res.header('Access-Control-Allow-Credentials', true)
+     res.header('Access-Control-Allow-Origin', req.headers.origin)
+     res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, PATCH, DELETE')
+     res.header(
+       'Access-Control-Allow-Headers',
+       'Origin, X-Requested-With, Content-Type, Accept, Credentials'
+     )
+     res.send('ok')
+   })
+
+   router.put('/api/*', (req, res) => {
+     res.send('<h1>put request received</h1>')
+   })
+
+   router.post('/api/*', (req, res) => {
+     res.send('<h1>post request received</h1>')
+   })
+   ```
+
+   </Spoiler>
+
+3. [Show how many distinct users have visited a site](https://js5.c0d3.com/examples/distinct) -
+   The industry standard is to use cookies to track users.
+
+   If you delete your cookie and refresh the page, you should see the distinct
+   count go up.
+
+   Screenshot is dev console in Chrome
+
+   <Image
+     src="/assets/curriculum/lessons/js5/deleteCookie.png"
+     width="781"
+     height="386"
+   />
+
+   When setting cookie header, your string must have the `key=value` format.
+
+   <Spoiler>
+
+   ```jsx
+   const { v4: uuid } = require('uuid')
+
+   let uniqueVisitors = 0
+   router.get('/distinct', (req, res) => {
+     const cookie = req.get('cookie') || ''
+     const cookieStr =
+       cookie.split(';').find(str => {
+         return str.includes('guid=')
+       }) || ''
+
+     let guid = cookieStr.split('=')[1]
+     if (cookieStr) {
+       return res.send(`
+         <h1>You have been identified with guid ${guid}</h1>
+         <h3>Distinct Number of Visitor Count: ${uniqueVisitors}.</h3>
+       `)
+     }
+     uniqueVisitors = uniqueVisitors + 1
+     guid = uuid()
+     res.set('set-cookie', `guid=${guid}`)
+     res.send(`
+     <h1>You have been ASSIGNED a guid ${guid}</h1>
+     <h3>Distinct Number of Visitor Count: ${uniqueVisitors}.</h3>
+     `)
+   })
+   ```
+
+   </Spoiler>
+
+4. [AB Testing](https://js5.c0d3.com/examples/ab) - 1 in 3 visitors who visits
+   your website will always see "Hello World" in red. The rest will see it in
+   blue. (You must delete cookie, use incognito mode, or open up a new browser
+   to simulate a new visitor)
+
+   Setting visitor cookie for AB testing is important because you want to give
+   select users the new experience throughout all the pages they visit. You can
+   use cookies to set what treatment you want to give the user. In our case, we
+   are giving 30% our users the red treatment.
+
+   <Spoiler>
+
+   ```jsx
+   let visitorId = 0
+   router.get('/ab', (req, res) => {
+     const cookie = req.get('cookie') || ''
+     const cookieStr =
+       cookie.split(';').find(str => {
+         return str.includes('abtest=')
+       }) || ''
+
+     let visitorKey = cookieStr.split('=')[1]
+     if (!visitorKey) {
+       visitorKey = visitorId
+       visitorId = visitorId + 1
+     }
+     let color = '#2a2'
+     if (+visitorKey % 3 === 0) {
+       // happens 1 every 3 times
+       color = '#a22'
+     }
+     res.set('set-cookie', `abtest=${visitorKey}`)
+     res.send(`
+     <style>
+     h1 {
+     color: ${color};
+     }
+     </style>
+     <h1>Hello World</h1>
+     `)
+   })
+   ```
+
+   </Spoiler>
+
+> Protip: **nodemon** is an application that helps you reload your JavaScript
+> file automatically when you change a file so you don't have to do it manually.
+> To run your JavaScript file with **nodemon**, follow the two steps:
+
+1. Install nodemon: `npm i -g nodemon`
+2. Run your file (app.js) using nodemon: `nodemon app.js`
+
+## Request & Response Objects
+
+This section will cover the important properties and functions in the request
+and response object that you may encounter at work.
+
+### Request
+
+Remember the URL consists of the following parts:
+
+<Image
+  src="/assets/curriculum/lessons/js3/urlStructure.png"
+  width="480"
+  height="77"
+/>
+
+Sometimes, you can specify for the path itself to be a variable by adding a `:`
+in front of the variable name
+
+```jsx
+// Visit http://localhost:4098/users/billyjoel/profile
+...
+app.get('/users/:username/profile/:age', (req, res) => {
+  const userId = req.params.username
+  res.send( `<h1>Welcome ${userId}, Your are ${req.params.age}</h1>` )
+})
+app.listen(4098)
+```
+
+**Properties**
+
+The important properties in the request object that you should know are:
+
+- `params` - An object with key / value pair based on the variables within the
+  URL.
+- `query` - An object with key / value pairs based on the url **query
+  parameters**
+- `hostname` - The hostname in the url
+- `ip` - The address of the machine that sent the request.
+
+  - Almost always, your code would be running behind a proxy like a load
+    balancer (described below). Therefore, the `ip` property will be the ip
+    address of the proxy, not the `ip` address of the device that actually sent
+    the request. To get the original ip address, you must look at the
+    `x-forwarded-for` request headers.
+
+- `headers` - Request headers. Normally we don't access headers directly using
+  this property, we use `get` function to retrieve the headers we need
+  (described below)
+- `body` - The body of the incoming request. This is only applicable to requests
+  methods that sends data in the request body: `PUT`, `PATCH`, `POST`
+
+**Functions**
+
+- `get` - Allows you to retrieve to request header
+  - `req.get('authorization')` will return the authorization value in the
+    `Authorization` header.
+  - `req.get('x-forwarded-for')` will return the ip address of the original
+    machine that sent the request if the request went through a proxy.
+
+### Response
+
+When it comes to the response object, it is important to know the functions.
+
+- `send` - Takes in a string and sets the response body and sends the response.
+  - `res.send('<h1>hello</h1>')`
+    - Sends back a response with the string in the body.
+- `status` - Takes in a number and sets the status of the response. Defaults
+  to 200. Returns the original response object
+  - `res.status(400).send('wrong input')`
+    - Sends back a response with a status code 400 and a string in the response
+      body
+- `redirect` - Takes in a url string and sets the response status code to 302.
+  When the browser receives the response, it will send a new request to the url
+  you specified
+  - `res.redirect('https://google.com')`
+- `set` - Sets a response header. There are two ways to use this.
+
+  ```jsx
+  // sets the set-cookie header in the response to hello.
+  res.set('set-cookie', 'hello')
+
+  // THis method of setting header is useful when you want to
+  //    set more than 1 header at once
+  res.set({
+    'set-cookie': 'hello',
+    'cache-control': 'max-age=120'
+  })
+  ```
+
+- `json` - Sets the response header `content-type` to JSON and sends back a JSON
+  string. Usually used for APIs to send back data.
+
+  ```jsx
+  res.json([
+    {
+      title: 'lesson1'
+    },
+    {
+      title: 'lesson2'
+    }
+  ])
+  ```
+
+- `sendFile` - Takes in a file path and sends back a file.
+  - `res.sendFile('./funny.png')` - sends back an image. Make sure the file
+    exists!
+
+### Exercises
+
+For some of the exercises below, you would have to come up with your own paths
+that makes sense to you. You should be practicing how to combine your front end
+skills with the backend to be able to build complete projects.
+
+1. [Custom Delay](https://js5.c0d3.com/examples/delayed?time=2000): When user
+   visits `/delayed?time=2000`, delay the `welcome` response by the specified
+   number of milli-seconds in the url parameter
+
+   <Spoiler>
+
+   ```jsx
+   router.get('/delayed', (req, res) => {
+     setTimeout(() => {
+       res.send(`
+       <h1>Here is your response after ${req.query.time}ms delay</h1>
+       `)
+     }, +req.query.time)
+   })
+   ```
+
+   </Spoiler>
+
+2. [Guest Note](https://js5.c0d3.com/examples/notes): When users visit
+   `/messages`, they should see a list of messages. They can also add messages.
+   When server restarts, you must not lose your data. Since you did not learn
+   how to handle request body on the server, send the data in the url query
+   parameter.
+
+   <Spoiler>
+
+   ```jsx
+   const noteFile = './notes'
+   let notes = []
+   fs.readFile(noteFile, (err, data) => {
+     if (err) {
+       return console.log('error reading file')
+     }
+     const str = data.toString()
+     if (str) {
+       notes = JSON.parse(str)
+     }
+   })
+   router.get('/notes', (req, res) => {
+     const noteListString = notes.reduce((acc, note) => {
+       return (
+         acc +
+         `
+       <h3>${note}</h3>
+       `
+       )
+     }, '')
+     res.send(`
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/andybrewer/mvp/mvp.css" />
+     <main>
+     ${noteListString}
+     <hr />
+     <textarea class="noteInput" name="" cols="30" rows="10"></textarea>
+     <button class="noteSubmit">Submit</button>
+     <script>
+     const textarea = document.querySelector('.noteInput')
+     const submit = document.querySelector('.noteSubmit')
+     submit.addEventListener('click', () => {
+       const value = textarea.value
+       fetch('./notes/add?content=' + value)
+       textarea.value = ''
+       alert('submitted. Refreshing the page to see your message')
+       window.location.reload()
+     })
+     </script>
+     `)
+   })
+
+   router.get('/notes/add', (req, res) => {
+     const content = req.query.content
+     if (!content) {
+       return res.status(400).send('Please provide a content query parameter')
+     }
+     notes.unshift(content)
+     notes = notes.splice(0, 5)
+     fs.writeFile(noteFile, JSON.stringify(notes), () => {})
+     res.json(notes)
+   })
+   ```
+
+   </Spoiler>
+
+3. [Online Users](https://js5.c0d3.com/examples/online?name=hello): When user
+   visits `/online?name=joe` user should see a list of all online users.
+
+   Users will always get 401 response until they put in the name query parameter
+
+   Display a list of users who are online (send a request every 1 second)
+
+   <Spoiler>
+
+   ```jsx
+   const lastseen = {}
+   router.get('/online', (req, res) => {
+     const name = req.query.name
+     if (!name) {
+       return res
+         .status(401)
+         .send(
+           'Please set a query params with name as the key and your name as the value'
+         )
+     }
+     lastseen[name] = Date.now()
+     res.send(`
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/andybrewer/mvp/mvp.css" />
+     <main>
+     <h1>Welcome ${name}</h1>
+     <p>Open this page in another tab, use a different name!</p>
+     <div class="container"></div>
+     </main>
+     <script>
+     const container = document.querySelector('.container')
+     const render = (data) => {
+       console.log('data is', data)
+       const otherUserString = data.reduce((acc, name) => {
+         return acc + '<h1>' + name + '</h1>'
+       }, '')
+       if (otherUserString) {
+         container.innerHTML = '<h2>Other Users</h2>' + otherUserString
+       }
+     }
+     const getData = () => {
+       fetch('./users?name=${name}').then(r => r.json()).then(data => {
+         console.log('data is', data)
+         render(data)
+         setTimeout(() => {
+           getData()
+         }, 1000)
+       })
+     }
+     getData()
+     </script>
+     `)
+   })
+
+   router.get('/users', (req, res) => {
+     const authorName = req.query.name
+     const now = Date.now()
+     lastseen[authorName] = now // update the user that sent the request
+     Object.keys(lastseen).forEach(name => {
+       if (lastseen[name] < now - 1000 * 10) {
+         // if last seen is > 10 seconds, remove
+         delete lastseen[name]
+       }
+     })
+     const online = Object.keys(lastseen).filter(name => {
+       return name !== authorName
+     })
+     res.json(online)
+   })
+   ```
+
+   </Spoiler>
+
+> Heartbeat is a concept where you send a request to the server constantly to
+> get data or simply let the server know you are still connected.
+
+## Middleware
+
+In the previous examples, your request handlers only used two arguments: request
+and response. You can actually use a third argument, which is a function.
+
+```jsx
+// Middleware to make sure every request has a cookie in order
+//   to access the profile page.
+app.get(
+  '/profile',
+  (req, res, next) => {
+    if (!req.get('cookie')) {
+      return res.status(401).send('You are not authorized to visit this page')
+    }
+    next()
+  },
+  (req, res) => {
+    const username = req.get('cookie')
+    res.send(`<h1> Welcome ${username}!</h1>`)
+  }
+)
+```
+
+In the example above, we passed 3 arguments into app
+
+1. path
+2. A function to check if the request has a cookie header. If not, send a 401
+   response.
+   1. `next()` runs the next function.
+3. A request handler to send back a response.
+
+The function that checks if the request has a cookie header is called a
+**middleware**. A middleware is a concept where a request goes through a
+function and before reaching the main function. The function in the middle is
+called a middleware.
+
+> A **middleware** is simply a concept. It is not a special function or
+> anything. It is simply a label.
+
+The simplest middleware is the request handler in the example above.
+
+Sometimes, you may want to run your middleware on different paths and different
+request methods. In the example below, the middleware will run for all request
+methods on all paths that starts with `/api`.
+
+```jsx
+// Middleware to make sure every request has a cookie in order
+//   to access the profile page.
+app.use('/api/*', (req, res, next) => {
+  if (!req.get('cookie')) {
+    return res.status(401).send('You are not authorized to visit this page')
+  }
+  next()
+})
+
+app.get('/api/users', (req, res) => {
+  const username = req.get('cookie')
+  res.send(`<h1> Welcome ${username}!</h1>`)
+})
+```
+
+When you use `app.use('/hello', requestHandlerFn)`, all request methods will go
+through the `requestHandlerFn`: `GET`, `POST`, `PATCH`, `PUT`, `DELETE`.
+
+If you do not pass in a path as the first argument,
+`app.use( requestHandlerFn )`, that means that `requestHandlerFn` will be run
+for all request methods on all paths.
+
+Since objects are non-primitive, your middleware can also set a property on the
+request. All the following request handlers will be able to use the request
+property.
+
+```jsx
+let count = 0
+app.get('/', (req, res, next) => {
+  req.user = {
+    id: count
+  }
+  count = count + 1
+  next()
+})
+
+app.get('/', (req, res) => {
+  res.send(`<h1> You are visitor number ${req.user.id}!</h1>`)
+})
+```
+
+At many companies, a common practice is to have a middleware to set a user
+object into the request object so all request handlers can access user info
+(like username, name, location, etc.) through `req.user`.
+
+### Helper Middlewares
+
+There are a few middlewares that are used frequently.
+
+**Express.static**
+
+This middleware will create a path for every file in your public folder. If you
+have a picture called `c0d3.png` in the `public` folder, you can access the
+picture by going to
+
+[http://url:port/c0d3.png](http://localhost:300/c0d3.png)
+
+```jsx
+app.use(express.static('./public'))
+// Question, what does express.static(...) return?
+```
+
+<Spoiler>
+
+Since middlewares are request callbacks, `express.static(...)` returns a
+function.
+
+</Spoiler>
+
+**[Express Session](https://www.npmjs.com/package/express-session)**
+
+In the previous examples, we used `req.get('cookie')` to retrieve cookies and we
+also set cookie headers in the response ourselves. It takes alot of work to do
+cookies correctly, and express-session middleware helps you do it right! Here
+are a few problems it solves:
+
+- Cookies are insecure. To determine the logged in user sending the request, you
+  cannot simply store the username in the cookie. If you did that, then any user
+  could change the cookie value to be anyone else. Instead, you must secure it
+  by encrypting the cookie you want to set, and decrypting the cookie from the
+  request to get user's information.
+
+  <Image
+    src="/assets/curriculum/lessons/js5/encryptedCookie.png"
+    width="484"
+    height="104"
+  />
+
+- Parsing cookies are not easy. Taking a string, separating the string by `;`
+  and then getting out the key/value takes alot of effort. Express session helps
+  you parse it out and gives you a `request.session` middleware.
+
+```jsx
+// setting up the middleware
+app.use(session({
+  secret: 'Your Encryption String',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
+
+// ... Using the session from the request ...
+app.get('/*', (req, res) => {
+	// getting a session value
+  console.log( req.session.name )
+
+  // setting a session value
+  req.session.name = 'hello....'
+  ...
+})
+```
+
+**Express.json**
+
+This middleware puts a `body` property in the request object when the request
+has JSON string data; a `content-type` header of `application/json` and a body
+string.
+
+```jsx
+app.use(express.json({ limit: '10mb' }))
+```
+
+With this middleware, your request handler will be able to get the request body
+from request methods that has a request body: `POST`, `PUT`, `POST`.
+
+**Note** This middleware is only applicable for `application/json` content type.
+There are other content-types like text, files, forms, etc. To handle those you
+have to add additional middleware.
+
+**[Multer](https://github.com/expressjs/multer)**
+
+This middleware helps you process file uploads and puts a `files` property in
+the request object when a user uploads a file.
+
+```jsx
+const multer = require('multer')
+
+// You must specify a folder where files should get uploaded to
+// Tip: If you specify the same folder as express.static middleware
+//    then every file you upload will be available on the website
+const upload = multer({ dest: 'uploads/' })
+
+// A form used for uploading file requires a key / value pair.
+//   Below, we are assuming the key is called keyname
+app.post('/files', upload.array('keyname'))
+```
+
+Example: [Drag and Drop front end](https://js5.c0d3.com/examples/dnd)
+
+- You must run `e.preventDefault` on your drag events listeners in order for the
+  `drop` event to work.
+- When the `drop` event fires, you can get the files from the event object
+- To upload files, you must create a `new formData()` and files. Make sure the
+  array key matches your server middleware name. In our example, we are using
+  `keyname` .
+
+```jsx
+<style>
+.container {
+  position: fixed; top: 0; bottom: 0; left: 0; right: 0;
+}
+.container.dropping {
+  background-color: #8f8;
+}
+</style>
+<div class="container"></div>
+<script>
+const container = document.querySelector('.container')
+const makeGreen = (e) => {
+  container.classList.add('dropping')
+  container.innerHTML = "<h1>Will upload " + e.dataTransfer.items.length + " Files</h1>"
+  e.preventDefault()
+}
+const clearScreen = (e) => {
+  container.classList.remove('dropping')
+  container.innerHTML = ""
+  e.preventDefault()
+  return false
+}
+console.log('container', container)
+document.body.addEventListener('dragover', makeGreen)
+document.body.addEventListener('dragleave', clearScreen)
+
+document.body.addEventListener('drop', (e) => {
+  e.preventDefault()
+	const files = Array.from(e.target.files || e.dataTransfer.files)
+	if (!files.length) {
+		return
+	}
+
+	const formData = new FormData()
+  files.forEach( file => {
+		formData.append('keyname[]', file, file.name)
+  })
+	fetch('/files', {
+		method: 'POST',
+		body: formData
+	}).then( r => r.json() ).then(arr => {
+		window.location.reload()
+	})
+	return clearScreen(e)
+})
+</script>
+```
+
+### Exercises
+
+1. Todo API: Build a fully functional todo list API that follows the REST
+   convention. Use the [uuidv4](https://www.npmjs.com/package/uuidv4) library to
+   generate unique id for each todo item.
+2. [Picture Saver](https://js5.c0d3.com/examples/webcam): Starting with a webcam
+   app, send a POST request to your server with the image data to create a
+   picture that you can download.
+
+   For now, don't worry about building the webcam app yourself, just right
+   click, view source, and then copy that into your own file.
+
+   Look at the network request, you want to change the url in the `fetch`
+   request to be your own url.
+
+   The response you get back will contain the url to the image that you took.
+
+   The image data is simply a string, in base64 encoding. Therefore, when you
+   write the image to a file, you must specify that it is a `base64` string.
+
+   ```jsx
+   fs.writeFile( imagePath, req.body.img, 'base64', (err) => {...} )
+   ```
+
+# Authentication
+
+Industry standards for building authentication.
+
+1. When the user inputs their information (like username / password) on their
+   browser, make sure the password input field has the correct type. This way,
+   the password is never revealed on the screen.
+
+   ```jsx
+   <input type="password" />
+   ```
+
+2. (optional) When the user hits the submit button, make sure to encrypt the
+   password. You don't want an accident where you are looking at the network
+   request with your coworker and accidentally see your password. Many companies
+   don't do this.
+3. When sending a network request to the server, make sure to send the data via
+   a POST request so the data is in the body. If you use a GET request, the
+   user's username and password will be exposed to anybody who can see the
+   network requests.
+
+   ```jsx
+   fetch('/api/sessions', {
+     method: 'POST',
+     headers: {
+       'content-type': 'application/json',
+     }
+     body: JSON.stringify({
+       username, password
+     })
+   })
+   ```
+
+4. When you receive a user's password on the server, you should not store the
+   user's password directly into your database. Instead, you need to do a **one
+   way encryption**. This means that even you yourself will not be able to
+   decrypt the stored user's password. To verify that a user's password is
+   correct, you run the one way encryption on the password and check to see if
+   the encrypted value matches what is in the database. The higher the salt
+   level, the slower the encryption. The most well know library to do this is
+   [bcrypt](https://www.npmjs.com/package/bcrypt).
+
+   ```jsx
+   // During signup / password reset:
+   bcrypt.hash(user_password, SALT_ROUNDS, (err, hashPw) => {
+     // hashPw will be the encrypted password
+   })
+
+   // During login, when we want to compare the passwords
+   bcrypt.compare(user_password, hashPw, (err, result) => {
+     // if passwords matches, result will be truthy
+   })
+   ```
+
+5. When you send back the user data as a response or console.log the user
+   information, make sure to remove the password field from the user before
+   logging. A team at facebook
+   [did not pay attention](https://krebsonsecurity.com/2019/03/facebook-stored-hundreds-of-millions-of-user-passwords-in-plain-text-for-years/)
+   to this and as a result, millions of user account passwords are exposed.
+
+   ```jsx
+   delete user.password
+   console.log(user)
+   ```
+
+# Challenges
+
+Congratulations! You know enough to tackle the challenges. Good luck!
+
+# Testing
+
+In the previous lessons you tested functions. Those tests are called **unit
+tests**. You treat each function like a unit of code and you are testing each
+function (aka unit) of code.
+
+In this lesson we will learn about integration test. **Integration test** is
+when you write tests that start a server, send a request, and expect response to
+be a certain way. When you send a request, the server request handler could be
+running many many different functions before sending back a response.
+Integration tests are appropriately named because it is making sure all your
+functions are properly integrated with each other.
+
+To write your code in a way that can be tested well, you must provide two
+functions: `startServer` and `closeServer` that could be run in the beginning
+and the end of your test, respectively.
+
+`startServer` will take in a port, but the port may be unavailable. Close the
+connection and try with the next port number until you are able to successfully
+connect to a port.
+
+### Start Server
+
+`app.listen` takes in an optional second argument, a function, that runs when
+the connection is done. Our startServer function will use this to return a
+promise that resolves.
+
+```jsx
+const startServer = port => {
+  return new Promise((resolve, reject) => {
+    app.listen(port, e => {
+      console.log(`app successfully listening to port ${port}`)
+    })
+  })
+}
+```
+
+## Integration Test
+
+**Functional Tests** - UI testing. Example we use:
+[https://www.cypress.io/](https://www.cypress.io/)
+
+To make sure that the urls will receive requests and respond correctly, you will
+write integration tests. To write an integration test, you need to make sure you
+have a function to start and stop your server.
+
+```jsx
+const startServer = (port) => {
+  return new Promise( (resolve, reject) => {
+    ...
+    const server = app.listen(port)
+    resolve(server)
+  })
+}
+
+const stopServer = (server) => {
+  return new Promise( (resolve, reject) => {
+    server.stop( () => {
+      resolve()
+    })
+  })
+}
+
+module.exports = {
+  start: startServer,
+  stop: stopServer
+}
+```
+
+Since starting and stopping server takes time, you need to make sure your test
+doesn't start until the server is completely started by using `beforeAll()`.
+Also you need to make sure you don't stop the server until your tests are done
+by using `afterAll()`.
+
+```jsx
+//Test file
+describe('test API', () => {
+	beforeAll( () => {
+	  startServer()
+	})
+	afterAll(() => {
+	  stopServer()
+	})
+
+	it('should get all students', () => {
+	  fetch(...)
+	})
+
+	it('should create a student', () => {
+	  fetch(...)
+	})
+
+	it('should update a student', () => {
+	  fetch(...)
+	})
+
+	it('should delete a student', () => {
+	  fetch(...)
+	})
+
+})
+```
+
+1. (POST) - Implement handling incoming image request, saves image into a file
+2. (POST) - Implement audio saving
+3. Text Editor for your JS files
+
+Deploy your application to [freedomains.dev](http://freedomains.dev) and share
+your application with the world!
+
+<Image
+  src="/assets/curriculum/lessons/js5/freedomains.png"
+  height="376"
+  width="368"
+/>
+
+<ChallengeBar
+  href="/curriculum/3"
+  description="Complete End to End challenges"
+  title="Master your skill by solving challenges"
+/>

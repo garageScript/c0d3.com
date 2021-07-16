@@ -1,0 +1,1362 @@
+---
+title: CSS
+order: 2
+---
+
+# Table of Contents
+
+# CSS
+
+So far, we have learned that HTML is a collection of tags, which are
+instructions for the browser. `<script>` is a tag that tells the browser to run
+everything inside that tag as JavaScript, which enables developers to build
+interactive and useful apps (a todo list, a stopwatch, a meme generator, and
+much more).
+
+There is another special tag that enables developers to make their websites
+pretty.
+
+`<style>` tells the browser to run everything inside that tag as **CSS**, a
+language that helps us make websites beautiful by changing the color, position,
+and other properties of browser elements. CSS stands for Cascading Style Sheets.
+Here's an example:
+
+<div style={{ maxWidth: 'max-content' }}>
+  <p
+    class="codepen"
+    data-height="265"
+    data-theme-id="light"
+    data-default-tab="result"
+    data-user="c0d3codepen"
+    data-slug-hash="oNZpNKe"
+    data-pen-title="hw"
+  >
+    <span>
+      See the Pen <a href="https://codepen.io/c0d3codepen/pen/oNZpNKe">hw</a> by
+      c0d3 (<a href="https://codepen.io/c0d3codepen">@c0d3codepen</a>) on{' '}
+      <a href="https://codepen.io">CodePen</a>.
+    </span>
+  </p>
+  <script
+    async
+    src="https://cpwebassets.codepen.io/assets/embed/ei.js"
+  ></script>
+</div>
+
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+Fortunately, CSS is a really simple language. You only need to know 3 things.
+
+<Image
+  src="/assets/curriculum/lessons/js4/selector.png"
+  height="292"
+  width="361"
+/>
+
+1. **Selector**: ALL elements that match your selector will have the properties
+   inside the `{}` applied to them.
+2. **Properties**: Each property is separated by `;`
+
+   For a list of available properties and possible values for each property,
+   visit [w3schools.com](https://www.w3schools.com/cssref/default.asp).
+
+3. **Values**: Values are going to be different depending on what properties you
+   use.
+
+- For **colors**, there are a few ways to specify which color you want. One is
+  to use the `rgba` function. RGBA stands for red, green, blue, and alpha
+  (opacity). The intensity of each color (e.g. red) goes from 0 (no red) to 255
+  (as much red as possible), while alpha ranges from 0 (transparent) to 1
+  (opaque, not transparent).
+
+  In the above example, we made solid magenta using:
+
+  ```css
+  /*               full red, no green, full blue, totally opaque  */
+  background: rgba(255, 0, 255, 1);
+  ```
+
+In most of the common browsers (Firefox, Chrome, etc.), you can right click on a
+element and select the `Inspect Element` option to see the HTML element. You can
+quickly test out CSS properties and values by selecting any element on your
+favorite web page and directly changing the CSS!
+
+<Image
+  src="/assets/curriculum/lessons/js4/cssBrowser.png"
+  height="597"
+  width="1477"
+/>
+
+(Don't worry about the box model yet; this will be explained in the next
+section.)
+
+# Selection
+
+There are many ways to select an element in the `<style>` tag to apply CSS
+properties to it. Starting with the following sample HTML, we'll learn a few.
+
+```jsx
+<h1 class="mainTitle">HW</h1>
+<h2 class="title2"> Easy Peas </h2>
+<div class="container">
+  <h1 class="title2">Hello</h1>
+  <h1 class="customStyle">Hello</h1>
+</div>
+
+<input class="nameInput" type="text" />
+<input class="ageInput" type="number" />
+<input class="titleInput" type="text" />
+<button>Submit</button>
+```
+
+## Selecting By
+
+- Element - All `h1` elements will have the color property.
+
+  ```css
+  h1 {
+    color: rgba(255, 0, 0, 1);
+  }
+  ```
+
+- Attribute - All elements with the attribute `type="text"` will have the color
+  property.
+
+  ```css
+  [type='text'] {
+    color: rgba(255, 0, 0, 1);
+  }
+  ```
+
+- Class - All elements with the class of `title2` will have the color property.
+  This notation might look familiar from how we used `document.querySelector`.
+
+  ```css
+  .title2 {
+    color: rgba(255, 0, 0, 1);
+  }
+  ```
+
+- Children - All `h1` elements that are children of a `div` will have the color
+  property.
+
+  ```css
+  div > h1 {
+    color: rgba(255, 0, 0, 1);
+  }
+  ```
+
+## Combining Selectors
+
+- All `h1` elements with the class `title2` will have the `font-size` property.
+
+  ```css
+  h1.title2 {
+    font-size: 2rem;
+  }
+  ```
+
+- All `h1` elements _and_ all elements with class `title2` will have the color
+  property.
+
+  ```css
+  h1,
+  .title2 {
+    color: rgba(255, 0, 0, 1);
+  }
+  ```
+
+## Selection States
+
+You can tweak CSS properties that get applied based on the state of the element.
+After the browser runs the code below, hover over the `h1` element and it should
+change color.
+
+```jsx
+<h1 class="hello">Welcome</h1>
+<style>
+h1 {
+  color: rgba(255, 0, 0, 1);
+}
+h1:hover {
+  color: rgba(0, 255, 0, 1);
+}
+</style>
+```
+
+These types of selectors are sometimes called **pseudo-classes.** Other options
+include `:visited`, `:active`, `:focus`, and
+[many more](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes).
+
+## Selection Specificity
+
+What happens if an element matches multiple selectors that are setting the same
+property?
+
+```jsx
+<h1 class="hello">Welcome</h1>
+<style>
+h1 {
+  color: rgba(255, 0, 0, 1);
+}
+.hello {
+  color: rgba(0, 255, 0, 1);
+}
+</style>
+```
+
+Should the `h1` element be red or green? The rules that determine which selector
+is more "important" (and gets to apply its properties to the element) are called
+**specificity.** The `h1` element above will be green because class selectors
+are more specific than element selectors.
+
+**Brief introduction to CSS selector specificity**
+
+There are 3 levels of CSS selector specificity and 3 levels of specificity
+overrides.
+
+The 3 levels of CSS selector **specificity** from most to least powerful:
+
+1. ID selectors (examples: `#nice`, `#green`, `#container`)
+2. Class selectors, attribute selectors, and pseudo-classes (examples: `.nice`,
+   `[type="div"]`, `:hover`)
+3. Type selectors and pseudo-elements (examples: `div`, `h1`,`::before`)
+
+```html
+<style>
+  #nice {
+    color: blue;
+  }
+
+  .nice {
+    color: purple;
+  }
+
+  h1 {
+    color: orange;
+  }
+</style>
+
+<h1 id="nice" class="nice">Multiple CSS Collions (Blue)</h1>
+<h1 id="nice">Id (Most Powerful)</h1>
+<h1 class="nice">Class, Pseudo</h1>
+<h1>HTML Elements (Least Powerful)</h1>
+```
+
+The 3 levels of specificity **overrides** ranked from most to least powerful:
+
+1. `!important`
+
+```html
+<style>
+  .blue {
+    color: green !important;
+    color: blue;
+  }
+</style>
+<h1 class="blue">Green Important</h1>
+```
+
+The color will be green because of `color: green !imporant`
+
+2. Inline styles
+
+```html
+<style>
+  .blue {
+    color: blue;
+  }
+</style>
+<h1 class="blue" style="color: green;">Green</h1>
+```
+
+The color will be green because inline style takes precedence.
+
+3. Ordering (last attribute read)
+
+```html
+<style>
+  .blue {
+    color: blue;
+    color: green;
+  }
+</style>
+<h1 class="blue">Green Ordering</h1>
+```
+
+The color will be green because `color: green` is ordered last.
+
+<Spoiler name="Pop Quiz!">
+
+What color is the text?
+
+```jsx
+<style>
+.blue {
+color: blue;
+}
+.green {
+color: green;
+}
+</style>
+<div class="green blue">hi</div>
+```
+
+<Spoiler>
+
+Green because `.blue` and `.green` have the same specificity so the color is
+green because `.green` is ordered after so it overrides the `.blue` styling.
+
+</Spoiler>
+
+What color is the text?
+
+```jsx
+<style>
+div.blue {
+color: blue;
+}
+.green {
+color: green;
+}
+</style>
+<div class="green blue">hi</div>
+```
+
+<Spoiler>
+
+Blue because `div.blue` is more specific.
+
+</Spoiler>
+
+What color is the text?
+
+```jsx
+<style>
+div .blue {
+color: blue;
+}
+.green {
+color: green;
+}
+</style>
+<div class="green blue">hi</div>
+```
+
+<Spoiler>
+
+Green because `div .blue` does not apply to anything on the page, it would work
+for
+
+```html
+<div><div class="blue">hi</div></div>
+```
+
+though.
+
+Notice how the CSS styling is `div .blue` (with a space). The space between div
+and .blue means that div is an element and then there's a child element that has
+a class called blue.
+
+If the CSS styling were `div.blue` (no space), then the text would be blue
+because `div.blue` would match to the div element with class blue and `div.blue`
+would also be more specific than `.green` so `div.blue` styling would be
+applied.
+
+</Spoiler>
+
+What color is the text?
+
+```jsx
+<style>
+div.green {
+color: green;
+}
+.green.blue {
+color: blue;
+}
+</style>
+<div class="green blue">hi</div>
+```
+
+<Spoiler>
+
+Blue `.green.blue` is more specific because classes are more powerful than
+element types.
+
+</Spoiler>
+
+What color is the text?
+
+```jsx
+<style>
+#blah { color: cyan; }
+div.green { color: green; }
+.green.blue { color: blue; }
+</style>
+<div id="blah" class="green blue">hi</div>
+```
+
+<Spoiler>
+
+Cyan `#blah` is more specific because ids are more powerful than classes.
+
+</Spoiler>
+
+What color is the text?
+
+```jsx
+<style>
+#container { color: cyan; }
+div.green { color: green; }
+.green.blue { color: blue; }
+</style>
+<div id="container">
+<div class="green blue">hi</div>
+</div>
+```
+
+<Spoiler>
+
+Blue because `#container` is more specific but it's applied to the parent, not
+the child because color in the child is not `color: inherit`.
+
+</Spoiler>
+
+What color is the text?
+
+```jsx
+<style>
+#container .blue { color: blue; }
+#container { color: cyan; }
+div.green { color: green; }
+</style>
+<div id="container">
+<div class="green blue">hi</div>
+</div>
+```
+
+<Spoiler>
+
+Blue because it is the most specific and applies to the child.
+
+</Spoiler>
+
+What color is the text?
+
+```jsx
+<style>
+#container .blue { color: blue; }
+#container { color: cyan !important; }
+div.green { color: green; }
+</style>
+<div id="container">
+<div class="green blue">hi</div>
+</div>
+```
+
+<Spoiler>
+
+Blue
+
+</Spoiler>
+
+What color is the text?
+
+```jsx
+<style>
+#container { color: cyan; }
+div.green { color: green !important; }
+.green.blue { color: blue; }
+</style>
+<div id="container">
+<div class="green blue">hi</div>
+</div>
+```
+
+<Spoiler>
+
+Green
+
+</Spoiler>
+
+What color is the text?
+
+```jsx
+<style>
+#container { color: cyan !important; }
+div.green { color: green; }
+.green.blue { color: blue; }
+</style>
+<div id="container">
+<div class="green blue">hi</div>
+</div>
+```
+
+<Spoiler>
+
+Blue
+
+</Spoiler>
+
+What color is the text?
+
+```jsx
+<style>
+#container { color: cyan; }
+div.green { color: green !important; }
+.green.blue { color: blue; }
+</style>
+<div id="container">
+<div style="color: orange;" class="green blue">hi</div>
+</div>
+```
+
+<Spoiler>
+
+Green
+
+</Spoiler>
+
+</Spoiler>
+
+**Further Reading**:
+
+[Web Specifity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity)
+
+# Simple CSS Properties
+
+In addition to the CSS properties covered above (`color`, `font-size`, etc.),
+below are a few more common properties that can add cool effects to your pages.
+
+## background and border-radius
+
+<p
+  class="codepen"
+  data-height="265"
+  data-theme-id="light"
+  data-default-tab="css,result"
+  data-user="c0d3codepen"
+  data-slug-hash="MWprWLg"
+  data-pen-title="radius"
+>
+  <span>
+    See the Pen <a href="https://codepen.io/c0d3codepen/pen/MWprWLg">radius</a>{' '}
+    by c0d3 (<a href="https://codepen.io/c0d3codepen">@c0d3codepen</a>) on{' '}
+    <a href="https://codepen.io">CodePen</a>.
+  </span>
+</p>
+
+- Change the value of `background` to
+  `url([https://placebear.com/50/50](https://placekitten.com/200/300))` and see
+  what happens!
+- Change the value of `border-radius` to `10px` and see what happens!
+
+## prefers-color-scheme
+
+`prefers-color-scheme` is a CSS media query that detects the current theme
+preference of the user's operating system.
+
+It has two values that you can specify: light and dark.
+
+```css
+/* Light mode 
+light: Indicates that the user has notified the 
+system that they prefer a page that has a light 
+theme (dark text on light background).*/
+@media (prefers-color-scheme: light) {
+  .element {
+    background: white;
+    color: black;
+  }
+}
+
+/* Dark mode 
+dark: Indicates that the user has notified the 
+system that they prefer a page that has a dark 
+theme (light text on dark background).*/
+@media (prefers-color-scheme: dark) {
+  .element {
+    background: black;
+    color: white;
+  }
+}
+```
+
+[Read more about prefers-color-scheme.](https://dev.to/juwanpetty/prefers-color-scheme-2op1)
+
+# Position
+
+By default, most elements are rendered onto the screen starting in the top left
+corner of their parent element and going one after another down and to the
+right. We can use the CSS `position` property, along with the properties `top`,
+`left`, `right`, and `bottom`, to precisely adjust elements' placements and
+create all kinds of interesting layouts.
+
+We'll start with 4 divs with no special positioning, which we'll adjust in the
+following examples.
+
+<p
+  class="codepen"
+  data-height="562"
+  data-theme-id="light"
+  data-default-tab="js,result"
+  data-user="c0d3codepen"
+  data-slug-hash="dyvJZEW"
+  style={{ height: '562px' }}
+  data-pen-title="position"
+>
+  <span>
+    See the Pen{' '}
+    <a href="https://codepen.io/c0d3codepen/pen/dyvJZEW">position</a> by c0d3 (
+    <a href="https://codepen.io/c0d3codepen">@c0d3codepen</a>) on{' '}
+    <a href="https://codepen.io">CodePen</a>.
+  </span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+The code on the left will render the above UI.
+
+Every div is a line with height 100px.
+
+## Relative
+
+In the example above, we can specify a `position` property with the value
+`relative` to adjust the element. For example:
+
+As you can see, the div element with the class `.div3` is moved up `20px` and
+right `20px` relative to where it was **supposed to be**. (The adjustments are
+given _from_ the top left corner going down and right, so if we want to move it
+up, we use a negative value for `top`.)
+
+## Fixed
+
+We can also specify a `position` property with the value `fixed` to adjust the
+element.
+
+<p
+  class="codepen"
+  data-height="265"
+  data-theme-id="light"
+  data-default-tab="css,result"
+  data-user="c0d3codepen"
+  data-slug-hash="OJpzPXr"
+  data-pen-title="fixed"
+>
+  <span>
+    See the Pen <a href="https://codepen.io/c0d3codepen/pen/OJpzPXr">fixed</a>{' '}
+    by c0d3 (<a href="https://codepen.io/c0d3codepen">@c0d3codepen</a>) on{' '}
+    <a href="https://codepen.io">CodePen</a>.
+  </span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+Notice that the `.div3` element **no longer occupies its default position**.
+Unlike when we used `relative`, the element does not take up any space in its
+default position.
+
+With the `fixed` property, notice how the `.div3` element:
+
+- Is 50px from the top of the browser, and 60px from the left of the browser
+  - No matter how small the browser window gets (even to the point where you
+    have to scroll), the element will always be 50px from the top of the browser
+    and 60px from the left of the browser.
+- Has a `width` property. Since this div is empty, we need to specify `width`.
+  - When `position: fixed;` is applied to an element, the element becomes an
+    `inline-block` element, so the width it takes up becomes like inline
+    elements (only as much as its children take up). Since div3 has no children,
+    if we didn't specify a width it would now have a width of `0` (which would
+    make it invisible).
+
+## Absolute
+
+The `absolute` position value is very similar to `fixed`; the only difference is
+that the `top`, `bottom`, `left` and `right` properties are relative to the
+element's _parent_ instead of the window.
+
+If you change the above example code to `position: absolute;` you may think it
+looks exactly the same as fixed position. If you resize your browser smaller,
+however, you will notice that as you scroll, the element does not stick to the
+browser. It sticks to the parent (in this case the body), so it will scroll with
+the page.
+
+Absolute positioning is really useful if you want to position an element within
+another element.
+
+In the code on the left, pay attention to how the `.div3` element is a child
+element of `.div2`.
+
+Since `.div2` has a position property of `relative`, its children's absolute
+positions are relative to `.div2`.
+
+Notice how `.div3` is a tiny box positioned 0px from the right, and 0px from the
+bottom, of its parent.
+
+## Z-Index
+
+What if multiple elements are all positioned in the same place? If an element
+has a `position` CSS attribute defined, you can set the element's `z-index`
+property to help the computer determine how the elements are ordered. An element
+with a higher `z-index` will always be drawn above an element with a lower
+z-index.
+
+<p
+  class="codepen"
+  data-height="265"
+  data-theme-id="light"
+  data-default-tab="css,result"
+  data-user="c0d3codepen"
+  data-slug-hash="rNypaGj"
+  data-pen-title="z-index"
+>
+  <span>
+    See the Pen <a href="https://codepen.io/c0d3codepen/pen/rNypaGj">z-index</a>{' '}
+    by c0d3 (<a href="https://codepen.io/c0d3codepen">@c0d3codepen</a>) on{' '}
+    <a href="https://codepen.io">CodePen</a>.
+  </span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+# Box Model
+
+Every HTML element displayed on your page follows the **box model**. This means
+that every element has a **margin** (distance between elements), a **border**
+inside the margin, and **padding** within the border.
+
+Margin vs. padding vs. border:
+
+<Image
+  src="/assets/curriculum/lessons/js4/boxModel.png"
+  height="612"
+  width="1072"
+/>
+
+<twoColumns>
+
+```css
+<h1 class="box">BOX1</h1>
+<style>
+.box {
+  width: 100px;
+  height: 100px;
+  color: white;
+  background: rgba(100,0,0,1);
+  border: 10px solid rgba(0,0,255,1);
+  margin: 50px;
+  padding: 20px;
+}
+</style>
+```
+
+<Image
+  src="/assets/curriculum/lessons/js4/smallBox.png"
+  height="562"
+  width="598"
+/>
+
+</twoColumns>
+
+# Width
+
+Because of the box model, the width of an element may be confusing. When you
+specify the width of an element, you are setting the width of the **content**.
+
+```css
+<h1 class="box">A</h1><h1 class="box">B</h1><h1 class="box">C</h1>
+<style>
+.box {
+  display: inline-block; /* We'll cover this soon */
+  width: 50px;
+  height: 50px;
+  color: white;
+  background: rgba(100,0,0,1);
+  margin: 10px;
+  padding: 10px;
+  border: 2px solid rgba(255,0,255,1);
+}
+</style>
+```
+
+What is the total width of each `.block` h1 element?
+
+<Spoiler>
+
+74px
+
+Each `h1` element has:
+
+- content width of 50px
+- padding of 10px on each side
+- a border of 2px on each side
+
+Note that margin does not count as part of an element's width. Total: 50+20+4 =
+74px
+
+</Spoiler>
+
+> Notice in the above example we put all the `h1` elements on one line, as
+> opposed to one element on each line. When you write HTML directly and need
+> precise control over your elements' widths, you might sometimes need to put
+> all the visual elements on one line. This is because the browser treats line
+> breaks as spaces, and this can cause your widths to be inaccurate.
+
+At work, you may be creating many elements from the UI provided by the designer.
+Calculating the width of each element can be time-consuming.
+
+To simplify this, you can force the browser to set the width of each element to
+include the padding and border by using the `box-sizing: border-box` property.
+
+```css
+<h1 class="box">A</h1><h1 class="box">B</h1><h1 class="box">C</h1>
+<style>
+.box {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  color: white;
+  background: rgba(100,0,0,1);
+  margin: 10px;
+  padding: 10px;
+  border: 2px solid rgba(255,0,255,1);
+  box-sizing: border-box;
+}
+</style>
+```
+
+What is the width of each `.inline` h1 element and the width of the h1 elements'
+content?
+
+<Spoiler>
+
+Width of each element: 50px
+
+Width of each element's content: 50 - 20 - 4 = 26px
+
+</Spoiler>
+
+# Display
+
+In addition to the `inline` and `block` display options mentioned above in the
+HTML Theory section, there are two other options given by the `display` CSS
+property.
+
+## inline-block
+
+`block` elements take up 100% of the width of their parents; `inline` elements
+take up only the width of their content. Sometimes, neither of these will
+work—you may want your elements to take up a certain, specified width only. To
+do this, you can set up the elements to have a `display: inline-block;`
+property.
+
+To understand how this property works, we can use `div`s to create 4 boxes side
+by side:
+
+<p
+  class="codepen"
+  data-height="265"
+  data-theme-id="light"
+  data-default-tab="css,result"
+  data-user="c0d3codepen"
+  data-slug-hash="QWpawoN"
+  data-pen-title="abcd"
+>
+  <span>
+    See the Pen <a href="https://codepen.io/c0d3codepen/pen/QWpawoN">abcd</a> by
+    c0d3 (<a href="https://codepen.io/c0d3codepen">@c0d3codepen</a>) on{' '}
+    <a href="https://codepen.io">CodePen</a>.
+  </span>
+</p>
+
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+Try adding the HTML and the rest of the necessary CSS for the above layout, and
+then change the `display` to `inline` and `block` to see how the boxes change.
+
+You can center an `inline-block` element by giving it a `margin: auto;` CSS
+property.
+
+- This is different from the `text-align: center;` property, which centers the
+  content **inside** the element.
+- In the HTML below, the `.container` is centered in the page because of the
+  `margin:auto;` property. The "Hello" text is centered inside `.container`
+  because of the `text-align: center;` property.
+
+<Image src="/assets/curriculum/lessons/js4/hello.png" width="634" height="98" />
+
+```jsx
+<style>
+.container {
+  background: rgba(50, 205, 105, 1);
+  width: 500px;
+  padding: 30px;
+  color: rgba(255,255,255, 1);
+
+  margin: auto;
+  text-align: center;
+}
+</style>
+<div class="container">Hello</div>
+```
+
+## Flexbox
+
+Flexbox is a display mode in CSS that lets a container (like a `div`) resize its
+children as needed to maximize the use of space along an axis (horizontal or
+vertical). To use this mode, you apply the `display: flex` property to the
+container. To understand why flexbox is useful, we will start with the example
+below.
+
+This code has a `div` element that has three child `h1` elements. Since each
+`h1` is a block element, it takes 100% of its parent's width, looking like the
+following:
+
+<p
+  class="codepen"
+  data-height="265"
+  data-theme-id="light"
+  data-default-tab="html,result"
+  data-user="c0d3codepen"
+  data-slug-hash="XWMVbNq"
+  data-pen-title="flexbox-justify"
+>
+  <span>
+    See the Pen{' '}
+    <a href="https://codepen.io/c0d3codepen/pen/XWMVbNq">flexbox-justify</a> by
+    c0d3 (<a href="https://codepen.io/c0d3codepen">@c0d3codepen</a>) on{' '}
+    <a href="https://codepen.io">CodePen</a>.
+  </span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>>
+
+What if we wanted the 3 headers to be displayed side-by-side and _together_ fill
+up 100% of the space available to them (meaning they would resize when the
+window changed)?
+
+The simplest solution is to use the `display: flex` property on the box element,
+then add `width: 100%` to each child element. By default, the children will be
+arranged along the horizontal axis. For many more ways to use flexbox, see
+[this article](https://css-tricks.com/snippets/css/a-guide-to-flexbox/#flexbox-background).
+
+You can also set the `justify-content` property to elements that have
+`position: flex` to position the children elements the way you want to. For the
+examples below, make sure to remove the `width: 100%` property from the
+`.header` CSS so you can see the effect.
+
+```css
+...
+.box {
+  display: flex;
+  justify-content: space-evenly;
+/*
+try replacing space-evenly with:
+	  space-around
+	  space-between
+		center
+*/
+}
+.header {
+  color: white;
+}
+...
+```
+
+See more possible values at
+[wcschools.com](https://www.w3schools.com/csSref/css3_pr_justify-content.asp).
+
+# External CSS Libraries
+
+You can import CSS files that other people have written into your HTML. To use
+someone else's CSS file, you need to use a `link` tag and set an `href`
+attribute with the URL value so the browser can send a request to get the file.
+In the example below, we will use the
+[bootstrap library](https://getbootstrap.com/) to create beautiful elements. To
+find out more about what classes bootstrap provides you, go to the site and
+click on `Documentation`.
+
+```jsx
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+```
+
+You might notice a few new attributes, like `rel` and `crossorigin`. This is
+copied directly from bootstrap's site, so you don't need to know what they are
+at this point.
+
+After adding the CSS above, add a `button` tag with the class `btn btn-warning`
+and you will see a beautiful button!
+
+[This site](https://songz.c0d3.com/js4/examples/bootstrap.html#) shows a few of
+the many CSS styles that bootstrap provides.
+
+<twoColumns>
+<div>
+
+Right-click and select "View Page Source" or "Inspect Element" to see the HTML.
+
+Using CSS libraries is easy and will not show up during coding interviews.
+Instead, you will be tested on your core CSS abilities.
+
+While you are learning, try not to rely on using external CSS libraries like
+bootstrap.
+
+</div>
+
+<Image
+  src="/assets/curriculum/lessons/js4/viewPageSource.png"
+  width="573"
+  height="483"
+/>
+
+</twoColumns>
+
+## Exercises
+
+Just like how you should always think about a problem before coding, when
+solving CSS problems you must first think about what HTML elements you need, how
+to group them together, and then how to style the elements.
+
+To debug the CSS behind each element, you can use the browser's debugger
+console.
+
+<Image
+  src="/assets/curriculum/lessons/js4/inspectCss.png"
+  width="716"
+  height="709"
+/>
+
+1. [Create this todo list layout](https://songz.c0d3.com/js4/exercises/todo.html).
+   No JavaScript needed.
+
+<Spoiler name = "Overview">
+
+**HTML**
+
+1. Create a `div` container, inside of the container add: `h1` tag for the
+   title, `input` tag, todo container `div`, a JS number `div` and two `buttons`
+   for edit and delete. (Do this six times)
+
+- Some of the `div`s have `strike` tags, add them.
+
+**CSS**
+
+2. Set the container’s css border, margin and width properties
+
+3. Set the todo’s height, margin-top, background, position and padding.
+
+4. Set a right class to float right
+
+5. Set a left class to float left
+
+6. Set the input’s width to 90%
+
+</Spoiler>
+
+2. [Create this layout header](https://songz.c0d3.com/js4/exercises/profile.html).
+   This is commonly used in social media profile pages.
+
+- Try your best to solve as much as you can by yourself, then view the HTML to
+  see the answer.
+- Make sure you can recreate this easily by yourself before moving on.
+- Steps
+  1. Build the layout of the container and the profile image
+  2. Build the `nav` bar
+  3. Add the profile name
+
+<Spoiler name = "Overview">
+
+### Version 1.0 HTML images:
+
+**HTML**
+
+1. Create a `div` container, background `image` tag, profile `div`, profile
+   `image`, a header `div` containing 6 `h2` tags. Select them.
+
+**CSS**
+
+2. Set the profile image's left, top, width, height, position, border-radius,
+   and border properties
+
+3. Set the background image's width and height properties
+
+4. Set the container class's width, height, margin, position and border
+   properties
+
+5. Set header's the width, left, top, display, margin, text-align and position
+   properties
+
+6. Target all of your h1 tags and set the top, left, color and position
+   properties
+
+7. Target all your h2 tags and set the margin and padding.
+
+### Version 2.0 CSS background-image:
+
+**HTML**
+
+1. Create a div container, background image `div`, profile `div`, `h1` tag for
+   the title, a header `div` contains 6 `h2` tags. Select them.
+
+**CSS**
+
+2. Set a profile image class's top, left, width, height, position,
+   border-radius, background-size, border and background image.
+
+3. Set a background image class for the profile's width, height, background-size
+   and background image.
+
+4. Set a container class's width, height, margin and border properties.
+
+5. Set a header profile class's top, width, position and padding-left
+   properties.
+
+6. Target all the h1 tags and set the top, left, color, display and position.
+
+7. Target all the h2 tags and set the margin, padding and display.
+
+</Spoiler>
+
+3. [Create a 20x20 grid](https://songz.c0d3.com/js4/exercises/20grid.html) where
+   each box is 20px (including its 1px borders).
+
+<Spoiler name = "Overview">
+
+**CSS**
+
+1. Create a class for square `divs` that has a display of inline-block, border,
+   height and width of 20px.
+
+- Create a row class that has a display of flex.
+
+**HTML**
+
+2. Create a row `div` that has holds 20 square `div`s.
+
+- Copy and paste it 20 times.
+
+</Spoiler>
+
+# JavaScript & CSS
+
+This section will give you a few examples and best practices of how to use
+JavaScript to change the appearance of an element.
+
+> **[Introduction of BEM (Block, Element, Modifier)](https://en.bem.info/methodology/quick-start/#introduction):
+> "**BEM (Block, Element, Modifier) is a component-based approach to web
+> development. The idea behind it is to divide the user interface into
+> independent blocks. This makes interface development easy and fast even with a
+> complex UI, and it allows reuse of existing code without copying and
+> pasting.**"**
+
+The BEM approach ensures that everyone who participates in the development of a
+website works with a single codebase and speaks the same language. Using proper
+naming will prepare you for the changes in design of the website.
+
+[Here is an article to introduce you to the BEM approach](https://en.bem.info/methodology/quick-start/#introduction),
+which is to give names that are able to describe the names' purposes using the
+right syntax(structure).
+
+## Classes
+
+The best practice way to change an element's appearance is to add and remove
+classes. Every element has a property called `classList` that contains functions
+that lets you manipulate its classes.
+
+There are three functions to know when manipulating classes:
+
+1. `contains` takes in a string parameter and returns true or false, depending
+   if the element contains the class.
+2. `add` takes in a string parameter and adds the new class to the element.
+3. `remove` takes in a string parameter and removes the class from the element.
+
+[This example](https://songz.c0d3.com/js4/examples/toggle.html) shows you how we
+can use the above functions to toggle the color of the ball between clicks.
+
+```jsx
+<div class="circle active"></div>
+<style>
+.circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: rgba(255,0,0,1);
+}
+.circle.active {
+  background: rgba(0, 255, 0,1);
+}
+</style>
+<script>
+  const circle = document.querySelector('.circle')
+  circle.addEventListener('click', () => {
+    if (circle.classList.contains('active')) {
+      return circle.classList.remove('active')
+    }
+    circle.classList.add('active')
+  })
+</script>
+```
+
+Alternatively, you can also use the much simpler `toggle` function. (However,
+focus on remembering the three functions above, which allow you to build more
+complex functionalities than a toggle).
+
+```jsx
+const circle = document.querySelector('.circle')
+circle.addEventListener('click', () => {
+  circle.classList.toggle('active')
+})
+```
+
+## Styling
+
+Sometimes adding and removing classes from elements is not enough to accomplish
+what you need to do, and you must change the CSS properties of an element
+directly. You do this by changing the `style` property of an element. The
+example code below increases the element's `width` and `height` CSS properties
+by 10 pixels on every click.
+
+```jsx
+let diameter = 100
+const circle = document.querySelector('.circle')
+circle.addEventListener('click', () => {
+  diameter = diameter + 10
+  circle.style.width = `${diameter}px`
+  circle.style.height = `${diameter}px`
+})
+```
+
+## Exercises
+
+1. [Caption maker for video player](https://songz.c0d3.com/js4/exercises/vidCaption.html):
+   Play the video, and add some captions! Click on a caption to delete it. Some
+   captions are pre-loaded for you.
+
+A few other things you'll need to know:
+
+- `confirm()` which is similar to `alert()` but returns a boolean depending on
+  the user's choice.
+- `Number.isInteger()` checks whether a value is a number or not.
+- `videoElement.currentTime` gives you where the position is (in seconds).
+- Timeupdate video event listener to keep track of the time in the video.
+
+```html
+<video
+  class="videoElement"
+  src="<https://songz.c0d3.com/js4/exercises/pubDomainRemix.mp4>"
+  controls
+  style="height:400px;width:400px;"
+></video>
+
+<script>
+  const video = document.querySelector('.videoElement')
+
+  setTimeout(() => {
+    video.addEventListener('timeupdate', evt => {
+      console.log('The current attribute has been updated: ', evt)
+      console.log(video.currentTime * 1000, 'current time')
+    })
+  }, 1000)
+</script>
+```
+
+Play the video for 5 seconds, pause it and then open the console while scrolling
+through different points in the video.
+
+<Spoiler name = "Overview">
+
+**HTML**
+
+1. Create two `div`s: one to contain the video, one to contain the caption
+   editor. Create a save `button` and caption list `div`. Select them.
+2. In the video container `div` add:
+   - A `video` element and set its `src` to the video URL
+   - A `div` for the captions
+3. In the caption editor `div` add:
+   - A header with the text "Add Caption"
+   - Three `input:text` elements for the caption text, start time, and end time
+   - A `button` with text "Save"
+   - A `hr` element to provide a visual space between the caption "form" and the
+     list of captions
+   - A `div` to contain the list of captions
+
+**CSS**
+
+4. The upper (video) container needs to be center aligned, it needs a background
+   color and the width needs to take up the entire page.
+
+5. Use display: flex so that caption, start and end stay on the same line but
+   have even spacing.
+
+**JavaScript**
+
+6. Create an array to store the captions.
+
+- Add some dummy captions (each caption is an object with text, start, and end
+  properties).
+
+7. Create a `render` function that:
+
+- Adds the captions to the caption list `div`.
+- Adds click event listeners to each caption in the list that allow a caption to
+  be deleted.
+
+8. Add a click event listener to the save `button` that:
+
+- Adds a new caption to the `captions` array using the values from the text
+  `input`s.
+- Clears the values from the text `input`s.
+- Calls `render`.
+
+9. Add a timeupdate event listener to the `video` element that:
+
+- Gets the current video progress time from the `video` element.
+- Finds the first caption in the `captions` array that is valid for the current
+  video time.
+- Sets the `textContent` of the video caption `div` to the text of the caption.
+
+</Spoiler>
+
+2. [Mouse magnifier](https://songz.c0d3.com/js4/exercises/magnify.html): Hover
+   over the small image. The arrow should point at the same place in the large
+   image.
+
+Assets:
+
+- Small image (300x225):
+  [https://songz.c0d3.com/js4/exercises/300x225.jpeg](https://songz.c0d3.com/js4/exercises/300x225.jpeg)
+- Large image (800x600):
+  [https://songz.c0d3.com/js4/exercises/800x600.jpeg](https://songz.c0d3.com/js4/exercises/800x600.jpeg)
+- Mouse image (40x43):
+  [https://songz.c0d3.com/js4/exercises/arrow.png](https://songz.c0d3.com/js4/exercises/arrow.png)
+
+<Spoiler name = "Overview">
+
+**HTML**
+
+1. Create a small `image`, container`div`, `img` for the mouse, and a large
+   `img` tag.
+
+**CSS**
+
+2. Set the container's position, right, bottom. The large image should have a
+   negative z-index and the mouse should have a positive z-index and position
+   property.
+
+**JavaScript**
+
+3. Select the small image and mouse and then add a mousemove event listener that
+   passes in an event parameter to the callback function.
+
+- Grab the event's clientX and multiply it by (800/30)
+- Grab the event's clientY and multiply it by (800/30)
+- Set the top of the mouse to the yCoordinate.
+- Set the left of the mouse to the xCoordinate.
+- Set the innerText of the circle `div` to your number variable then append your
+  circle `div` to your screen.
+
+</Spoiler>
+
+<ChallengeBar
+  href="/curriculum/24"
+  description="Complete css chalenges (all current ones)"
+  title="Master your skill by solving challenges"
+/>

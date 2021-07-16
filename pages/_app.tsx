@@ -14,12 +14,15 @@ import '../scss/index.scss'
 import MDXcomponents from '../helpers/mdxComponents'
 import { useApollo } from '../helpers/apolloClient'
 import { ContextProvider } from '../helpers/globalContext'
+import type { Page } from '../@types/page'
 interface IProps extends AppProps {
   err: any
   apollo: ApolloClient<NormalizedCacheObject>
+  Component: Page
 }
 
 function MyApp({ Component, pageProps, err }: IProps) {
+  const getLayout = Component.getLayout || (page => page)
   const apolloClient = useApollo(pageProps)
   useEffect(() => {
     if (process.env.NODE_ENV === 'production' && process.env.POSTHOG_API_KEY) {
@@ -73,7 +76,7 @@ function MyApp({ Component, pageProps, err }: IProps) {
               content="https://www.c0d3.com/assets/c0d3-meta.svg"
             />
           </Head>
-          <Component {...pageProps} err={err} />
+          {getLayout(<Component {...pageProps} err={err} />, pageProps)}
         </ContextProvider>
       </MDXProvider>
     </ApolloProvider>

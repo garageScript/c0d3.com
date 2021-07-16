@@ -9,7 +9,7 @@ const IndexPage: React.FC<{}> = () => {
   const [status, setStatus] = useState(false)
   useEffect(() => {
     window.localStorage.getItem('loggedIn')
-      ? router.push('/curriculum')
+      ? router.replace('/curriculum')
       : setStatus(true)
   }, [])
   //render empty white background with AppNav before possible redirect to prevent 'flickering'

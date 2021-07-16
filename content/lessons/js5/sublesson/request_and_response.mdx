@@ -1,0 +1,1126 @@
+---
+title: Request and response
+order: 1
+---
+
+# Table of Contents
+
+# Intro
+
+In this section, you will be writing code that runs on the computer using
+`node`, an application that runs JavaScript code. Everything in this section is
+about figuring out how to use the libraries that engineers have written for you
+to build the application you want.
+
+## Preflight
+
+Before you start, make sure you understand these concepts.
+
+1. (line by line) `node app.js` runs a file called `app.js`. When a file is run,
+   the computer will go through the code, line by line starting at the top.
+
+   ```jsx
+   // app.js
+   const fruits = []
+   fruits.push('apple')
+   console.log(fruits)
+   ```
+
+   Let's say you run the file a few times:
+
+   ```jsx
+   node app.js
+   node app.js
+   node app.js
+
+   // What gets printed out?
+   ```
+
+<Spoiler>
+
+```jsx
+;['apple']['apple']['apple']
+```
+
+</Spoiler>
+
+2. (async) Make sure you understand the async nature of JavaScript!
+
+   ```jsx
+   let counter = 1
+   setTimeout(() => {
+     console.log(counter)
+     counter = counter + 1
+   }, 1)
+   console.log(counter)
+   // what gets printed out?
+   ```
+
+<Spoiler>
+
+```jsx
+1
+1
+```
+
+</Spoiler>
+
+3. (Non-Primitive) Make sure you understand the nature of objects in JavaScript!
+
+   ```jsx
+   const data = {}
+   setTimeout(() => {
+     const newObj = data
+     console.log(newObj.name)
+     newObj.name = 'hello'
+   }, 10)
+   setTimeout(() => {
+     const newObj = data
+     console.log(newObj.name)
+     newObj.name = 300
+   }, 5)
+   console.log(data.name)
+   ```
+
+<Spoiler>
+
+```jsx
+undefined
+undefined
+300
+```
+
+</Spoiler>
+
+## Overview
+
+First you will use a few libraries to help you learn the underlying concepts
+behind the internet. Once you understand these concepts, we will go over some
+problems that companies face when trying to scale their technology to prepare
+you for system design.
+
+Previously, you learned that URL is made up of the `protocol`, `hostname`,
+`path`, and `query parameters`.
+
+We can pass data into a request by using the URL's **query parameters**.
+
+<Image
+  src="/assets/curriculum/lessons/js3/urlStructure.png"
+  width="480"
+  height="77"
+/>
+
+- **Protocol** - Specifies how the data is transferred and how to interpret the
+  request. When you look at the protocol, you should have a high level idea of
+  what the url is used for.
+  - **http** - Runs on port 80 by default, specifies what headers are in the
+    request and what the header means. The headers we cover in this lesson deals
+    specifically with the **http** protocol.
+  - **https** - Same as _http_ protocol with two differences:
+    - Runs on port 443 by default
+    - Encrypts all of your request / response headers except request IP
+- **Path & query parameters**: Sends data to the server in the request url. This
+  is usually used in marketing teams to see how advertising is doing.
+  - `&` separates the different pieces of data.
+    - `https://macys.com/shoes?size=4&brand=allbirds&type=outdoors`
+  - Sending data using path and query parameters has a few notable drawbacks:
+    - **Security risk**: All data in the URL is exposed. Sensitive data like
+      usernames and passwords must never be put in the query parameters. Imagine
+      sending someone a postcard with your username and password on the
+      postcard. Everyone can see it, it is not secure.
+    - **Data limit**: The URL cannot hold large amounts of data. In fact, many
+      browsers will not be able to handle URLs longer than 2048 characters. That
+      is not a lot—only 2KB of data.
+      - Imagine sending someone a postcard, there is only so much you can write
+        before you run out of space
+
+In this chapter you will learn other ways of sending data to the server.
+Everything you learn will only be applicable to the **http** or **https**
+protocol. The protocol is the first letters before `://` in a url.
+
+Quick overview of other protocols (Feel free to read more about these, but you
+are not expected to know these in your day to day role as a software engineer).
+
+- SMTP, POP3, IMAP - Email protocols used for sending emails. Usually runs on
+  port 25, 110, 143 respectively.
+- SSH - Protocol for accessing remote machines as well as managing your `git`
+  repositories. Usually runs on port 22.
+- FTP - Protocol for sending files. Usually port 21.
+- DNS - Protocol for getting an **IP Address** using a hostname. **IP Address**
+  is the address of a computer in the internet. Usually port 53.
+
+When it comes to port numbers, we say **usually** because you can very easily
+specify the application to run on ports other than the default ones. When you
+create your server, you will be sending http requests to your own specified port
+instead of the default port 80.
+
+## IP Addresses
+
+The internet as you know it is powered by computers talking to each other. Every
+machine in the network will have an `IP Address`. This is very similar address
+as you know it.
+
+# Request & Response
+
+<br />
+
+<Image
+  src="/assets/curriculum/lessons/js5/browserServer.png"
+  height="76"
+  width="339"
+/>
+
+- MD graph code
+
+  Code used to generate the graphs above using
+  [mermaidJS](https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiZ3JhcGggTFJcblx0QVtCcm93c2VyXSAtLT58MS4gU2VuZHMgUmVxdWVzdHwgQihTZXJ2ZXIpIC0tPiB8Mi4gU2VuZHMgUmVzcG9uc2V8IEFcdFx0XHRcdCIsIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9)
+
+  ```jsx
+  graph LR
+  	A[Browser] -->|1. Sends Request| B(Server) --> |2. Sends Response| A
+  ```
+
+1. When you type a **url** into the browser, or when you click on a link, the
+   browser is sending a **request** to a **server**, which is essentially
+   someone's computer.
+2. When the server (aka someone's computer) receives a request, it sends back a
+   **response**. This response is usually HTML, but it can sometimes be just
+   data (like the examples you did in JS3).
+3. When the browser receives the response from the server, the browser will
+   decide what to do with the response. If the response is HTML, then the
+   browser will start executing the instructions in the HTML.
+
+If you send a request using the terminal and run your JavaScript with `node`,
+the process is exactly the same
+
+<Image
+  src="/assets/curriculum/lessons/js5/terminalServer.png"
+  height="76"
+  width="339"
+/>
+
+If the response is HTML, the terminal would not do anything automatically with
+the response data since HTML is instructions for the browser only.
+
+## Request
+
+Every request that gets sent over the internet is made up of
+[2-3 parts](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_message)
+
+1. **Request line** - Consist of **request method** and **path**
+   - Request method tells the server what type of request this is.
+   - **path** is extracted from the URL you provide.
+2. **Headers** - Headers to provide information about the request. The
+   information includes: the type of browser / terminal that the request is sent
+   from, what type of data is contained in the request body, information for
+   identifying the user, etc. There is a
+   [full list on Wikipedia](https://en.wikipedia.org/wiki/List_of_HTTP_header_fields),
+   but we will cover only the most important ones in the next section.
+3. **Body** - (Optional) Blob of data in the request. The request headers
+   determine how this blob of data should be handled. Examples of data the body
+   could contain are: strings, JSON string, and files like images, videos,
+   documents, etc.
+
+When you visit a webpage, you can view information about a request in the
+_network tab_ from the _developer console_ on your browser.
+
+<Image
+  src="/assets/curriculum/lessons/js5/networkTab.png"
+  height="546"
+  width="957"
+/>
+
+### Request Methods
+
+Request methods describes what type of request it is and shows up in the first
+line of the request. The request below is a `GET` request that the browser sends
+out when I type in a url into the browser and hit enter.
+
+<Image
+  src="/assets/curriculum/lessons/js5/requestMethods.png"
+  height="560"
+  width="786"
+/>
+
+Here's a list of the most commonly used request methods that you need to know.
+The specification for these request methods are simply best practices to follow.
+You can choose to ignore these practices but keep in mind that doing so will
+confuse and annoy other software engineers who takes over your code.
+
+- `GET` - A GET request is used for getting data. It should not have body in the
+  request. This is the browser's default request to send when you visit a
+  website. When you write code and you don't specify a method, it defaults to
+  `GET` request.
+- `HEAD` - a HEAD request is used for getting response headers. It should not
+  have a body in the request. The server will also not send a body in the
+  response. The server will only send back response headers.
+- `POST` - A POST request is used to tell the server to create data like user
+  account, new image, etc. It will have a body in the request containing the
+  data that needs to be created in the server.
+- `DELETE` - A DELETE request is used to tell the server to delete data. It
+  should not have a body in the request.
+- `PATCH` - A PATCH request is used to to tell the server to edit a particular
+  attribute in the data. For example, change the name for a user, edit the due
+  date for a task, etc. It should have a body in the request.
+- `PUT` - A PUT request is used to tell the server to replace existing or create
+  new data. It should have a body in the request. What makes this request
+  different from a `PATCH` request is that this request will contain all the
+  attributes needed to create a new record.
+- `OPTIONS` - An OPTIONS request is sent by the browser for security reasons;
+  you will never need to send an OPTIONS request yourself. The browser will send
+  an OPTIONS request before sending out some **cross-domain** requests (requests
+  to a url with a different hostname than the one you are currently on).
+
+  OPTIONS requests are called **pre-flight** requests.
+
+  Example:
+
+  1. You are currently on `[c0d3.com](http://c0d3.com)`.
+  2. The JavaScript instructs the browser to send a PUT request to -
+     `[api.slacker.club/api/lessons](http://api.slacker.club)`.
+  3. The browser notices that the hostname is different so it sends an OPTIONS
+     request to
+     `[api.slacker.club/api/lessons](http://api.slacker.club/api/lessons)`. The
+     server sends back a response saying whether it is okay to send a PUT
+     request to `api.slacker.club/api/lessons`
+
+     **Cross-Domain requests**: requests that are sent to a url with a different
+     hostname than the url you are currently on.
+
+  4. If browser is allowed to send a request, the browser now sends the PUT
+     request.
+
+> Of all the request methods covered above, GET, DELETE, and OPTIONS request do
+> not have body in the request. POST, PATCH, PUT request has a body in the
+> request.
+
+Here is a sample code to send a `DELETE` request. Notice we are passing an
+object as the second argument. To send a different request method, simply change
+the `method` property.
+
+```jsx
+fetch('https://songz.c0d3.com/api/todos', {
+  method: 'DELETE'
+})
+```
+
+### Request Headers
+
+Every request has a header that describes the request. In this section we will
+go over a few important request headers.
+
+<Image
+  src="/assets/curriculum/lessons/js5/requestHeaders.png"
+  height="560"
+  width="786"
+/>
+
+In the list below, there are only two headers you would set manually when
+sending a request: Content-Type and Authorization. Although you can set the
+other headers, they are usually handled by the browser automatically.
+
+- `Content-Type` - When a request has a body (PUT, POST, PATCH requests), you
+  must provide a `content-type` header to specify what kind of data is in the
+  body. Most of the time it would be `application/json` in the request when
+  writing code, but you could also be sending files to the server and use other
+  types of `content-type`:
+  - `application/json` - JSON data
+  - `text/html` - HTML text
+  - `image/gif` - A gif image
+  - `video/mpeg` - MPEG videos
+  - And
+    [many more](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types)!
+    You don't have to memorize any of these
+- `Authorization` - This is used by the server to identify who the user is.
+  Unlike cookie, this header must be set manually by the developer when sending
+  the request. Commonly used for API requests and JWT authentication (covered
+  below).
+- `Cookie` - This is used by the server to identify who the user is. Most of the
+  time, the browser automatically sends the cookie with every request.
+- `User-Agent` - Information about the browser and/or mobile device sending the
+  request.
+- `Origin` - Indicates from which hostname a fetch came from.
+- `ETag` - string representing the data that the browser already has (aka hash)
+  from a previous GET request. If the server notices that the data it is about
+  to send back matches the `ETag` in the request, the server will not send back
+  with the response body, resulting in saved bandwidth!
+- `X-Forwarded-For` - This header will only be visible on your server and will
+  be covered in the server section below. In short, when your server application
+  is behind a proxy (99% of all applications) receives the request, this header
+  gives you the ip address of the client (phone or computer or device that sent
+  the request).
+- [List of other headers](https://en.wikipedia.org/wiki/List_of_HTTP_header_fields)
+
+A sample POST request. Notice how we have to specify the `content-type` header
+of the request and make sure we pass in a string as the `body` value.
+
+```jsx
+fetch('https://songz.c0d3.com/api/todos', {
+  method: 'POST',
+  headers: {
+    'content-type': 'application/json'
+  },
+  body: JSON.stringify({
+    task: 'learn request headers',
+    status: 'starting'
+  })
+})
+  .then(res => res.json())
+  .then(console.log)
+```
+
+A sample `PATCH` request
+
+```jsx
+fetch('https://songz.c0d3.com/api/todos/0e750eff-f872-4ac4-a1b0-ec7a877b1d6e', {
+  method: 'PATCH',
+  headers: {
+    'content-type': 'application/json'
+  },
+  body: JSON.stringify({
+    status: 'complete'
+  })
+})
+  .then(r => r.json())
+  .then(console.log)
+```
+
+<Image
+  src="/assets/curriculum/lessons/js5/options.png"
+  width="1047"
+  height="216"
+/>
+
+If you are on a different domain and running these code on the browser console,
+you should see the browser send an OPTIONS request automatically before each
+PATCH request.
+
+## Response
+
+Responses are structurally very similar to requests. Every response that gets
+sent over the internet is made up of
+[2-3 parts](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Response_message)
+
+1. **Status Code** - A number that quickly describes what happened. For example,
+   the server sends back status code 200 when everything went well.
+2. **Headers** - Headers to provide information about the response. The
+   information includes: the type of server that sent the response, what type of
+   data is contained in the response body, as well as commands for the browser.
+   We will be covering the most important headers.
+3. **Body** - (Optional) Blob of data in the response. The response headers
+   determine how this blob of data should be handled. Examples of data the body
+   could contain are: strings, JSON string, and files like images, videos,
+   documents, etc.
+
+<Image
+  src="/assets/curriculum/lessons/js5/response.png"
+  width="956"
+  height="504"
+/>
+
+In the sections below, make sure you pay attention to how the response status
+codes and headers affect the browser.
+
+### Status Codes
+
+The specification for response status codes are simply best practices to follow.
+When writing code to accept incoming requests, you can choose to ignore these
+practices but keep in mind that doing so will confuse and annoy those who send
+requests to you.
+
+The only status code that **affects the browser's behavior** are the ones in 300
+range. The most common ones are:
+
+- `302` - The server responds with 302 when it wants the request to go to
+  another URL. When the browser (or `node-fetch` library in node) receives this
+  response code, it will take the new url from the response's `Location` header
+  and send another request to the new URL automatically
+- `304` - (Review the `ETag` header section in the request headers first). The
+  server sends back a 304 status code when it realizes that the response body
+  matches the request `ETag` headers so instead of sending back the response
+  body the server will send back a 304 status code with no body to save
+  bandwidth. When the browser receives this code, it will automatically use its
+  own data saved from the previous requests.
+
+The other status codes are primarily informational. Code in 200s indicates that
+everything went well, code in 400s indicates that there was a user error, and
+code in 500s indicates that there was a server error.
+
+- `200` - The server sends back 200 when everything went smoothly.
+- `201` - The server sends back 201 when everything went smoothly and something
+  had been created in the server. Usually a response code for POST requests.
+- `400` - The server sends back 400 when the request is bad. Missing required
+  data or incompatible data (ie. username too short, invalid characters, etc.)
+- `403` - The server sends back 403 when the user is trying to access a page
+  he/she does not have permission for. Normally, server uses the request's
+  `cookie` or `authorization` header to determine who the user is in every
+  request.
+- `404` - The server sends back 404 when the url in the request is not supported
+  by the browser.
+- `418` - The server sends back 418 when the server is a teapot and it receives
+  a request to brew coffee.
+- `500` - The server sends back 500 when it has encountered an internal error
+  and could not process the request.
+- [A full list of status codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) -
+  All the important ones you will need to memorize is covered above.
+
+### Headers
+
+Response headers can be very generic (such as specifying the type of response
+body data) and also very specific (some response headers are only necessary for
+certain requests).
+
+- `Cache-Control` - This header tells the browser to save the response body for
+  a period of time. Within this time period, the browser should use the saved
+  data immediately instead of sending the request. This not only saves bandwidth
+  for the user, but also makes the website faster.
+
+  Example that saves the response for 1 hour: `Cache-Control: max-age=3600`
+
+- `ETag` - A hash string that represents the content of the response body. The
+  browser will now send this `ETag` with every request with the same url (review
+  request header above if necessary).
+- `Server` - A name for the server that processed the request.
+- `Set-Cookie` - This header tells the browser to set a cookie. After the
+  browser sets the cookie, the browser will automatically send the cookie in the
+  request header with every request to the same host name.
+- `Content-Type` - This header tells the browser how to read the response body.
+
+Some response headers have very specific use cases. The header below is used in
+conjunction with 300 status codes.
+
+- `Location` - This header contains a url, which tells the requestor (browser or
+  node) the new URL to resend the request to.
+
+When the browser needs to make cross domain request, it first sends an OPTIONS
+request. The browser looks for very specific headers in the response to
+determine if it should proceed to send the cross-domain request. Review the
+OPTIONS request method above if you need to before proceeding. We will go over
+the important ones.
+
+- `Access-Control-Allow-Origin` - Contains the host name that is allowed to send
+  the cross domain request. If this does not match the hostname of the site that
+  the user is on, then the cross domain is rejected.
+- `Access-Control-Allow-Credentials` - If this is true in the response header,
+  then the cross domain request will include a cookie header. If this is false,
+  the browser will not set the cookie header when sending the cross origin
+  request.
+- `Access-Control-Allow-Methods` - This is a comma separated string that tells
+  the browser what request methods are allowed in the cross domain request. The
+  request will not be sent if the request method is not included in this
+  response header.
+
+## Exercise & Learn
+
+In this exercise we will send different types of requests and observe the
+response from the server. Before proceeding, make sure you know how to look at
+the network request. We will be using it throughout the exercise.
+
+As you complete this exercise, you will not only learn how to observe the
+request and responses, you will also learn some industry standards.
+
+We will be using an API to create login, create accounts, create, edit, and
+delete todo items. All requests that you are sending from your file are called
+**Cross-Origin** requests because your browser requests to a hostname that is
+different from where your file is located.
+
+Although everything is secure (as you will see when you implement the API
+features yourself), feel free to use insecure passwords and fake emails. There
+will be no verification needed.
+
+1. [Save the code here](https://js5.c0d3.com/setup_todo.html) into a html file
+   on your computer. Open the code with your text editor and read the code.
+   Identify the different functions and classes and try to understand what they
+   do.
+
+   <Image
+     src="/assets/curriculum/lessons/js5/viewPageSource.png"
+     width="579"
+     height="341"
+   />
+
+   Note: Nothing will show up on the page. But if you look at the network
+   request, you should see that there is no error. To get the code, right click
+   on the page and click **View Source**.
+
+  <Spoiler>
+
+     1. `Todo` is a class to create a todo element.
+     2. `render` displays a title, a input box to create a todo, and a list of
+        todo items
+     3. `setupLogin` displays a login page.
+     4. `setupSignup` displays a signup page.
+     5. `startApp` is a function that runs when the page loads.
+
+  </Spoiler>
+
+> Confused by the variable symbol `$`? When you see something confusing, it is
+> all the more important to stick to your foundations and evaluate **what you
+> know** and make a best guess. In the code, `$` is simply another character in
+> the variable name. There is nothing special about it. The author put `$` in
+> the variable name to help him quickly understand that the variable stores an
+> HTML element.
+
+2. In `startApp` function, send a `GET` request to
+   `[https://js5.c0d3.com/auth/api/sessions](https://js5.c0d3.com/auth/api/sessions)`.
+   Observe the network request, notice the response status code. The body of the
+   response is JSON.
+
+   <Image
+     src="/assets/curriculum/lessons/js5/error.png"
+     width="1125"
+     height="378"
+   />
+
+   If the response JSON result has an `error` key, run the `setupLogin` function
+   to render the login page and stop the function.
+
+   **Note:** This exercise is asking you to write the `fetch` request code to
+   send the requests.
+
+  <Spoiler>
+
+  ```jsx
+  const startApp = () => {
+    fetch('https://js5.c0d3.com/auth/api/sessions')
+      .then(r => {
+        return r.json()
+      })
+      .then(body => {
+        if (body.error) {
+          return setupLogin()
+        }
+      })
+  }
+  ```
+
+  </Spoiler>
+
+3. We can't login, because we don't have an account. Thankfully there is a
+   `Signup` link. If you look at the code, clicking on Signup will run the
+   `setupSignup` function. Let's create an account! Send a `POST` request to
+   [`https://js5.c0d3.com/auth/api/users`](https://js5.c0d3.com/auth/api/users)
+   when the signup button is clicked. Leave the body empty for now and look at
+   the network request.
+
+   <Spoiler>
+
+   ```jsx
+   fetch('https://js5.c0d3.com/auth/api/users', {
+     method: 'POST'
+   })
+   ```
+
+   </Spoiler>
+
+   Notice how the response code is `400` and the response body is a JSON telling
+   you what is wrong.
+
+   <Image
+     src="/assets/curriculum/lessons/js5/code400.png"
+     width="1263"
+     height="381"
+   />
+
+   Send the input fields to your request body and try to get a successful
+   response. When sending password, please do not send your password directly.
+   Somebody may be looking over your shoulder and see your network request and
+   accidentally see your password! To prevent this, you can do a simple encoding
+   by running `btoa` function before sending your password with `fetch`
+
+   <Spoiler>
+
+   ```jsx
+   fetch('https://js5.c0d3.com/auth/api/users', {
+     method: 'POST',
+     body: JSON.stringify({
+       username: $username.value,
+       name: $name.value,
+       email: $email.value,
+       password: btoa($password.value)
+     })
+   })
+   ```
+
+   </Spoiler>
+
+   If you face issues, you may need to look at the `request` you are sending to
+   the API. You are sending JSON and the server needs to know that. Is your
+   request's `Content-Type` header set to `application/json`?
+
+   <Image
+     src="/assets/curriculum/lessons/js5/contentType.png"
+     width="1296"
+     height="662"
+   />
+
+   To do this, pass in a header attribute into the second argument object.
+
+   <Spoiler>
+
+   ```jsx
+   fetch('...url...', {
+     method: 'POST',
+     headers: {
+       'content-type': 'application/json'
+     },
+     body: JSON.stringify({})
+   })
+   ```
+
+   </Spoiler>
+
+   If everything goes well, you should see a `200` response code. You should
+   also see the a `Set-Cookie` response header to tell your browser to set a
+   cookie.
+
+   <Image
+     src="/assets/curriculum/lessons/js5/contentType.png"
+     width="1279"
+     height="579"
+   />
+
+   <Spoiler>
+
+   ```jsx
+   $submit.addEventListener('click', () => {
+     fetch('https://js5.c0d3.com/auth/api/users', {
+       method: 'POST',
+       headers: {
+         'content-type': 'application/json'
+       },
+       body: JSON.stringify({
+         username: $username.value,
+         email: $email.value,
+         name: $name.value,
+         password: btoa($password.value)
+       })
+     })
+   })
+   ```
+
+   </Spoiler>
+
+4. To check whether your browser successfully followed the response instruction
+   to set a cookie, go to the API hostname and click on Storage tab. On Chrome
+   it would be Application tab.
+
+   Cookies are set against hostnames. Since you are sending a request to
+   `[https://js5.c0d3.com](https://js5.c0d3.com/auth/api/sessions)`, you must go
+   there first and then look at the cookie.
+
+   <Image
+     src="/assets/curriculum/lessons/js5/checkCookies.png"
+     width="1200"
+     height="410"
+   />
+
+   No cookie! Usually a cookie is automatically set, but for **cross-origin**
+   requests you must pass in a `credentials: 'include'` property to tell the
+   browser to respect the `set-cookie` response header.
+
+   <Spoiler>
+
+   ```jsx
+   $submit.addEventListener('click', () => {
+     fetch('https://js5.c0d3.com/auth/api/users', {
+       method: 'POST',
+       credentials: 'include',
+       headers: {
+         'content-type': 'application/json'
+       },
+       body: JSON.stringify({
+         username: $username.value,
+         email: $email.value,
+         name: $name.value,
+         password: btoa($password.value)
+       })
+     })
+   })
+   ```
+
+   </Spoiler>
+
+5. Add `credentials: 'include'` key to the `GET` request in your `startApp`
+   function.
+
+   <Image
+     src="/assets/curriculum/lessons/js5/credentials.png"
+     width="1059"
+     height="535"
+   />
+
+   Notice how the request now has a `cookie` header. The browser is sending
+   cookie to the server. Notice how the server recognized who is sending the
+   request so it sends back a `304` or a `200` status code instead of a `403`.
+   If you look at the response body, you will see that it now contains your
+   information!
+
+   If the `GET` request has your username, set the global variable
+   `globalUsername` to your username and run the `render` function.
+
+   <Spoiler>
+
+   ```jsx
+   const startApp = () => {
+     fetch('https://js5.c0d3.com/auth/api/session', {
+       credentials: 'include'
+     })
+       .then(r => {
+         return r.json()
+       })
+       .then(body => {
+         if (body.error) {
+           return setupLogin()
+         }
+         if (body.username) {
+           globalUsername = body.username
+           render()
+         }
+       })
+   }
+   ```
+
+   </Spoiler>
+
+6. Add to your signup functionality so that if a user successfully signs up, you
+   set the `globalUsername` variable and run the `render` function.
+
+   Send a `POST` request to
+   `[https://js5.c0d3.com/auth/api/sessions](https://js5.c0d3.com/auth/api/sessions)`
+   for to login correctly.
+
+   To delete your cookie so you can visit any page on the API hostname, go to
+   the cookie section, right click and select delete.
+
+   <Image
+     src="/assets/curriculum/lessons/js5/deleteCookies.png"
+     width="1158"
+     height="421"
+   />
+
+   <Spoiler>
+
+   ```jsx
+   // setupLogin function click event
+   $submit.addEventListener('click', () => {
+     fetch('https://js5.c0d3.com/auth/api/sessions', {
+       method: 'POST',
+       credentials: 'include',
+       headers: {
+         'content-type': 'application/json'
+       },
+       body: JSON.stringify({
+         username: $username.value,
+         password: btoa($password.value)
+       })
+     })
+       .then(response => {
+         console.log(response.status)
+         return response.json()
+       })
+       .then(body => {
+         if (body.username) {
+           globalUsername = body.username
+           render()
+         }
+       })
+   })
+
+   // Inside setupSignup function click event
+   $submit.addEventListener('click', () => {
+     fetch('https://js5.c0d3.com/auth/api/users', {
+       method: 'POST',
+       credentials: 'include',
+       headers: {
+         'content-type': 'application/json'
+       },
+       body: JSON.stringify({
+         username: $username.value,
+         email: $email.value,
+         name: $name.value,
+         password: btoa($password.value)
+       })
+     })
+       .then(response => {
+         console.log(response.status)
+         return response.json()
+       })
+       .then(body => {
+         if (body.username) {
+           globalUsername = body.username
+           render()
+         }
+       })
+   })
+   ```
+
+   </Spoiler>
+
+7. When you type Enter into the input box, create a todo item by sending a
+   `POST` request to:
+
+   `[https://js5.c0d3.com/todolist/api/todos](https://js5.c0d3.com/todolist/api/todos)`
+
+   Start by sending an empty body, then use the response status code and body
+   from the server to figure out how to create a todo item correctly.
+
+   Once you get a successful response, refresh the page by calling `render`
+   function.
+
+   <Spoiler>
+
+   ```jsx
+   if (e.key === 'Enter') {
+     fetch('https://js5.c0d3.com/todolist/api/todos', {
+       credentials: 'include',
+       method: 'POST',
+       headers: {
+         'content-type': 'application/json'
+       },
+       body: JSON.stringify({
+         text: input.value
+       })
+     })
+       .then(r => {
+         return r.json()
+       })
+       .then(render)
+   }
+   ```
+
+   </Spoiler>
+
+8. When `render` is called, get all the todo items by sending a `GET` request
+   to:
+
+   `[https://js5.c0d3.com/todolist/api/todos](https://js5.c0d3.com/todolist/api/todos)`
+
+   When you receive the array of todo items (make sure you create a few of them
+   in the previous step), create a `Todo` object with each element in the array
+   and the `todolist` element.
+
+   Notice that each todo item in the has an `id`, `createdAt`, and a `complete`
+   property
+
+   <Spoiler>
+
+   ```jsx
+   const $todolist = $appContainer.querySelector('.todolist')
+   // create a Todo object like this: new Todo(element, $todolist)
+   fetch('https://js5.c0d3.com/todolist/api/todos', {
+     credentials: 'include'
+   })
+     .then(r => {
+       return r.json()
+     })
+     .then(arr => {
+       arr.forEach(todo => {
+         new Todo(todo, $todolist)
+       })
+     })
+   ```
+
+   </Spoiler>
+
+9. When the delete button is clicked, delete the selected item by sending a
+   `DELETE` request to:
+
+   `[https://js5.c0d3.com/todolist/api/todos/:id](https://js5.c0d3.com/todolist/api/todos)`
+
+   Replace the end of the url, `:id` with the id value of the todo item. When
+   you get a response from the server, refresh the page by calling the `render`
+   function.
+
+   <Spoiler>
+
+   ```jsx
+   const $delete = todoContainer.querySelector('.delete')
+   $delete.addEventListener('click', () => {
+     fetch(`https://js5.c0d3.com/todolist/api/todos/${todo.id}`, {
+       credentials: 'include',
+       method: 'DELETE'
+     }).then(render)
+   })
+   ```
+
+   </Spoiler>
+
+10. When the save button is clicked, update the text of the todo item. When the
+    text of the element is clicked, update the complete property. To update an
+    item, send a `PATCH` request to:
+
+    `[https://js5.c0d3.com/todolist/api/todos/:id](https://js5.c0d3.com/todolist/api/todos)`
+
+    Replace the end of the url, `:id` with the id value of the todo item. When
+    you get a response from the server, refresh the page by calling the `render`
+    function. Remember, `PATCH` requests should have a body containing the
+    properties you want to edit.
+
+    <Spoiler>
+
+    ```jsx
+    // Update complete property
+    $h1.addEventListener('click', () => {
+      fetch(`https://js5.c0d3.com/todolist/api/todos/${todo.id}`, {
+        credentials: 'include',
+        method: 'PATCH',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          complete: !todo.complete
+        })
+      }).then(render)
+    })
+
+    // Update text property
+    $save.addEventListener('click', () => {
+      fetch(`https://js5.c0d3.com/todolist/api/todos/${todo.id}`, {
+        credentials: 'include',
+        method: 'PATCH',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          text: $todoInput.value
+        })
+      }).then(render)
+    })
+    ```
+
+    </Spoiler>
+
+In some of the examples above, you may see an `OPTIONS` request that the browser
+sends automatically to determine if you are allowed to send a **cross-origin**
+request. Notice the response headers from the server. As of December 2019,
+Chrome browser will hide the `OPTIONS` request, so you must use Firefox browser
+if you want to see this request.
+
+<Image
+  src="/assets/curriculum/lessons/js5/newAccount.png"
+  width="1456"
+  height="654"
+/>
+
+That was a lot! Please go back to review if you need to.
+[Final product](https://js5.c0d3.com/todo.html). There are a few important
+concepts used in the example above. The next section will go over them.
+
+### Takeaways
+
+A few important concepts are introduced in the example above.
+
+- **Client Side Rendering** - Client side rendering is a coding practice where
+  you change the page changing the HTML directly using JavaScript. In our
+  example above, we called `render`, `setupLogin`, and `setupSignup` functions
+  to render the pages. In the sections below, we will be using **Server Side
+  Rendering**, where each page requires sending a request to the server.
+- **Session** - A session is the duration in which a user is logged in. A
+  session is created when a user logs in, and that session is deleted when the
+  user logs out.
+- **Cross Site Request** - A cross site request is a request that the browser
+  sends that goes to a different hostname than the site that it is currently on.
+  In the example above, you are on your computer's file system and requests are
+  sent to [js5.c0d3.com](http://js5.c0d3.com) (different domain). In the
+  sections below, we will not be sending cross site requests.
+
+### REST
+
+In the example above, you may have noticed a pattern in the URL when you get,
+create, update, and delete todos:
+
+- POST -
+  `[https://js5.c0d3.com/todolist/api/todos](https://js5.c0d3.com/todolist/api/todos)`
+- GET -
+  `[https://js5.c0d3.com/todolist/api/todos](https://js5.c0d3.com/todolist/api/todos)`
+- PATCH -
+  `[https://js5.c0d3.com/todolist/api/todos/:id](https://js5.c0d3.com/todolist/api/todos)`
+- DELETE -
+  `[https://js5.c0d3.com/todolist/api/todos/:id](https://js5.c0d3.com/todolist/api/todos)`
+
+This pattern is an industry pattern called **REST**. When an API follows the
+REST pattern, developers are able to understand and use the API quickly.
+Although REST pattern is not required and some companies choose not to follow
+it, it has become an industry best practice so it is best to practice it.
+
+**REST** stands for Representational State Transfer (not important to memorize
+this) and it is a set of design principles to let you use and modify resources
+on servers using APIs.
+
+Our example only covers a subset of the full REST pattern for **todo resource.**
+
+| Type   | Path       | Action                                                               | Body |
+| ------ | :--------- | :------------------------------------------------------------------- | :--- |
+| Get    | /todos     | Get a list of all the todo items                                     | No   |
+| GET    | /todos/:id | Get data about a todo with the id, :id                               | No   |
+| POST   | /todos     | Create a new todo                                                    | Yes  |
+| PUT    | /todos/:id | Replace data about an existing todo with the id or create a new todo | Yes  |
+| PATCH  | /todos/:id | Update one attribute about the todo with the id, :id                 | Yes  |
+| DELETE | /todos/:id | Deletes the todo with the id, :id                                    | No   |
+
+Our example also showed a create API for the **user resource** when a user signs
+up.
+
+| Type   | Path       | Action                                               | Body |     | Body |
+| ------ | :--------- | :--------------------------------------------------- | :--- | --- | ---- |
+| GET    | /users     | Get list of all users                                | No   |
+| GET    | /users:id  | Get data about a user with the id, :id               | No   |
+| POST   | /users     | Create a new user                                    | Yes  |
+| PUT    | /users/:id | Replace data about a user with the id, :id           | Yes  |
+| PATCH  | /users/:id | Update one attribute about the user with the id, :id | Yes  |
+| DELETE | /users/:id | Deletes the user with the id, :id                    | No   |
+
+For a given resource, note that the path is always in the plural form.
+
+You must memorize the REST API convention above. The exercises below will help
+you memorize them.
+
+### Exercises
+
+1. Write the REST convention for the resource, Store
+
+   <Spoiler>
+
+   | Type   | Path        | Action                            | Body |
+   | ------ | :---------- | :-------------------------------- | :--- |
+   | GET    | /stores     | Get all stores                    | No   |
+   | GET    | /stores/:id | Get info about one specific store | No   |
+   | POST   | /stores     | Create new store                  | Yes  |
+   | PUT    | /stores/:id | Replace data of one store         | Yes  |
+   | PATCH  | /stores/:id | Update an attribute about a store | Yes  |
+   | DELETE | /stores/:id | Delete a store                    | No   |
+
+   </Spoiler>
+
+2. Write the REST convention for the resource, Robot
+
+   <Spoiler>
+
+   | Type   | Path        | Action                            | Body |
+   | ------ | :---------- | :-------------------------------- | :--- |
+   | GET    | /robots     | Get all robots                    | No   |
+   | GET    | /robots/:id | Get info about one specific robot | No   |
+   | POST   | /robots     | Create new robot                  | Yes  |
+   | PUT    | /robots/:id | Replace data of one robot         | Yes  |
+   | PATCH  | /robots/:id | Update an attribute about a robot | Yes  |
+   | DELETE | /robots/:id | Delete a robot                    | No   |
+
+   </Spoiler>
+
+3. Write the REST convention for the resource, Relationship
+
+   <Spoiler>
+
+   | Type   | Path               | Action                                   | Body |
+   | ------ | :----------------- | :--------------------------------------- | :--- |
+   | GET    | /relationships     | Get all relationships                    | No   |
+   | GET    | /relationships/:id | Get info about one specific relationship | No   |
+   | POST   | /relationships     | Create new relationship                  | Yes  |
+   | PUT    | /relationships/:id | Replace data of one relationship         | Yes  |
+   | PATCH  | /relationships/:id | Update an attribute about a relationship | Yes  |
+   | DELETE | /relationships/:id | Delete a relationship                    | No   |
+
+   <br />
+
+   </Spoiler>

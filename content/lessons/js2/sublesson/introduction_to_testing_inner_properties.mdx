@@ -1,0 +1,1345 @@
+---
+title: Introduction to testing, inner Properties
+order: 1
+---
+
+# Table of Contents
+
+<br />
+
+# Introduction to Testing
+
+Up till now we've introduced exercises by giving examples of what the function
+is supposed to do. As our functions get more complex, we need to specify in more
+detail what right and wrong behavior for each function looks like. One good way
+to do this is by writing **test cases**.
+
+Testing is an extremely important part of software engineering. When you test
+your code, you make sure that it works. Testing also gives you a permanent
+record of what correct behavior for your code looks like. In the future, if
+someone changes your code and breaks it, your tests will reject their changes.
+This way, tests can help ensure that your code will keep working forever.
+
+Developers have lots of tools they can use to make testing easy and reliable. In
+this section we'll introduce one of these tools, called Jest. Starting with this
+lesson, we'll describe exercises by showing you test cases that your solution
+should pass. Then in JS4, you'll learn how to write your own test cases.
+
+## Using jest
+
+Follow these steps to create and run a test file that you can use to test your
+solutions to the Preflight exercises.
+
+1. Create a new folder (or use an existing one)
+2. We will be using the `jest` framework to run our tests, so we need to install
+   it.
+
+   `npm i jest`
+
+3. We need to setup your folder for using `jest` . To do that, initialize your
+   project
+
+   `npm init -y`
+
+4. Create a file for your solutions to this section. Call it `preflight.js`.
+5. Create a file for the tests. Call it `preflight.test.js`. The word `test` in
+   the filename is important; Jest will only run files with `test` in the
+   filename.
+
+   Don't worry about what to put into this file just yet, the examples will
+   guide you through what to put in.
+
+6. First tell your test file to include the file that will have your solutions:
+
+   ```jsx
+   // fn will be an object with all your preflight solutions
+   const fn = require('./preflight.js')
+   ```
+
+We're now ready to start writing functions. We'll do the first one step-by-step
+as an example.
+
+## Example
+
+Write a function named removeCharX that removes the character at the given index
+from a string.
+
+```jsx
+removeCharX("We're in the endgame now.", 1) // "W're in the endgame now."
+```
+
+**Testing this** - In the following 5 steps, step 1 is most important
+(examples). These examples will be your tests and the following instructions
+will show you how to create tests and run them. After that, put your examples
+into the test and run it.
+
+1. In the `preflight.js` file, set up the object that will be exported to the
+   test file and write your solution. You'll learn more about objects in JS3,
+   but for now you just need to know that `allFuns` is an object.
+
+   ```jsx
+   const allFuns = {}
+
+   const removeCharX = ( ... ) => {
+     // Your code goes here
+   }
+
+   allFuns.removeCharX = removeCharX // You need this line for every function
+                                     // you write
+   ```
+
+2. Add this line to `preflight.js`. As you solve more exercises, just keep this
+   line at the end.
+
+   ```jsx
+   module.exports = allFuns
+   ```
+
+3. Open the Tests toggle and paste the code into your `preflight.test.js` file.
+
+<Spoiler name = "Tests">
+
+```jsx
+describe('removeCharX function', () => {
+  it('should remove the first character', () => {
+    const str = "We're in the endgame now."
+    const result = fn.removeCharX(str, 0)
+    expect(result).toEqual("e're in the endgame now.")
+  })
+  it('return the original string', () => {
+    const str = 'a'
+    const result = fn.removeCharX(str, 3)
+    expect(result).toEqual('a')
+  })
+  it('return the original string', () => {
+    const str = 'abc'
+    const result = fn.removeCharX(str, -3)
+    expect(result).toEqual('abc')
+  })
+})
+```
+
+</Spoiler>
+
+<Spoiler>
+
+1. **Function Shape**
+
+   ```jsx
+   const removeCharX = (str, idx) => {}
+   ```
+
+2. **Explanation**
+   1. We need a variable to keep track of where we are `i` and it starts from 0.
+      We need another variable `result` to collect all the new letters.
+   2. If `i` goes to the end of the string, we return the result.
+   3. If `i` is not equal to `idx`, we add letter to the result
+   4. Continue to next iteration of i
+3. **Code**
+
+   ```jsx
+   const removeCharX = (str, idx, i = 0, result = '') => {
+     if (i === str.length) {
+       return result
+     }
+     if (i !== idx) {
+       result = result + str[i]
+     }
+     return removeCharX(str, idx, i + 1, result)
+   }
+   ```
+
+</Spoiler>
+
+4. Run the test with `jest preflight.test.js`.
+
+<Spoiler name = 'If you have problems running jest'>
+
+Run it directly from the library: `node_modules/jest/bin/jest.js`
+
+If that doesn't work:
+
+- Try installing jest globally: `npm i -g jest`, and run it again: `jest`
+- If you get an `EACCES` error, then you need to run it with sudo:
+  `sudo npm i -g jest`
+
+</Spoiler>
+
+5. To have your tests automatically re-run as you edit the code or add new
+   tests, run jest with the `--watch` option in one terminal and leave it
+   running. As you change your code in your editor (VS Code, vim, etc.) your
+   tests will run automatically. Press `q` to exit when you're done.
+
+   `jest --watch preflight.test.js`
+
+For each new exercise, click the Tests toggle and add the tests to your
+`preflight.test.js` file. Then add your solution to the `preflight.js` file and
+re-run the tests (or leave them running with `--watch`).
+
+## Exercises
+
+1. Write a function named `less3Diff` that determines whether two strings have
+   fewer than 3 different characters. Both arguments will have the same length.
+
+   ```jsx
+   less3Diff('spiderman', 'spyderman') // true because only character at index 2
+   // is different
+   less3Diff('spiderman', 'mary jane') // false
+   ```
+
+<Spoiler>
+
+1. **Tests**
+
+   ```jsx
+   describe('less3Diff function', () => {
+     it('should return false on strings with >= 3 letters different', () => {
+       const result = fn.less3Diff('spiderman', 'mary jane')
+       expect(result).toEqual(false)
+     })
+     it('should return true if < 3 letters different', () => {
+       const result = fn.less3Diff('spiderman', 'spyderman')
+       expect(result).toEqual(true)
+     })
+     it('should always return true on strings < 3 characters', () => {
+       const result = fn.less3Diff('jk', 'lm')
+       expect(result).toEqual(true)
+     })
+   })
+   ```
+
+2. **Shape**
+
+   ```jsx
+   const less3Diff = (str1, str2) => {}
+   ```
+
+3. **Explanation**
+   - You are given string `str1` and string `str2`.
+   - We will need an additional variable for index (let's say `i`) which starts
+     at 0.
+   - We will need an additional variable to keep count of different characters
+     (let's say `differences` ) which starts at 0 as well.
+   - When index `i` equals the length of `str1`,
+     - return true*.*
+   - When `differences` is greater than 2,
+     - return false*.*
+   - When the first character of string `str1` does not equal first character of
+     second string `str2`,
+     - Update `differences` by incrementing it by 1.
+   - Continue.
+4. **Code**
+
+   ```jsx
+   const less3Diff = (str1, str2, i = 0, differences = 0) => {
+     if (i === str1.length) {
+       return true
+     }
+     if (differences > 2) {
+       return false
+     }
+     if (str1[i] !== str2[i]) {
+       differences = differences + 1
+     }
+     return less3Diff(str1, str2, i + 1, differences)
+   }
+   ```
+
+</Spoiler>
+
+2. Write a function named `reverso` that takes in a string, and returns a new
+   string with the input string reversed.
+
+   ```jsx
+   reverso('sneakers') // srekaens
+   ```
+
+<Spoiler>
+
+1. **Tests**
+
+   From here on you'll notice that some of our test suites include tests on
+   unlikely input. After all, most people who use your `reverso` function
+   probably won't try to reverse an empty string. But your code should ready to
+   handle situations that test the limits of the data types it works with.
+   Engineers call these **edge cases**, and you'll see them pop up in many of
+   our tests!
+
+   ```jsx
+   describe('reverso function', () => {
+     it('should reverse "sneakers"', () => {
+       const result = fn.reverso('sneakers')
+       expect(result).toEqual('srekaens')
+     })
+     it('should reverse strings of one letter', () => {
+       const result = fn.reverso('s')
+       expect(result).toEqual('s')
+     })
+     it('should return an empty string when given an empty string', () => {
+       const result = fn.reverso('')
+       expect(result).toEqual('')
+     })
+   })
+   ```
+
+2. **Shape**
+
+   ```jsx
+   const reverso = (str, i = 0, result = '') => {}
+   ```
+
+3. **Explanation**
+   - You are given a string `str`.
+   - We will need a second variable for index (let's say `i`) which starts at 0.
+   - We will need a third variable to keep track of our reversed string (let's
+     say `result` ) which starts at empty string "".
+   - When the length of string `result` equals to the length of string `str`,
+     - return `result`.
+   - Continue.
+4. **Code**
+
+   ```jsx
+   const reverso = (str, i = 0, result = '') => {
+     if (result.length === str.length) {
+       return result
+     }
+     return reverso(str, i + 1, str[i] + result)
+   }
+   ```
+
+</Spoiler>
+
+3. Write a function named `delayAndCall` that takes in 2 parameters, a number
+   and a function, and returns a function
+
+   When the returned function is called, the input function will execute after
+   the input number of milliseconds.
+
+   ```jsx
+   const fun = delayAndCall(1000, () => {
+     console.log('I am groot')
+   })
+   fun() // after 1 second, 'I am groot' will be logged
+   fun() // after 1 second, 'I am groot' will be logged
+   ```
+
+<Spoiler>
+
+1. **Tests**
+
+   ```jsx
+   // Don't worry about understanding all the functions used to test
+   //   this function. But they use natural language, so you might
+   //   be able to figure them out!
+   describe('delayAndCall function', () => {
+     jest.useFakeTimers()
+     it('should run function after 1000 milliseconds', () => {
+       const callback = jest.fn()
+       const fun = fn.delayAndCall(1000, callback)
+       fun()
+       expect(callback).not.toBeCalled() // It shouldn't run right away
+       jest.advanceTimersByTime(1000)
+       expect(callback).toBeCalled() // But after 1000ms
+       // it should have run
+     })
+     it('should run callback repeatedly', () => {
+       const callback = jest.fn()
+       const fun = fn.delayAndCall(1000, callback)
+       fun()
+       expect(callback).not.toBeCalled() // It shouldn't run right away
+       jest.runAllTimers()
+       expect(callback).toHaveBeenCalledTimes(1) // Should have been
+       // called once
+       fun()
+       jest.runAllTimers()
+       expect(callback).toHaveBeenCalledTimes(2) // Now it should have
+       // been called twice
+     })
+   })
+   ```
+
+2. **Shape**
+
+   ```jsx
+   const delayAndCall = (time, fn) => {}
+   ```
+
+3. **Explanation**
+   - You are given number `time` and a function `fn`.
+   - Inside the return function,
+     - call `setTimeout` with given function `fn` and number `time`.
+4. **Code**
+
+   ```jsx
+   const delayAndCall = (time, fn) => {
+     return () => {
+       setTimeout(fn, time)
+     }
+   }
+   ```
+
+</Spoiler>
+
+4. Write a function named `primeMachine` that takes in a number and returns a
+   function.
+
+   - Each time the returned function is called, return the next prime number
+     (starting from the input number).
+   - _(For a new coder, this can be a hard problem. This problem was asked
+     during an onsite interview, so it is okay if you can't come up with the
+     answer yourself. This problem involves creating other functions to help you
+     get the correct solution.)_
+
+   ```jsx
+   const getPrime = primeMachine(10)
+   getPrime() // 11
+   getPrime() // 13
+   getPrime() // 17
+   getPrime() // 19
+   ```
+
+<Spoiler name = "Interview response (after interviewer asked the question)">
+
+### Step 1: Examples
+
+I'm going to start writing a few examples (x3) to make sure I understand the
+problem.
+
+```jsx
+// example 1: I intentionally picked a negative number
+const getPrime1 = primeMachine(-2)
+getPrime1() // Should return 2? Interviewer: Yes
+getPrime1() // Should return 3? Interviewer: Yes
+
+// example 2: I intentionally picked a prime number to start
+const getPrime2 = primeMachine(5)
+getPrime2() // Should return 7? Interviewer: Yes
+getPrime2() // Should return 11? Interviewer: Yes
+
+// example 3: Just used the example I was given
+const getPrime3 = primeMachine(10)
+getPrime3() // Should return 11? Interviewer: Yes
+getPrime3() // Should return 13? Interviewer: Yes
+getPrime3() // Should return 17? Interviewer: Yes
+```
+
+### Step 2: Function Shape
+
+Just so I don't have to think about this much, I'll just write out the shape of
+the function because it is obvious and get it out of the way. (Interviewer: OK)
+
+I know that the `primeMachine` function takes in a parameter, and returns a
+function.
+
+```jsx
+const primeMachine = start => {
+  return () => {}
+}
+```
+
+### Step 3: Explaining the Solution
+
+Okay, so we probably need a few helper functions. I need a function to check to
+see if a number is prime. And then I also need another function to get the next
+prime number. I'll assume I have these 2 functions that I need and will just
+focus on solving the `primeMachine` function first. Then I'll come back to them.
+
+When the `primeMachine` function is called, we need to check for out-of-range
+input (like < 2) and change them to 1. Also, if the input is a prime number
+itself, we should add 1 to it so we get the next one.
+
+When the returned function is called, it will return the result of calling the
+`getNextPrime` function. After getting the result, we need to increment the
+input number by 1.
+
+### Step 4: Coding the Solution
+
+In this step, our main task is to write the codes for `primeMachine` function.
+
+We will write the codes for `isPrime` and `getNetPrime` functions in step 5 if
+requested by the interviewer.
+
+```jsx
+const isPrime = num => {
+  // Returns true or false. Don't actually write anything more beyond this.
+  // we will write the codes in step 5 if requested
+}
+
+const getNextPrime = num => {
+  // Returns the next prime number which is >= than the num input.
+  // Don't write anything beyond this.
+  // we will write the codes in step 5 if requested
+}
+
+const primeMachine = start => {
+  if (start < 2) {
+    start = 1 // Any number smaller than 2 is not a prime.
+  }
+  if (isPrime(start)) {
+    start = start + 1
+  }
+  return () => {
+    const result = getNextPrime(start)
+    start = start + 1
+    return result
+  }
+}
+```
+
+### Step 5: Testing Original Examples
+
+I went through the original 3 examples from step 1 to make sure the result was
+correct step by step.
+
+Then I asked the interviewer: Do you want me to implement (write) the `isPrime`
+and `getNextPrime` functions?
+
+- Usually at this point, the interviewer might be impressed enough to know that
+  you know how to implement these 2 functions and move on to the next question.
+- If not, they might pick either one of the 2 functions and tell you to
+  implement it. Just repeat these 5 steps.
+
+If you could not figure out this function yourself, follow the 5 steps above and
+solve for `isPrime` and `getNextPrime` functions. Answers are included in the
+answer toggle for this problem.
+
+</Spoiler>
+
+<Spoiler>
+
+1. **Tests**
+
+   ```jsx
+   describe('primeMachine function', () => {
+     it('should return next 2 primes starting with a negative number', () => {
+       const getPrime1 = fn.primeMachine(-2)
+       expect(getPrime1()).toEqual(2)
+       expect(getPrime1()).toEqual(3)
+     })
+     it('should not return starting number if prime', () => {
+       const getPrime2 = fn.primeMachine(5)
+       expect(getPrime2()).toEqual(7)
+       expect(getPrime2()).toEqual(11)
+     })
+     it('should return next 3 primes starting at 10', () => {
+       const getPrime3 = fn.primeMachine(10)
+       expect(getPrime3()).toEqual(11)
+       expect(getPrime3()).toEqual(13)
+       expect(getPrime3()).toEqual(17)
+     })
+   })
+   ```
+
+2. **Shape**
+
+   ```jsx
+   const isPrime = num => {}
+
+   const getNextPrime = () => {}
+
+   const primeMachine = () => {}
+   ```
+
+3. **Explanation**
+   - You are given a number `num` .
+   - You need a helper function `isPrime` to determine which number is a prime.
+   - You need another helper function `getNextPrime` to get the next prime
+     number starting from the given number `num`.
+   - In the `primeMachine` function,
+     - Pass in the result from running the `getNextPrime` function as a
+       parameter.
+     - We name the result from running the `getNextPrime` function on `start` to
+       be passed in as a parameter.
+     - When the value of `start` is less than 2,
+       - change to value of `start` to 1.
+   - When `start` is prime,
+     - increment `start` by 1.
+   - Inside the return function,
+     - We need an additional variable (let's say `result`) that stores the
+       result of running `getNextPrime` function.
+     - Pass in `start` as argument inside this `getNextPrime` function.
+     - Now `start` equals `result` plus 1.
+     - return `result`
+4. **Code**
+
+   ```jsx
+   const isPrime = (num, start = 2) => {
+     if (num < start) {
+       return false
+     }
+     if (num === start) {
+       return true
+     }
+     if (num % start === 0) {
+       return false
+     }
+     return isPrime(num, start + 1)
+   }
+
+   const getNextPrime = start => {
+     if (isPrime(start)) {
+       return start
+     }
+     return getNextPrime(start + 1)
+   }
+
+   const primeMachine = start => {
+     if (start < 2) {
+       start = 1 // any number smaller than 2 is not a prime.
+     }
+     if (isPrime(start)) {
+       start = start + 1
+     }
+     return () => {
+       const result = getNextPrime(start)
+       start = result + 1
+       return result
+     }
+   }
+   ```
+
+</Spoiler>
+
+# Overview
+
+In the last lesson, you got started with HTML and learned more about functions.
+If you had any issues solving any of the **Preflight** questions, please review
+the previous lesson by doing the exercises and challenges again until you're
+comfortable. This lesson will rely heavily on the foundations covered in the
+previous lesson in two parts:
+
+The first part will build on your existing HTML knowledge and introduce you to
+more element properties.
+
+The second part will teach you what you need to know about **arrays**, a
+powerful non-primitive data type in JavaScript.
+
+Like in the previous lesson, make sure you follow along by running the example
+code yourself. If the concept is new to you, do not copy and paste. You will
+learn better if you write out the code. Ready? Let's get started!
+
+# HTML/JS
+
+In JS1 you learned about:
+
+- Definitions: `tags`, `elements`, and `attributes`
+- Browser functions: `document.queryselector` and `alert`
+- Element properties: `onclick` and `value`
+
+In this section we will learn a new element and a new property that can make
+your websites more interactive. To follow along, first launch VS Code, create a
+new .html file and view/open it in your browser.
+
+## div tag
+
+The `<div>` tag is one of the most important HTML tags in modern web design.
+This very simple tag `<div>` defines a container or section that is used to
+group other elements together inside it. All HTML elements inside the section
+are called **child** elements of the `<div>`. For example:
+
+```html
+<div>
+  <input type="text" class="username" />
+  <input type="password" class="password" />
+  <button>Log in</button>
+</div>
+```
+
+In the example above, the two `input` elements and the `button` element are all
+**children** of the `div` element. They are also **sibling** elements of each
+other.
+
+Real websites have many thousands of elements, and developers use `div`s to
+group them into logical parts like “header,” “sidebar,” “body,” or “chat
+window.” Each div can often be further broken into more divs. Therefore, a
+typical web page has a hierarchy of several divs deep.
+
+## innerHTML property
+
+We already learned how to change elements like input boxes by setting their
+values. By setting an element's `innerHTML` property, you can dynamically add
+any other elements to the page. For example, you can change your page behavior
+as follows:
+
+```html
+<div class="container"></div>
+<script>
+  const box = document.querySelector('.container')
+  box.innerHTML = `
+	<input type="text" class="username" />
+	<input type="password" class="password" />
+	<button>Log in</button>
+`
+</script>
+```
+
+In the example above, we are using JavaScript to dynamically add three HTML tags
+inside the `div` tag. The 3 lines of HTML after `box.innerHTML =` might look a
+little out of place, but they're actually one long string! Recall from JS0 how
+we can use `"`, `'`, or `` ` `` to create a string. We chose `` ` `` here
+because it allows us to easily include line breaks inside the string, and
+because the HTML is already using quotation marks. If we had used `"` to begin
+the string, the first attribute would have ended it and broken our code.
+
+If you want to get a reference of an element that is inserted by JavaScript, pay
+attention and make sure you write the document.querySelector to search the
+element **after** adding the element tag!
+
+**Good**
+
+This will work because we are getting the `.submitButton` element after setting
+innerHTML.
+
+```jsx
+<div class="container"></div>
+<button class="showButton">Show</button>
+<script>
+const box = document.querySelector('.container')
+const button = document.querySelector('.showButton')
+
+button.onclick = () => {
+  box.innerHTML = `
+		<input type="text" class="username" />
+		<input type="password" class="password" />
+		<button class="submitButton">submit</button>
+	`
+
+	const submitButton = document.querySelector('.submitButton')
+  submitButton.onclick = ...
+}
+</script>
+```
+
+**Bad**
+
+The browser will throw an error because it is trying to get the `.submitButton`
+element before it exists.
+
+```jsx
+<div class="container"></div>
+<button class="showButton">Show</button>
+<script>
+const box = document.querySelector('.container')
+const button = document.querySelector('.showButton')
+
+const submitButton = document.querySelector('.submitButton')
+submitButton.onclick = ...
+
+button.onclick = () => {
+  box.innerHTML = `
+		<input type="text" class="username" />
+		<input type="password" class="password" />
+		<button class="submitButton">submit</button>
+	`
+}
+</script>
+```
+
+**Be careful when setting the `innerHTML` property**
+
+Elements lose their properties when they're being replaced by other elements. In
+the example below, we bind an **onclick** function to the showButton button.
+When the showButton button is clicked, the element inside the `<div>` tag is
+totally replaced with an `<h1>` tag and a new button element. The original
+button element has been replaced although the new button has exactly the same
+class name and text. It's technically a brand new element. Replace the current
+contents of your page with the below code to see what happens:
+
+```html
+<input class="inputText" type="text" />
+<div class="container">
+  <button class="showButton">Show</button>
+</div>
+<script>
+  const box = document.querySelector('.container')
+  const input = document.querySelector('.inputText')
+  let button = document.querySelector('.showButton')
+
+  button.onclick = () => {
+    box.innerHTML = `
+		<h1>${input.value}</h1>
+    <button class="showButton">Show</button>
+	`
+    // When you click the button, its onclick function will replace
+    //   button element inside the box with the new innerHtml property.
+    // Now if you click the button again, nothing happens.
+  }
+</script>
+```
+
+> Keep in mind that when you set the `innerHTML` property, whatever was there
+> previously is gone. In other words, after setting the `innerHTML` of an
+> element, all variables for the children elements are no longer usable.
+
+In the above example, whenever the button is clicked, the clicked button is to
+be replaced with an identical new button. So in the current `onclick` function,
+after we set the container div's innerHtml, we need to select this new button
+and give it an `onclick` function that sets the container's innerHtml including
+a new button, selects that button and gives it an `onclick` function that... See
+the problem here? We need to create a function that will run every time the
+button is clicked, and it needs to assign _itself_ as the button's `onclick`
+function. Replacing our current `button.onclick` function with the following
+code will make it work as many times as the button is clicked:
+
+```jsx
+const prepareTheButton = () => {
+  box.innerHTML = `
+    <h1>${input.value}</h1>
+    <button class="showButton">Show</button>
+    `
+  button = document.querySelector('.showButton')
+  button.onclick = prepareTheButton
+}
+
+button.onclick = prepareTheButton
+```
+
+## innerText property
+
+If you do not wish to create new HTML elements and simply wish to change the
+text inside an element, you should use the `innerText` property. The `innerText`
+property will treat your strings as literal strings instead of `html` tags.
+
+```jsx
+<h1 class="heading"></h1>
+<script>
+const h1Element = document.querySelector('.heading')
+h1Element.innerText = "The hardest choices require the strongest wills."
+</script>
+```
+
+## Exercises
+
+Some of these UI exercises may seem intimidating. When you feel overwhelmed,
+take a deep breath, think about _what you know_, and make sure to start with
+that. When you work as a software engineer, you will have to handle projects
+that seem really intimidating. In these situations, it is important to think
+about what you know and understand, then slowly branch out from there piece by
+piece.
+
+> Good engineers spend the majority of their time thinking, not coding. Whether
+> you are working on these exercises, interviewing for a software engineering
+> job, or working on projects, make sure you spend the first half of your
+> allotted time thinking through the problem before actually starting to code.
+
+<twoColumns>
+
+<Image
+  src="/assets/curriculum/lessons/js2/view_source.png"
+  width="1240"
+  height="794"
+/>
+
+<div style={{marginLeft:'1em'}}>
+To see each page in action, click on the link. To view the solution, right-click
+anywhere on the page and select `View Source`.
+
+**Debugging** - If your page is not doing what you want it to do, you can look
+at the `console`. This is where the browser will try to tell you what the error
+is if you've written your code in a way it can't understand.
+[Read this](/docs/setup#running-html-codes-on-the-browser) to learn how to open
+the browser's console.
+
+</div>
+
+</twoColumns>
+
+> For each of the problems below, if you are struggling through the answers,
+> please walk through each step with your mentor (in person) or in the chatroom
+> to make sure you have each step in the answer written correctly.
+
+1. [Create an h1 element that says](https://songz.c0d3.com/js1/1.html)
+   `Change Me`, an input box, and a submit button. When the submit button is
+   clicked, the h1 element is changed to whatever is inside the input box.
+
+<Spoiler name="Overview">
+
+1. Create an input, h1 and submit button
+2. Add a class to all three elements and target them using querySelector
+3. When button is clicked, set the innerText of the h1 tag to the input value
+
+</Spoiler>
+
+2. [Start with a button called Start.](https://songz.c0d3.com/js1/2.html) When
+   you click on the button the page changes to show an input box and a button
+   (Cancel). When the Cancel button is clicked, the page goes back to its
+   original state.
+
+<Spoiler name="Overview">
+
+1. Create a container and inside of that container put a start button
+2. Select the start button with querySelector and set the start button's onclick
+   event to a function. This function replaces the container’s innerHTML with an
+   input box and a cancel button
+   1. Set the cancel button onclick's event to a function that replaces the
+      container's innerHTML with a start button.
+   2. Repeat #2 (need to turn step 2 into a function `startApp` )
+3. Run `startApp` function.
+
+</Spoiler>
+
+3. [Build a closure UI](https://songz.c0d3.com/js1/3.html). BTW, UI means User
+   Interface which is the means that the user and a computer system interacts,
+   like the use of input box or buttons. (There are many ways to do this. The
+   provided solution is not the only solution.)
+
+<Spoiler name="Overview">
+
+1. Start with a `<div>` element named container. Within the `<div>` element, add
+   an input box that only allows numerical value to be entered and a button
+   named start. You also need a h1 Tag (outside the container).
+2. Using querySelector, get the `h1` and container `div` elements.
+3. Create a function named `solution` that takes in a number as a parameter and
+   returns a function. Let's name the number as a.
+   1. Before returning the function, select the input element and get the
+      numerical value of the input element. Set the h1 element's innerText to
+      that value and a "+" character (Example: `5 +` )
+   2. The returned function takes in a number as a parameter. When this function
+      is run, select the input element and pass the numerical value as an
+      argument to the returned function. Return the sum of this value and the
+      number a from step 3 above.
+4. Select the start button. When start button is clicked,
+   1. Get the input element. Pass the value (convert to number first) as an
+      argument into the function named `solution` .
+   2. store the return value `result` .
+   3. Set container's innerHTML to input, add button, and clear button.
+   4. when `clear` button is clicked, replace the elements inside the container
+      with an input box element and a start button element. Clear h1 element,
+      then run step 4 (to add onclick function for the start button).
+   5. When add button is clicked, select the input element and get the value.
+      Run the `result` function and pass in the value (convert to number). Set
+      h1 element's inner text. (Example: `5 + 244 = 249` )
+
+</Spoiler>
+
+4. [Hello String Generator UI](https://songz.c0d3.com/js1/4.html). Create a page
+   with an input box and a button. The input box takes a number, and when the
+   button is clicked, `Hello` repeated that many times is displayed inside an
+   `<h1>` element.
+
+<Spoiler name="Overview">
+
+1. Create an input box that takes in a number, a generate button, h1 element
+2. Write a function named solution that takes in a number named x and returns a
+   string of "hello" repeated x number of times.
+3. When the generate button is clicked, run solution . The h1 element's
+   innerText is set to the result string.
+
+</Spoiler>
+
+5. [String Breaker.](https://songz.c0d3.com/js1/5.html) Split the input string
+   into single characters and add the individual characters into their own
+   `<h1>` element. For example, breaking `Batman` will generate:
+
+   ```html
+   <h1>B</h1>
+   <h1>a</h1>
+   <h1>t</h1>
+   <h1>m</h1>
+   <h1>a</h1>
+   <h1>n</h1>
+   ```
+
+<Spoiler name="Overview">
+
+1. Create an input box, generate button and a container div.
+2. Write a function named `solution` that takes in a string and returns a
+   string. Example:
+
+   ```jsx
+   solution('hello')
+   // returns "<h1>h</h1><h1>e</h1><h1>l</h1><h1>l</h1><h1>o</h1>"
+   ```
+
+3. When the generate button is clicked, run the solution function and pass the
+   inputbox value as argument. Set container div's innerHTML to the returned
+   value.
+
+</Spoiler>
+
+6. [House Of Primes](https://songz.c0d3.com/js1/6.html). Create an input box, a
+   button, and h1 element. When the user types in a number and hits start
+   button, all the prime numbers from 2 to the input number will be displayed.
+
+<Spoiler name="Overview">
+
+1. Create a helper function named `isPrime` that takes in a number as a
+   parameter and returns a boolean: if the number is prime.
+2. Create another helper function named `printAllPrimes` that takes in a number
+   as a parameter and returns a string of all prime numbers from 2 to the
+   number:
+
+   ```jsx
+   printAllPrimes(7)
+   // returns "2...3...5...7..."
+   ```
+
+3. In your HTML code, create an Input box, start button and h1 tag.
+4. Finally, when the user clicks on the start button, run the second helper
+   function `printAllPrimes` with the input box value (turn it into a number) as
+   argument
+5. Set the returned value into `h1` element's `innerText`.
+
+</Spoiler>
+
+- **[Part 2](https://songz.c0d3.com/js1/6b.html)**: Display each number in its
+  own h1 element.
+
+<Spoiler name="Overview">
+
+Now would be a good time to `git add` and `git commit` your changes so that if
+you mess up, you can undo quickly and restart from here.
+
+If you did not initialize your repository yet, run `git init` and now you will
+be able to use git in that folder!
+
+Simply change the `printAllPrimes` function to return a different string:
+
+```jsx
+printAllPrimes(7)
+// returns "<h1>2</h1><h1>3</h1><h1>5</h1><h1>7</h1>"
+```
+
+Change the `h1` element to a `div` element instead
+
+Change `innerText` to `innerHTML`
+
+</Spoiler>
+
+7. [Delayed typing](https://songz.c0d3.com/js1/7.html). Create an input box and
+   a button. When the button is clicked, display each key that was typed after a
+   delay of 200ms.
+
+<Spoiler name="Overview">
+
+1. Create an `h1` `input`, and `button` tag. Select them.
+2. Write a function that takes in 1 arguments: a string.
+
+   ```jsx
+   type('hello')
+   // Will put into h1 element:
+   /*
+   ...200ms...
+   h
+   ...200ms...
+   he
+   ...200ms...
+   hel
+   ...200ms...
+   hell
+   ...200ms...
+   hello
+   */
+   ```
+
+3. When user clicks on the button, now you can run your amazing function! Run
+   the `type` function (above) and pass in the input value as an argument
+
+   ```jsx
+   button.onclick = () => {
+     type(input.value)
+   }
+   ```
+
+</Spoiler>
+
+- **[Part 2](https://songz.c0d3.com/js1/7b.html)**: Add the new text that was
+  typed to the top of the page. (type a few times)
+
+  If you are stuck and want to solve this by yourself without looking at the
+  solution, try doing the **Chat Input** exercise under **Optional Additional
+  Exercises** below.
+
+<Spoiler name = "Hint 1: What display elements do you need?">
+
+You need two display elements: an `h1` element to display the typing, and a
+`div` element to hold all of the typed strings.
+
+</Spoiler>
+
+<Spoiler name = "Hint 2: How to display the previous inputs">
+
+When the typing is done (which should be your base case), you must clear the
+`h1` element and then set the `div` element's `innerHTML` to its existing value
+**plus** the string (enclosed inside a `h1` tag) that just completed in the
+timeouts.
+
+```jsx
+if (i === str.length) {
+  // str is the user's input
+  h1Element.innerText = ''
+  allMessages.innerHTML = `${allMessages.innerHTML} <h1>${str}</h1>`
+  return
+}
+```
+
+</Spoiler>
+
+<Spoiler name="Overview">
+
+1. Add a h1 tag, get the element
+2. At the end of the `type` function above, add the string into the h1 element.
+
+   ```jsx
+   // allMessages is the h1 element from the previous step
+   type = (str, i=0) => {
+     if (i === str.length) {
+       ...
+       allMessages.innerHTML = allMessages.innerHTML + '<h1>' + str + '</h1>'
+       return
+     }
+     ....
+   }
+   ```
+
+</Spoiler>
+
+8. [Stopwatch](https://songz.c0d3.com/js1/8.html) (every 10 milliseconds)
+
+   1. The JavaScript Math.floor() method rounds a number DOWNWARDS to the
+      nearest integer, and returns the result. For example:
+
+      ```jsx
+      let num = Math.floor(3 / 2)
+      // num is 1, because 3 divided by 2 is 1.5.
+      //     Rounding down will give you 1.
+
+      num = Math.floor(7 / 2) // num is 3
+      num = Math.floor(9 / 4) // num is 2
+
+      // if the number is negative,
+      // rounding down will give you the next smaller negative integer
+      num = Math.floor(-2.1) // num is -3
+      ```
+
+<Spoiler name="Overview">
+
+1. We need an h1 and a button element. Select them.
+2. We need a variable `timeVal` to keep track of how much time has passed. The
+   initial value of timeVal is 0.
+3. We need a variable `isRunning` to keep track of whether the timer has started
+   or not. The initial value of isRunning is `false`.
+4. We need a function (named display) that takes in a number and returns a
+   string that displays the second and millisecond. There are 1000ms in a
+   second.
+
+   ```jsx
+   display(2000) // return "02:00"
+   display(28000) // return "28:00"
+   display(28290) // return "28:29"
+   ```
+
+   If you are struggling to write the `display` function, try to break it down:
+
+   - Are you able to figure out how to return just the seconds?
+   - Are you able to figure out how to return just the milliseconds?
+     - If given `28290` , you may need to get out `290` .
+     - To extract the last 3 numbers from a number, you use `%` remainder.
+     - `28290 % 1000` will give you `290`
+     - Get `29` from `290` (hundredths of a second)
+     - Trouble with the math? Make sure you take the time to review
+       [these math exercises](/docs/numbers)!
+
+5. We need a helper function `setTimer` that will call setTimeout with 2
+   arguments, a function and 100 (because we want to update the clock every 100
+   ms). The callback function should:
+
+   - Update `timeVal` with `timeVal + 10`
+   - run `display` function and pass in `timeVal` as argument.
+   - set `h1` element's innerText to the result of the `display` function.
+   - call `setTimer`
+
+   To test this step, run `setTimer` function and refresh your page. You should
+   see the timer increase second by second.
+
+6. When you click on start button, the `onclick` event function should do this:
+   - Check if `isRunning` is true. If it is, return.
+   - Set `isRunning` to true
+   - run `setTimer` function.
+
+</Spoiler>
+
+- **[Part 2](https://songz.c0d3.com/js1/8b.html)**: Add Pause and Stop buttons
+
+<Spoiler name="Overview">
+
+Make sure you test each button to check that it is working before moving on!
+
+Add 2 button (Pause & Stop) elements and select them.
+
+1. Pause button — the onclick event function will:
+
+   if `isRunning` is true, set `isRunning` to false and set button text to
+   Unpause.
+
+   Otherwise, set `isRunning` to true and button text to Pause and run the
+   `setTimer` function
+
+2. Stop button — the onclick event function will:
+
+   Set `isRunning` to false and `timeVal` to 0
+
+3. `setTimer` function — Add codes:
+
+   if we are stopped or paused, (`isRunning` is false), return from the function
+   and don't do anything.
+
+</Spoiler>
+
+<Spoiler name="Debrief">
+
+How did you do? Stopwatch was definitely the most complex program we've built so
+far, so don't worry if you had to use mulitple hints! Good software engineers
+don't hesitate to ask for help when they need it.
+
+As you might have expected, the basic structure for the JavaScript on this page
+revolves around the `onClick` event functions of each of the three buttons:
+Start, Pause/Unpause, and Stop. But one key variable that ties them all together
+is the `isRunning` flag. This has to be defined early on in the script and
+checked whenever a button is clicked so the setTimeout functions don't go out of
+control! If you want to see time fly by, remove the isRunning checks from your
+solution and press Start a few times.
+
+**Possible variants**
+
+The more complex the problem, the more ways there are to solve it. For example,
+you might have kept two separate counters, one for seconds and one for
+hundredths of a second, and thus avoided using `Math.floor`, or you might have
+wrapped the `isRunning` and `isPaused` flags into one. These variants are fine
+as long as your stopwatch functions exactly the same as the solution page.
+
+</Spoiler>
+
+9. [Blinker](https://songz.c0d3.com/js1/9.html): Flashing text website that
+   allows users to change both the text and the speed.
+
+<Spoiler name="Overview">
+
+1. Add two input boxes, one for text and a numeric input box for speed of
+   blinking, and a tag (named p) for displaying the text. Select them
+2. Add a helper function named `blink` . This function will run:
+   - if the `p` element has `innerText` value, reset it to ''
+   - otherwise, set `p` element to display the text input's value
+   - determine the wait time: divide 1000 by numeric input's value
+   - make sure to convert input's value to a number!
+   - then run `blink` again.
+3. Run `blink` function
+
+</Spoiler>
+
+If you struggled with any of the above exercises, make sure you practice them
+until you can do them on your own. A few of these problems have shown up during
+interviews.
+
+> During your interviews or at work, you are expected to come up with these
+> steps yourself. Before moving on to the next lesson (JS3), make sure you
+> review these exercises over and over again until you are able to come up with
+> the answer steps yourself.
+
+Below are more exercises that you can do for more practice:
+
+**Optional Additional Exercises**
+
+1. [Countdown from Input](https://songz.c0d3.com/js1/countdown.html)
+
+<Spoiler name="Overview">
+
+1. Create an input box, button, and h1 tag. Select the elements
+2. Write a function named `countDown` that takes in a number (`x`) as parameter
+   and
+   - If `x` is smaller than or equal to 0, return.
+   - set h1 element's `innerText` to `x`
+   - runs setTimeout function which takes in 2 arguments. A function and 1000
+     (for 1 second). The callback function should run `countDown` again with
+     `x-1` as argument
+3. When button is clicked, get the value from input element, convert it to
+   number, and pass it into `countDown` function.
+
+</Spoiler>
+
+2. [Chat Input](https://songz.c0d3.com/js1/chatInput.html)
+
+<Spoiler name="Overview">
+
+1. Create an input box, div, and a button tag. Select the elements
+2. When button is clicked, get the input value and append it to the `div`
+   innerHTML property. Make sure to wrap your input value around h1 elements:
+   `<h1> string </h1>`
+
+</Spoiler>
+
+3. [Letter Filter](https://songz.c0d3.com/js1/letterFilter.html)
+
+<Spoiler name="Overview">
+
+1. Write a function named `createFilter` that takes in a string and returns a
+   function. It should work like the following:
+
+   ```jsx
+   // Example 1:
+   let fn = createFilter('i')
+   fn('finding') // should return "fndng"
+
+   // Example 2:
+   fn = createFilter('b')
+   fn('breaking bad') // should return 'reaking ad'
+   ```
+
+2. Add a `h1` tag (for the title), `div` tag (to hold the input and button
+   tags), and `h1` tag (for displaying result) and select them.
+3. Add a variable called `filterFunction`. We need this to store the result from
+   `createFilter`
+4. Create a function called `startApp` that:
+   - sets the `div` element's innerHTML with `input` tag and a `button` tag.
+   - select the input and button element inside the `div`
+   - set the button's onclick function to do this:
+     - run the `createFilter` function and pass in input value as argument.
+       Store the result in `filterFunction`
+     - set the title element string to "Filtering out:
+       `<whatever value inside input>`
+     - set the `div` element's innerHTML with `input` tag and 2 `button` tags.
+     - Select the elements
+     - Set the **GoBack** button's onclick property to run `startApp` function
+     - Set **Filter** button's onlick function to do this:
+       - Run `filterFunction`, and store the result in result `h1` element's
+         `innerText` property.
+       - Set `input` element's value to `""` to clear it
+5. Run `startApp` function
+
+</Spoiler>
+
+4. [Increase 1](https://songz.c0d3.com/js1/increase1.html)
+
+<Spoiler name="Overview">
+
+1. Create an add button and a h1 tag.
+2. Select both button and h1 elements.
+3. Add a number variable `counter` and set its value to zero.
+4. set button's `onclick` event to do :
+   - Add 1 to `counter` .
+   - set h1 element's `innerText` property to value of `counter`
+
+</Spoiler>
+
+5. [Toggle](https://songz.c0d3.com/js1/toggle.html)
+
+<Spoiler name="Overview">
+
+1. Add button named Create, and a h1 tag.
+2. Select them.
+3. Add a boolean variable named `isShowing` and set its value to false.
+4. When the button is clicked, do the following (via `onclick` event function):
+   - if `isShowing`
+     - the `h1` tag will display blank ( `""`)
+     - reset `isShowing` variable to false
+     - stop running of the function (with return)
+   - set `isShowing` to true
+   - the `h1` tag will display `"Hello World"`
+
+</Spoiler>
+
+<ChallengeBar
+  href="/curriculum/1"
+  description="Complete HTML and testing challenges (TO-DO add these challenges)"
+  title="Master your skill by solving challenges"
+/>

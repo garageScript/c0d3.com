@@ -1,0 +1,2105 @@
+---
+title: Recursion, closure and async
+order: 2
+---
+
+# Table of Contents
+
+# Interviewing
+
+During interviews for software engineering positions, your ability to write
+functions will be tested. Your interviewer will not write down every detail for
+you describing what the function does. Instead, they will give you a few
+examples, briefly describe it, and see what you do.
+
+Therefore, from this lesson on, all exercise problems will have short
+explanations to help train your ability to figure out what you are supposed to
+do from the examples. For each problem and during interviews, we highly
+recommend following these 5 steps:
+
+1. Provide 3 examples. Make sure to always use examples with negative numbers,
+   0, and empty strings.
+2. Function shape: With your examples, this one is easy to knock out of the
+   park. Specify what parameters the function needs.
+3. Explanation: Explain what you need, and how you will use it.
+4. Write your code: Follow your explanation and translate it into code.
+5. Test: Go through your code step by step with your examples in step 1 and
+   verify that your solution works. (This step will be omitted in our exercise
+   examples)
+
+If you don't completely understand the 5 steps above, don't worry. You will get
+an example for every exercise for the rest of the book
+
+# Closure
+
+**Note: It might be helpful to review
+[Execution Context in JS0](/curriculum/lessons/js0/functions_and_execution_context#execution-context)
+before tackling this section.**
+
+Closure is a concept that allows a JavaScript function to keep track of the
+values it needs to run, allowing you to do incredible things. Closure simply
+means that:
+
+> An inner function always has access to the variables and parameters of its
+> outer function, even after the outer function has returned.
+
+Let's see an example. JS0 challenge 2 asked you to create a function that will
+add 3 numbers together. Now we'll add 3 numbers, but with a twist: We're going
+to create a function that, given 2 numbers, will _return_ a new function that
+takes a third number and then adds all three together.
+
+```jsx
+const solution = (a, b) => {
+  return c => {
+    return a + b + c
+  }
+}
+
+const fun1 = solution(1, 2)
+// Even though solution has finished running, the a and b parameters still exist
+// a -> 1, b -> 2
+
+// Because of closure, fun1 can access variables a and b
+let res = fun1(3) // What is the value of res?
+res = fun1(5) // What is the value of res?
+
+res = solution(2, 3)(9) // what is the value of res?
+```
+
+<Spoiler>
+
+```jsx
+const solution = (a, b) => {
+  return c => {
+    return a + b + c
+  }
+}
+
+const fun1 = solution(1, 2)
+
+let res = fun1(3) // 1 + 2 + 3 = 6
+res = fun1(5) // 1 + 2 + 5 = 8
+
+res = solution(2, 3)(9) // 2 + 3 + 9 = 14
+```
+
+</Spoiler>
+
+In the example above, notice how `fun1` is aware of the arguments (a, b) that
+were originally passed into its parent function (`solution`).
+
+Because of closure, a function's variables can change over time. Let's see how
+this plays out in the next example. Remember that every function has its own
+execution context (variables).
+
+```jsx
+const solution = () => {
+  let counter = 0
+  return () => {
+    counter = counter + 1
+    if (counter < 3) {
+      return 0
+    }
+    return counter
+  }
+}
+const arya = solution()
+let res = arya() // what is res?
+const sansa = solution()
+res = arya() + sansa() // what is res?
+res = arya() + sansa() // what is res?
+res = arya() + sansa() // what is res?
+res = arya() + sansa() // what is res?
+res = arya() + sansa() // what is res?
+```
+
+<Spoiler>
+
+```jsx
+const solution = () => {
+  let counter = 0
+  return () => {
+    counter = counter + 1
+    if (counter < 3) {
+      return 0
+    }
+    return counter
+  }
+}
+const arya = solution()
+let res = arya() // res is 0, but arya's counter has become 1
+const sansa = solution()
+res = arya() + sansa() // 0; arya's counter -> 2, sansa's counter -> 1
+res = arya() + sansa() // 3; arya's counter -> 3, sansa's counter -> 2
+res = arya() + sansa() // 7; arya's counter -> 4, sansa's counter -> 3
+res = arya() + sansa() // 9; arya's counter -> 5, sansa's counter -> 4
+res = arya() + sansa() // 11; arya's counter -> 6, sansa's counter -> 5
+```
+
+</Spoiler>
+
+solution returns a function that has access to solution's `counter` variable.
+Each time the function runs, it updates the counter. Even though we got both
+`arya` and `sansa` from solution, they're separate functions so they each have
+their execution context, and their own copy of `counter`.
+
+Note that we followed good practice and used `let counter = 0`. What would
+happen if instead we just used `counter = 0`?
+
+```jsx
+const solution = () => {
+  counter = 0 // because there is no let declaration,
+  //   counter is in the global scope.
+  return () => {
+    counter = counter + 1
+    if (counter < 3) {
+      return 0
+    }
+    return counter
+  }
+}
+const arya = solution()
+let res = arya() // what is res?
+const sansa = solution()
+res = arya() + sansa() // what is res?
+res = arya() + sansa() // what is res?
+res = arya() + sansa() // what is res?
+res = arya() + sansa() // what is res?
+res = arya() + sansa() // what is res?
+```
+
+<Spoiler>
+
+```jsx
+const solution = () => {
+  counter = 0
+  return () => {
+    counter = counter + 1
+    if (counter < 3) {
+      return 0
+    }
+    return counter
+  }
+}
+const arya = solution()
+let res = arya() // res is 0, counter -> 1
+const sansa = solution() // counter -> 0
+res = arya() + sansa() // 0; counter -> 2
+res = arya() + sansa() // 7; 3 + 4
+res = arya() + sansa() // 11; 5 + 6
+res = arya() + sansa() // 15; 7 + 8
+res = arya() + sansa() // 19; 9 + 10
+```
+
+What happened? When we created `counter` with no let or const declaration, we
+created it in the global scope. That means each function created by solution
+doesn't get its own copy for its execution context; they all share the same
+`counter`. The reason this is **bad practice** is that functions become
+unpredictable when they're allowed to change variables that other functions
+might be expecting to stay the same.
+
+</Spoiler>
+
+## Exercises
+
+From here to the rest of the lesson, the description of the function you are
+supposed to solve will be intentionally short and lacking to accurately reflect
+the life as a software engineer. No one will write out the instructions for you
+in detail. Instead, you will be given examples and you must figure out what the
+function does from the examples.
+
+1. Write a function named `hello3x` that _returns a function_. The returned
+   function should return "hello" only the first 3 times it's run, then "".
+
+   Example:
+
+   ```jsx
+   const threeF = hello3x()
+   let b = threeF() // b is "hello"
+   b = threeF() // b is "hello"
+   b = threeF() // b is "hello"
+   b = threeF() // b is ""
+   // b will always be "" for all subsequent b = threeF() executions
+   ```
+
+<Spoiler>
+
+Let's walk through how we will write this function using the five steps to
+solving interview problems: examples, function shape, think, code, test.
+
+1. 3 examples (Not many possibilities for examples here because the problem is
+   straightforward)
+
+   ```jsx
+   // example 1:
+   const b = hello3x()
+   b() // returns 'hello'
+   b() // returns 'hello'
+   b() // returns 'hello'
+   b() // returns ''
+
+   // This is too simple, no need for other examples.
+   ```
+
+2. Function shape
+
+   `hello3x` takes in 0 arguments and returns a function. The returned function
+   takes no arguments.
+
+   ```jsx
+   const hello3x = () => {
+     return () => {}
+   }
+   ```
+
+3. Explanation
+
+   1. What variables do you need?
+      - We need a counter to keep track of how many times the function has run.
+   2. Where do you create the variables?
+      - We can't put it in the returned function. If we do it there, then every
+        time the returned function is called, the variable is created and then
+        removed when function is done. So we must put it outside the returned
+        function, right when `hello3x` starts running.
+   3. When do you update the variables?
+      - Every time the returned function runs, we'll need to update the counter.
+        When it reaches 3, the function should stop returning "hello".
+
+   If you are confident that you've nailed down all the steps, start coding!
+
+4. Code
+
+   ```jsx
+   const hello3x = () => {
+     let counter = 0
+     return () => {
+       if (counter === 3) {
+         return ''
+       }
+       counter = counter + 1
+       return 'hello'
+     }
+   }
+   ```
+
+5. Test
+
+   Walk through your code like a computer, running it through your head with the
+   examples in step 1 to make sure your code works
+
+</Spoiler>
+
+2. Write a function named `helloFunction` that returns a function:
+
+   ```jsx
+   const moreHello = helloFunction()
+   let b = moreHello() // b is "hello"
+   b = moreHello() // b is "hellohello"
+   b = moreHello() // b is "hellohellohello"
+   b = moreHello() // b is "hellohellohellohello"
+   // every time moreHello is called, one more "hello" will be appended to variable b.
+   ```
+
+<Spoiler>
+
+Let's walk through how we wrote this function using the five steps to solving
+interview problems: examples, function shape, think, code, test.
+
+1. Write 3 Examples:
+
+   ```jsx
+   // Example A:
+   const b = helloFunction()
+   let e = b() // e is "hello"
+   e = b() // e is "hellohello"
+   e = b() // e is "hellohellohello"
+   e = b() // e is "hellohellohellohello"
+   // every time the function is called, one more "hello" will be appended
+   // to variable e.
+
+   // Example B:
+   const c = helloFunction()
+   c // c is a function
+
+   // This is too simple, no need for other examples.
+   ```
+
+2. **Function shape**: `helloFunction` takes in 0 arguments and returns a
+   function. The returned function takes no arguments.
+
+   ```jsx
+   const helloFunction = () => {
+     return () => {}
+   }
+   ```
+
+3. **Explanation**
+
+   What variables do you need?
+
+   We need to declare the variable that allows us to change its value every time
+   the function runs.
+
+   Where do you create the variable?
+
+   We can't put it in the returned function. If we do it there, then every time
+   the returned function is called, the variable is created and then removed
+   when function is done. So we must put it outside the returned function, right
+   when `helloFunction` starts running.
+
+   When do you update the variable?
+
+   Every time the returned function runs, we update the variable by adding
+   "hello" to the value of the variable. Return that variable.
+
+4. **Code**
+
+   ```jsx
+   const helloFunction = () => {
+     let result = ''
+     return () => {
+       result = result + 'hello'
+       return result
+     }
+   }
+   ```
+
+</Spoiler>
+
+3. Write a function named `lessThan` that returns a function:
+
+   ```jsx
+   const youngerThanCardiB = lessThan(27)
+   let miley = youngerThanCardiB(26) // true, because 26 is smaller than 27
+   let nicki = youngerThanCardiB(36) // false, because 36 is not smaller than 27
+
+   const smallerThan = lessThan(2)
+   let b = smallerThan(3) // b is false, because 3 is not smaller than 2
+   b = smallerThan(5) || youngerThanCardiB(5) // smallerThan(5) is false (falsey)
+   // so b takes the value true because youngerThanCardiB(5) returns true
+   ```
+
+<Spoiler name = "Hint">
+
+1. First, you must recognize that `lessThan` is a function. You should know how
+   to write a function.
+1. Next, you should write the shape of the function. Write the parameters and
+   return value of the function. What does the returned function return?
+
+</Spoiler>
+
+<Spoiler>
+
+1. **Examples**
+
+   ```jsx
+   //Example A:
+   const youngerThanMary = lessThan(0)
+   let b = youngerThanMary(0) // b is true
+   b = youngerThanMary(27) // b is false
+   b = youngerThanMary(22) // b is false
+   b = youngerThanMary(-1) // b is true
+
+   //Example B:
+   const youngerThanJohn = lessThan(-35)
+   let c = youngerThanJohn(-35) // c is false
+   c = youngerThanJohn(0) // c is false
+   c = youngerThanJohn(42) // c is false
+   c = youngerThanJohn(-24) // c is false
+   c = youngerThanJohn(-39) // c is true
+
+   //Example C:
+   const youngerThanJane = lessThan(45)
+   let d = youngerThanJane(45) // d is false
+   d = youngerThanJane(49) // d is false
+   d = youngerThanJane(39) // d is true
+   d = youngerThanJane(24) // d is true
+   ```
+
+2. **Function Shape**
+
+   `lessThan` takes in a parameter and returns a function. The returned function
+   takes in a parameter
+
+   ```jsx
+   const lessThan27 = n => {
+     return n2 => {}
+   }
+   ```
+
+3. **Explanation**
+
+   Before return - no need to do anything
+
+   Inside returned function - We need an `if` statement to tell the function to
+   return a boolean that checks if `n2` is smaller than `n`
+
+4. **Code**
+
+   ```jsx
+   const lessThan = n => {
+     return n2 => {
+       return n2 < n
+     }
+   }
+   ```
+
+</Spoiler>
+
+4. Write a function named `callWith` that takes a number and returns a function.
+   The **returned** function takes in a function as its parameter and invokes it
+   with the number as argument.
+
+> If the above description sounds like a mouthful, don't worry. Nobody will (or
+> should) talk to you like that. Rather, you will be given examples (like below)
+> and you will need to figure out what the function `callWith` does before
+> solving it.
+
+```jsx
+const fun = callWith(10)
+let b = fun(num => {
+  return num + 5
+}) // b is 15
+
+b = fun(num => {
+  return num + 'hello'
+}) // b is "10hello"
+
+b = fun(num => {
+  return 500 % num
+}) // b is 0
+```
+
+<Spoiler>
+
+Wow, that was a lot of functions, wasn't it? Although it might have been
+intimidating that we kept saying "function," hopefully following the 5 steps
+helped you through the problem.
+
+1. **Examples**
+
+   ```jsx
+   //Example A:
+   const fun = callWith(10)
+   let b = fun(() => {}) // b is undefined
+
+   b = fun(num => {
+     return num + 'hello0'
+   }) // b is "10hello10"
+
+   b = fun(num => {
+     return 50 + num
+   }) // b is  60
+
+   //Example B:
+   const fun2 = callWith('hello')
+
+   let c = fun2(num => {
+     return num
+   }) // c is "hello"
+
+   c = fun2(num => {
+     return num + ' 10hello'
+   }) // c is "hello 10hello"
+
+   c = fun2(num => {
+     return 'world'
+   }) // c is "world"
+
+   //Example C:
+   const fun3 = callWith(-10)
+
+   let d = fun3(num => {
+     return num + 38
+   }) // d is 28
+
+   d = fun3(num => {
+     return num + '10'
+   }) // d is "-1010"
+
+   d = fun3(num => {
+     return 10 * num
+   }) // d is -100
+   ```
+
+2. **Function Shape**
+
+   `callWIth` takes in an parameter and returns a function.
+
+   returned function takes in a parameter.
+
+   ```jsx
+   const callWith = num => {
+     return f => {}
+   }
+   ```
+
+3. **Explanation**
+
+   Before return - no need to do anything
+
+   Inside returned function - return the result of running the argument
+
+4. **Code**
+
+   ```jsx
+   const callWith = num => {
+     return f => {
+       return f(num)
+     }
+   }
+   ```
+
+</Spoiler>
+
+5. Write a function named `runIt` that takes in a function as a parameter and
+   returns the function.
+
+   ```jsx
+   const subtract = runIt((a, b) => {
+     return a - b
+   })
+   let b = subtract(3, 20) // b is -17
+   b = subtract(11, 2) // b is 9
+   ```
+
+<Spoiler>
+
+1. **Examples**
+
+   ```jsx
+   // Example A:
+   const subtract = runIt((a, b) => {
+     return a - b
+   })
+   let b = subtract(3, 20) // b is -17
+   b = subtract(7, 4) // b is 3
+   b = subtract(12, 6) // b is 6
+
+   // Example B:
+   const fun = runIt((a, b) => {
+     return 'hello'
+   })
+   let c = fun(27, 4) // c is "hello"
+   c = fun(12, 12) // c is "hello"
+
+   // Example C:
+   const fun2 = runIt((a, b) => {
+     return a + b
+   })
+   let d = fun2(-10, 10) // d is 0
+   d = fun2(2, 3) // d is 5
+   d = fun2(9, 0) // b is 9
+   ```
+
+2. **function shape**
+
+   `runIt` takes a parameter and returns a function
+
+   returned function takes in 2 arguments
+
+   ```jsx
+   const runIt = a => {
+     return (b, c) => {}
+   }
+   ```
+
+3. **Explanation**
+
+   Before return - no need to do anything
+
+   Inside returned function - return the result of running the `a`
+
+4. **Code**
+
+   ```jsx
+   const runIt = a => {
+     return (b, c) => {
+       return a(b, c)
+     }
+   }
+   ```
+
+</Spoiler>
+
+You may have noticed that some of the exercises and challenges in JS0 are
+actually closure examples.
+
+## Real Life Use Case
+
+> If this section goes way over your head, skip it and come back to it later.
+> How much later? Just keep coming back over and over again until you get it.
+
+Sometimes when you run a function you want to write an HTML `console.log()`
+method to display or print out what is going on in the console. Instead of
+writing `console.log()` into every function, you can create a function called
+`addLog`. When you want to write a function, you pass your function into
+`addLog` like this:
+
+```jsx
+// Let's say you want to write a function that adds 2 numbers
+const add2 = addLog('sum of 2 numbers', (a, b) => {
+  return a + b
+})
+
+// Let's say you want to write a function that checks if the first number
+//    is bigger than the second number
+const isFirstBigger = addLog('comparing 2 numbers', (a, b) => {
+  return a > b
+})
+
+// Let's use these functions!
+let result = add2(5, 2) // result is 7
+if (isFirstBigger(result, 5)) {
+  result = 100
+}
+// result is 100
+
+result = add2(result, 5)
+// result is 105
+
+/*
+At the same time, because add2 and isFirstBigger is created by addLog
+you will see logs printed out!
+
+sum of 2 numbers, 5, 2
+comparing 2 numbers, 7, 5
+sum of 2 numbers, 100, 5
+
+These logs are incredibly helpful if you need to figure out what went wrong.
+*/
+```
+
+**AddLog Implementation**
+
+```jsx
+const addLog = (msg, fn) => {
+  return (a, b) => {
+    console.log(msg, a, b)
+    return fn(a, b)
+  }
+}
+```
+
+# Default Parameters
+
+Sometimes, when another developer calls your function, they may have nothing to
+pass to any of the parameters. To get around that, you can define **default
+values** for your parameters. In the next section, you'll see how this allows us
+to create all kinds of powerful functions. For now, see this example of a
+function that adds 1 to the sum of its parameters.
+
+```jsx
+const add1 = (x = 3, y = 2) => {
+  return x + y + 1
+}
+let res = add1 // what is res?
+
+res = add1(1) + add1() + add1(4, 5) // what is res?
+
+res = add1(5) === add1(2, 3) + 2 // what is res?
+```
+
+<Spoiler>
+
+```jsx
+const add1 = (x = 3, y = 2) => {
+  return x + y + 1
+}
+let res = add1 // function
+
+res = add1(1) + add1() + add1(4, 5) // 20; [1+2+1] + [3+2+1] + [4+5+1]
+
+res = add1(5) === add1(2, 3) + 2 // true; 8 === 8
+```
+
+When a function has default parameters and you call the function with only some
+arguments, the parameters will be filled with arguments starting from the left.
+When we ran `add1(1)`, x took the value 1 and y took its default value 2. When
+we gave no arguments (`add1()`), both x and y took their default values.
+Finally, when we ran `add1(4,5)` both x and y had values specified so neither
+one took its default.
+
+</Spoiler>
+
+# Recursion
+
+In the previous section, we created functions that return other functions that
+must be called again and again to get different results. What if instead we
+created a function that only needs to call _itself_? This is called recursion.
+
+For example, say you wanted to add up all the numbers from 1 to 999. You would
+need to create a variable to hold the sum, then add 1 to the sum, add 2 to the
+sum, add 3 to the sum, ... add 999 to the sum, and then return the sum. Let's
+start with a much smaller number (3) so we can follow it through the whole
+process:
+
+```jsx
+const addTo3 = (counter = 1, result = 0) => {
+  if (counter > 3) {
+    return result
+  }
+  return addTo3(counter + 1, result + counter)
+}
+let res = addTo3 // what is res?
+
+res = addTo3(2) // what is res?
+res = addTo3() // what is res?
+```
+
+<Spoiler>
+
+```jsx
+const addTo3 = (counter = 1, result = 0) => {
+  if (counter > 3) {
+    return result
+  }
+  return addTo3(counter + 1, result + counter)
+}
+let res = addTo3 // function
+
+res = addTo3(2) // 5
+/*
+ * return fun1(3, 2)
+ *   return fun1(4, 5)
+ *     return 5
+ */
+res = addTo3() // 6
+```
+
+</Spoiler>
+
+The `addTo3` function above adds up all the numbers from 1 to 3 (if no arguments
+are given). When writing a function like this, it is important to think through
+these steps before coding:
+
+**What variables do I need?**
+
+- We need a number that increments one at a time (1, 2, 3) starting at 1. When
+  this number becomes greater than 3, we know we are done! Let's call this
+  variable `counter`.
+- We need a variable that stores the sum of all the numbers that we have added
+  up, starting at 0. Let's call this variable `result`.
+
+We can just add these variables to the function parameters (if needed):
+`counter=1, result=0`.
+
+**When does the function stop?**
+
+When counter reaches 4, we would have finished adding all the numbers from 1-3,
+so we can return `result` to stop the function from executing anymore:
+`if (counter > 3) return result`.
+
+**If we are not at the end, how do we proceed?**
+
+Since we are not at the end, we just call the function again and increment
+counter by 1, then add counter to our result:
+`return addTo3(counter + 1, result + counter)`.
+
+## Writing A Recursive Function
+
+Let's recap the steps for writing a recursive function:
+
+1. **Parameters:** Figure out what variables you need, add them to your function
+   as parameters, and give them a default value.
+2. **Base case:** Write an if condition telling your function when to stop and
+   exit.
+3. **Recursive case:** Write logic for the next iteration.
+
+### Example
+
+Write a function named sumToMe that takes in a number and returns the sum of all
+numbers from 0 to that number.
+
+```jsx
+const res = sumToMe(5) // res should be 15 because 5+4+3+2+1+0
+```
+
+This will be similar to our addTo3 example above, but now instead of counting up
+to a fixed number, we will count down from whatever number is passed in. (You
+can also write this function by using a counter. We opted not to do it here so
+we create fewer parameters.)
+
+1. **Parameters:** In addition to the required parameter, we need a variable to
+   keep track of the sum. Let's call this variable `sum`. sum should start with
+   a default value of 0.
+2. **Base case:** When we've counted down to 0, there are no numbers left to add
+   so we should stop and return the result that we have collected:
+   `if (input <= 0) return sum`.
+
+   We write `input <= 0` in our check just in case someone used our function
+   incorrectly by passing in a negative number. For instance: `sumToMe(-3)`.
+
+3. **Recursive case:** The rest of the logic is simple; at each step we just add
+   the current number to the result and decrease the number.
+
+   ```jsx
+   const sumToMe = (input, sum = 0) => {
+     if (input <= 0) {
+       return sum
+     }
+     return sumToMe(input - 1, sum + input)
+   }
+   ```
+
+## Exercises
+
+Some of these questions have been asked during onsite interviews, so make sure
+you attempt these problems and understand how to do them.
+
+Make sure you think through the steps first before attempting to solve the
+problem.
+
+1. Write a function named love that calls
+   `console.log("The things I do for love")` 99 times.
+
+   ```jsx
+   love()
+   /*
+   The things I do for love
+   The things I do for love
+   ... (96 times)
+   The things I do for love
+   */
+   ```
+
+<Spoiler>
+
+1. **Explanation**: There are no parameters and no return values, so we don't
+   need to provide any examples
+2. **Function Shape:** `love` does not take in any parameters and does not
+   return anything
+
+   ```jsx
+   const love = () => {}
+   ```
+
+3. **Explanation**:
+   1. We need a parameter that is a counter that starts at 0.
+   2. when counter is 99, return (stop the function)
+   3. print
+   4. Move to next function with next counter
+4. **Code**
+
+   ```jsx
+   const love = (counter = 0) => {
+     if (counter === 99) {
+       return
+     }
+     console.log('The things I do for love')
+     return love(counter + 1)
+   }
+   ```
+
+<Spoiler name = "Debrief">
+
+1. **Parameters:** We'll need a counter to keep track of how many times solution
+   has run. Let's start it at 0.
+2. **Base case:** When the counter reaches 99, return. Note that because our
+   function calls on console.log to do something and doesn't return any value
+   itself, we can just put `return` to end the recursion.
+3. **Recursive case:** If the counter is still below 99, print 'The things I do
+   for love', bring the counter one step closer to 99, and go again.
+
+   It might look strange to see `return love(i+1)` in the recursive case, but
+   only `return` in the base case. Shouldn't a function always either have a
+   return value or not?
+
+   Each of the 99 calls to `love` will pass its return value to the `love` that
+   called it, and saying `return` is like saying `return undefined`. So the very
+   last call will pass an `undefined` return value all the way back to first
+   call, and the first call will end up returning `undefined`.
+
+Did you start at 99 and count down to 1? That’s OK too. Sometimes there is more
+than one way to solve a recursive problem. Just be careful, because sometimes
+counting down vs. up can change the final output of a recursive function. The
+next exercise is one example where the direction you count can completely change
+the result!
+
+</Spoiler>
+
+</Spoiler>
+
+2. Write a function named countTo98 that calls `console.log` once for every
+   number from 0 to 98.
+
+   ```jsx
+   countTo98()
+   /*
+   0
+   1
+   2
+   ...
+   98
+   */
+   ```
+
+<Spoiler>
+
+1. **Explanation**: There are no parameters and no return values, so we don't
+   need to provide any examples
+2. **Shape**
+
+   ```jsx
+   const countTo98 = () => {}
+   ```
+
+3. **Explanation**
+   - We need a variable (let's say `i`) that starts at 0 and keeps track of
+     which number we are on.
+   - When `i` is greater than 98, return
+   - Console.log `i`
+   - Continue
+4. **Code**
+
+   ```jsx
+   const countTo98 = (i = 0) => {
+     if (i > 98) {
+       return
+     }
+     console.log(i)
+     return countTo98(i + 1)
+   }
+   ```
+
+</Spoiler>
+
+3. Write a function named countToMe that calls `console.log` for every number
+   from 8 to the input number.
+
+   ```jsx
+   countToMe(10)
+   /*
+   8
+   9
+   10
+   */
+   ```
+
+<Spoiler>
+
+1. **Examples**
+
+   ```jsx
+   // Example 1
+   countToMe(-4)
+   /*
+    */
+
+   // Example 2
+   countToMe(0)
+   /*
+    */
+
+   // Example 3
+   countToMe(8)
+   /*
+   8
+   */
+
+   // Example 4
+   countToMe(13)
+   /*
+   8
+   9
+   10
+   11
+   12
+   13
+   */
+   ```
+
+2. **Shape**
+
+   ```jsx
+   const countToMe = num => {}
+   ```
+
+3. **Explanation**
+   - We need a variable (let's say `i`) that starts at 8
+   - When `i` is greater than num, return
+   - Console.log `i`
+   - Continue
+4. **Code**
+
+   ```jsx
+   const countToMe = (num, i = 8) => {
+     if (i > num) {
+       return
+     }
+     console.log(i)
+     return countToMe(num, i + 1)
+   }
+   ```
+
+</Spoiler>
+
+4. Write a function named fizzbuzz that call `console.log` for every number from
+   1 to the input number. However, if the number is divisible by 3, log `"fizz"`
+   instead and if the number is divisible by 5, log `"buzz"` instead. If the
+   number is divisible by both, log `"fizzbuzz"`.
+
+   ```jsx
+   fizzbuzz(16)
+   /*
+   1
+   2
+   fizz
+   4
+   buzz
+   fizz
+   7
+   8
+   fizz
+   buzz
+   11
+   fizz
+   13
+   14
+   fizzbuzz
+   16
+   */
+   ```
+
+<Spoiler>
+
+1. **Examples**
+
+   ```jsx
+   //Example 1
+   fizzbuzz(-3)
+   /*
+    */
+
+   //Example 2
+   fizzbuzz(0)
+   /*
+    */
+
+   //Example 2
+   fizzbuzz(3)
+   /*
+   1
+   2
+   fizz
+   */
+
+   //Example 2
+   fizzbuzz(5)
+   /*
+   1
+   2
+   fizz
+   4
+   buzz
+   */
+   ```
+
+2. **Shape**
+
+   ```jsx
+   const fizzbuzz = num => {}
+   ```
+
+3. **Explanation**
+   - We need a variable (let's say `i`) that starts at 0.
+   - When `i` is greater than `num` , return.
+   - We need a local variable (let's say `val`) to store what the output should
+     be at each `num` . Initial value is `i`
+   - If `i` is divisible by 3, assign `fizz` to `val` .
+   - If `i` is divisible by 5, assign `buzz` to `val` .
+   - If `i` is divisible by 3 **and** 5, assign `fizzbuzz` to `val` .
+   - console.log `val`
+   - Continue
+4. **Code**
+
+   ```jsx
+   const fizzbuzz = (num, i = 1) => {
+     if (i > num) {
+       return
+     }
+     let val = i
+     if (i % 3 === 0) {
+       val = 'fizz'
+     }
+     if (i % 5 === 0) {
+       val = 'buzz'
+     }
+     if (i % 3 === 0 && i % 5 === 0) {
+       val = 'fizzbuzz'
+     }
+     console.log(val)
+     return fizzbuzz(num, i + 1)
+   }
+   ```
+
+</Spoiler>
+
+5. Write a function named `numberedHello` that returns a string with the same
+   number of `"hello"` as a given number.
+
+   ```jsx
+   numberedHello(5) // "hellohellohellohellohello"
+   numberedHello(0) // ""
+   numberedHello(-4) // ""
+   ```
+
+<Spoiler name="Hint">
+  This exercise is very similar to `moreHello` (Closure, exercise 2). Instead of
+  a variable outside the function, here you'll use a default parameter to keep
+  track of the text that will be returned.
+</Spoiler>
+
+<Spoiler>
+
+1. **Examples**
+
+   ```jsx
+   //Example 1
+   const a = numberedHello(0) // a is ""
+
+   //Example 2
+   const b = numberedHello(-3) // b is ""
+
+   //Example 3
+   const c = numberedHello(2) // c is "hellohello"
+   ```
+
+2. **Shape**
+
+   ```jsx
+   const numberedHello = num => {}
+   ```
+
+3. **Explanation**
+   - We need a variable (let's say `result`) that stores an empty string ""
+     initially.
+   - When `num` is less than 1, return `result`
+   - Add `"hello"` to `result`
+   - Continue by decreasing `num` and passing in `"hello" + result` into the
+     next function.
+4. **Code**
+
+   ```jsx
+   const numberedHello = (num, result = '') => {
+     if (num < 1) {
+       return result
+     }
+     return numberedHello(num - 1, result + 'hello')
+   }
+   ```
+
+   <Spoiler>
+
+   **Parameters:** Of course we need a counter like in the previous examples.
+   But this time we'll also need a result variable to store all the hellos. This
+   is just like exercise 2 in the Closure section, except that now we're using
+   recursion. Our result will start as an empty string "", and our recursive
+   function calls can pass it to each other to build onto.
+
+   **Base case:** When the counter reaches 0, return the result variable with
+   all the hellos. (Note that we said `if ( num < 1 )`. What would happen if we
+   wrote `if ( num === 0 )` and someone called `solution(-1)`?)
+
+   **Recursive case:** Decrease the counter and add one "hello" to the result as
+   we call this function again.
+
+   </Spoiler>
+
+</Spoiler>
+
+6. Write a function named `sumEvens` that adds up all the positive even numbers
+   from 2 to the given number. (Use `%` to determine if each number is even.)
+
+   ```jsx
+   let result = sumEvens(5) // result is 6 because 4 + 2
+   result = sumEvens(1) // result is 0
+   ```
+
+<Spoiler>
+
+1. **Examples**
+
+   ```jsx
+   //Example 1
+   const a = sumEvens(-8) // a is 0
+
+   //Example 2
+   const b = sumEvens(0) // b is 0
+
+   //Example 3
+   const d = sumEvens(2) // d is 2
+
+   //Example 4
+   const c = sumEvens(10) // c is 30 : (2 + 4 + 6 + 8 + 10)
+   ```
+
+2. **Shape**
+
+   ```jsx
+   const sumEvens = num => {}
+   ```
+
+3. **Explanation**
+   - We need a variable (let's say `result`) that has a value of 0 initially.
+   - When `num` is less than or equal to 0, return.
+   - If `num` is even, add it to `result` .
+   - Continue by decreasing `num`
+4. **Code**
+
+   ```jsx
+   const sumEvens = (num, result = 0) => {
+     if (num <= 0) {
+       return result
+     }
+     if (num % 2 === 0) {
+       result = result + num
+     }
+     return sumEvens(num - 1, result)
+   }
+   ```
+
+</Spoiler>
+
+7. Write a function named `tryNumRange` that takes in a number and a function
+   and calls the function with every number from 1 to the input number. If any
+   of these return true, return true; if they all return false, return false.
+
+   ```jsx
+   let res = tryNumRange(15, e => {
+     return e > 10
+   }) // res is true, because the input function returns
+   // true when it is called with 11
+
+   res = tryNumRange(8, e => {
+     return e === 19
+   }) // res is false, because passing 1-8 into
+   // the input function will never return true
+   ```
+
+<Spoiler name="Hint">
+  You'll need to include a default parameter when writing this function.
+</Spoiler>
+
+<Spoiler>
+
+1. **Examples**
+
+   ```jsx
+   //Example 1
+   let res = tryNumRange(0, e => {
+     return e + 10 > 20
+   }) // res is false since range does not include 0
+
+   //Example 2
+   res = tryNumRange(-2, e => {
+     return e % 2 === 0
+   }) // res is false since negative numbers are not included in the range
+
+   //Example 3
+   res = tryNumRange(8, e => {
+     return e === 19
+   }) // res is false, because passing 1-8 into
+   // the input function will never return true
+
+   //Example 4
+   res = tryNumRange(8, e => {
+     return true
+   }) // res is true
+   ```
+
+2. **Shape**
+
+   ```jsx
+   const tryNumRange = (num, fun) => {}
+   ```
+
+3. **Explanation**
+
+   - We need a variable (let's say `counter`) that starts at 1.
+   - When `counter` is greater than num, return false.
+   - When running `fun` with `counter` as argument is truthy, return true.
+   - Continue
+
+4. **Code**
+
+   ```jsx
+   const tryNumRange = (num, fun, counter = 1) => {
+     if (counter > num) {
+       return false
+     }
+     if (fun(counter)) {
+       return true
+     }
+     return tryNumRange(num, fun, counter + 1)
+   }
+   ```
+
+</Spoiler>
+
+8. Look at the code below and try to figure out how to use `fun1`. Next, write
+   some code that calls `fun1`.
+
+   ```jsx
+   // fun1 runs b (2nd argument) x times
+   fun1(99, () => {
+     console.log('hello')
+   })
+   ```
+
+<Spoiler>
+
+1. **Examples**
+
+   ```jsx
+   //Example 1
+   const a = fun(2, () => {
+   	console.log("c0d3")
+   })
+
+   /*
+   "c0d3"
+   "c0d3"
+   a is undefined since there is no value being returned.
+   It prints out string 'c0d3' 2 times.
+
+   ```
+
+2. **Shape**
+
+   ```jsx
+   const fun1 = (x, b) => {}
+   ```
+
+3. **Explanation**
+   - You are a value `x` a function `b`
+   - When `x` is less than or equal to 0, return
+   - Call the `b` function
+   - Continue
+4. **Code**
+
+   ```jsx
+   const fun1 = (x, b) => {
+     if (x <= 0) {
+       return
+     }
+     b()
+     return fun1(x - 1, b)
+   }
+   ```
+
+</Spoiler>
+
+# Strings And Characters
+
+Now that you know recursion, let's learn more about strings so you can tackle
+the harder string problems.
+
+A JavaScript string stores a series of characters like "John Smith". A string
+can be any text inside double or single quotes:
+
+const a = "iPhone 11"
+
+const b = 'iPhone 11'
+
+String indices are zero-based: The first character is in position 0, the second
+in 1, and so on.
+
+To access a character in a string, you can use square brackets with the
+position. For example, `"hello"[1]` will give you the character `"e"` in the
+second position.
+
+Strings also have a special property called `length`. For example,
+`"hello".length` will give you 5 which is the length of "hello".
+
+## Example
+
+Write a function named solution that takes in a string and calls `console.log()`
+for every letter in the string.
+
+1. **3 Examples** - Let's make sure we understand the problem!
+
+   ```jsx
+   //Example 1
+   const a = logString('') // returns undefined since we are passing in empty string as argument.
+
+   //Example 2
+   const c = logString(' ') // c logs empty space
+   /*
+   " "(empty space)
+   */
+
+   //Example 3
+   const b = logString('Hello') // b is
+   /*
+   H
+   e
+   l
+   l
+   o
+   */
+   ```
+
+2. **Shape**
+
+   ```jsx
+   const logString = str => {}
+   ```
+
+3. **Explanation**
+   - We need a variable (let's say `i`) that starts at 0 and keeps track of
+     where we are in `str`
+   - When we arrive at the end (`i` is equal to `str.length`), return.
+   - Console.log `str[i]`
+   - Continue
+4. **Code**
+
+   ```jsx
+   const logString = (str, i = 0) => {
+     if (i >= str.length) {
+       return
+     }
+     console.log(str[i])
+     return logString(str, i + 1)
+   }
+   ```
+
+**Debrief**
+
+1. **Parameters:** You'll quickly notice a pattern with many recursion problems
+   involving strings. Just like in the previous section, they'll have a counter,
+   and this time it will keep our place in the string.
+2. **Base case:** Going one character at a time, the base case is when we get to
+   end of the string.
+3. **Recursive case:** Just update the counter to point to the next character.
+
+Not too bad, right? Ready to try some on your own?
+
+## Exercises
+
+1. Write a function named `logNonMatching` that `console.log`s every character
+   in a word, except for one given character.
+
+   ```jsx
+   logNonMatching('banana', 'a')
+   // Will print out everything not matching "a":
+   /*
+   b
+   n
+   n
+   */
+   ```
+
+<Spoiler>
+
+1. **Examples**
+
+   ```jsx
+   //Example 1
+   logNonMatching('', 'c') // output is ""
+
+   //Example 2
+   logNonMatching('I love computer science!', ' ')
+   // removes empty space
+   /*
+   I
+   l
+   o
+   v
+   e
+   c
+   o
+   m
+   p
+   u
+   t
+   e
+   r
+   s
+   c
+   i
+   e
+   n
+   c
+   e
+   */
+
+   //Example 3
+   logNonMatching('ccc', 'c') // output is ""
+   ```
+
+2. **Shape**
+
+   ```jsx
+   const logNonMatching = (str, character) => {}
+   ```
+
+3. **Explanation**
+   - We need a variable (let's say `i`) that starts at 0 and keeps track of
+     where we are in `str`.
+   - When `i` equals `str.length` (we are at the end) return.
+   - If `str[i]` doesn't equal `character`, console.log `str[i]`
+   - Continue
+4. **Code**
+
+   ```jsx
+   const logNonMatching = (str, character, i = 0) => {
+     if (i === str.length) return
+     if (str[i] !== character) console.log(str[i])
+     return logNonMatching(str, character, i + 1)
+   }
+   ```
+
+</Spoiler>
+
+2. Write a function named `logFirstX` that logs a given number of characters
+   from the _beginning_ of a string.
+
+   ```jsx
+   logFirstX('Winterfell', 3)
+   // Will print out (3 characters):
+   /*
+   W
+   i
+   n
+   */
+   ```
+
+<Spoiler>
+
+1. **Examples**
+
+   ```jsx
+   //Example 1
+   const a = logFirstX("", 4) // logs "" since there is nothing to log
+
+   //Example 2
+   const b = logFirstX("Happy", 10) // logs the whole string
+   /*
+   H
+   a
+   p
+   p
+   y
+   */
+
+   //Example 3
+   const c = logFirstX("I am having a great day!", 5)
+   /*
+   I
+   " "(empty space)
+   a
+   m
+   " "(empty space)
+   /*
+   ```
+
+2. **Shape**
+
+   ```jsx
+   const logFirstX = (str, num) => {}
+   ```
+
+3. **Explanation**
+   - We need a variable (let's say `i`) that starts at 0 and keeps track of
+     where we are in `str`.
+   - When `i` is ≥ `num` or `i` is ≥ `str.length`, return
+   - print out the character at index `i`
+   - Continue
+4. Code
+
+   ```jsx
+   const logFirstX = (str, num, i = 0) => {
+     if (i >= num || i >= str.length) {
+       return
+     }
+     console.log(str[i])
+     return logFirstX(str, num, i + 1)
+   }
+   ```
+
+</Spoiler>
+
+3. Write a function named `lastX` that _returns_ (not console.log) a chunk of a
+   given size from the _end_ of a string.
+
+   ```jsx
+   lastX('Winterfell', 3) // returns "ell"
+   ```
+
+<Spoiler>
+
+1. **Examples**
+
+   ```jsx
+   // Example 1
+   const b = lastX('', 4) // b is ""
+
+   // Example 2
+   const a = lastX('hello', -11) // a is ""
+
+   // Example 3
+   const d = lastX('a', 1) // d is "a"
+
+   // Example 4
+   const c = lastX('Winter', 8) // c is "Winter"
+   ```
+
+2. **Shape**
+
+   ```jsx
+   const lastX = (str, num) => {}
+   ```
+
+3. **Explanation**
+
+   - We need a variable (let's say `i`) that starts at the last character index:
+     `str.length - 1`
+   - We need a variable (let's say `result` ) that starts with "" to collect all
+     the characters.
+   - When `result`'s length is ≥ to `num` or if `i` becomes smaller than 0, we
+     know we are done so return `result`
+   - Add result to `str[i]`
+   - Continue (by decreasing i)
+
+4. **Code**
+
+   ```jsx
+   const lastX = (str, num, result = '', i = str.length - 1) => {
+     if (result.length >= num || i < 0) {
+       return result
+     }
+     return lastX(str, num, str[i] + result, i - 1)
+   }
+   ```
+
+</Spoiler>
+
+4. Write a function named `logOddOnly` that prints out only the characters at
+   odd indices (remember, index starts at 0) from a string.
+
+   ```jsx
+   logOddOnly('catelyn')
+   // Will print out (3 characters):
+   /*
+   a
+   e
+   y
+   */
+   ```
+
+<Spoiler>
+
+1. **Examples**
+
+   ```jsx
+   //Example 1
+   logOddOnly("")
+   // Will print out nothing
+
+   //Example 2
+   logOddOnly("I love coding!")
+   // Will print out (7 characters):
+   /*
+    (empty space)
+   o
+   e
+   c
+   d
+   n
+   !
+   */
+
+   //Example 3
+   logOddOnly(" This is fun! ") // "Ti sfn "
+   // Will print out (7 characters):
+   /*
+   T
+   i
+
+   s
+   f
+   n
+    (empty space)
+   */
+   ****
+   ```
+
+2. **Shape**
+
+   ```jsx
+   const logOddOnly = str => {}
+   ```
+
+3. **Explanation**
+   - We need a variable (let's say `i`) that starts at 0 and keeps track of
+     where we are in `str`.
+   - When we are at the end of `str`, return.
+   - We check if `i` is odd and if it is, we print out `str[i]` .
+   - Continue
+4. **Code**
+
+   ```jsx
+   const logOddOnly = (str, i = 0) => {
+     if (i === str.length) return
+     if (i % 2 !== 0)
+       // A quicker way is to simply do i % 2
+       console.log(str[i])
+     return logOddOnly(str, i + 1)
+   }
+   ```
+
+</Spoiler>
+
+5. Write a function called `removeCharacter` that returns a string without any
+   instances of a given character.
+
+   ```jsx
+   removeCharacter('banana', 'a') // bnn
+   ```
+
+<Spoiler>
+
+1. **Examples**
+
+   ```jsx
+   // Example 1
+   const a = removeCharacter(' ', 'abc') // a is ''
+
+   // Example 2
+   const b = removeCharacter('Jump', 'i') // b is "Jump"
+
+   // Example 3
+   const c = removeCharacter('Iblovebcoding!', 'b') // c is "Ilovecoding!"
+   ```
+
+2. **Shape**
+
+   ```jsx
+   const removeCharacter = (str, letter) => {}
+   ```
+
+3. **Explanation**
+   - We need a variable (let's say `i`) that starts at 0 and keeps track of
+     where we are in `str`.
+   - We need a variable (let's say `acc`) that starts with `""` and we add to
+     it.
+   - When we get to the end of the string, return `acc`
+   - Add to `acc` (if `str[i]` doesn't match `letter` )
+   - Continue
+4. **Code**
+
+   ```jsx
+   const removeCharacter = (str, character, i = 0, acc = '') => {
+     if (i === str.length) {
+       return acc
+     }
+     if (str[i] !== character) {
+       acc = acc + str[i]
+     }
+     return removeCharacter(str, character, i + 1, acc)
+   }
+   ```
+
+</Spoiler>
+
+6. Write a function named `secretCodeGenerator` that takes in 3 parameters: a
+   string, a letter, and a string, and returns a string where all the matching
+   letters are replaced by the last input string.
+
+   ```jsx
+   secretCodeGenerator('banana', 'a', '*z*') // b*z*n*z*n*z*
+   ```
+
+<Spoiler>
+
+1. **Examples**
+
+   ```jsx
+   // Example 1: nothing to replace
+   secretCodeGenerator('', 'b', ' ')
+   // returns ''
+
+   // Example 2: no matches to replace
+   secretCodeGenerator('acd', 'b', 'hello')
+   // returns 'acd'
+
+   // Example 3: Removes b and add space " " instead.
+   secretCodeGenerator('Ibambhappy', 'b', ' ')
+   // returns 'I am happy'
+
+   // Example 4: Replaces "o" with "u"
+   secretCodeGenerator('Boomerang', 'o', 'u')
+   // returns 'Buumerang'
+   ```
+
+2. **Shape**
+
+   ```jsx
+   const secretCodeGenerator = (str, letter, replacement) => {}
+   ```
+
+3. **Explanation**
+   - We need a variable (let's say `i`) that starts at 0 and keeps track of
+     where we are in `str`
+   - We need a variable `acc` that starts with `""` and we add to it character
+     by character
+     - if the `str[i]` matches letter, we add the replacement.
+     - Otherwise, we add the letter.
+   - When we get to the end of the string, return `acc`
+   - Add to `acc` (could be `str[i]` or `replacement` )
+   - Continue
+4. **Code**
+
+   ```jsx
+   const secretCodeGenerator = (str, letter, replacement, i = 0, acc = '') => {
+     if (i >= str.length) {
+       return acc
+     }
+     if (str[i] === letter) {
+       acc = acc + replacement
+     } else {
+       acc = acc + str[i]
+     }
+     return secretCodeGenerator(str, letter, replacement, i + 1, acc)
+   }
+   ```
+
+</Spoiler>
+
+# Async
+
+This section will cover the asynchronous nature of JavaScript that
+differentiates it from other languages. To understand it, let's explore a
+hypothetical scenario:
+
+If you are baking pizza and you put the pizza into the oven, do you wait until
+the pizza is done before doing something else? Probably not. You will probably
+do other things and and come back to it after the oven finishes cooking the
+pizza. Usually, the oven will let you know when it is done (like emitting a
+beep).
+
+JavaScript works the same way. In the following example, `setTimeout` (you might
+remember this function from Preflight) takes in 2 arguments, a function and a
+time (in milliseconds). The function will run after the milliseconds have
+passed.
+
+```jsx
+let points = 0
+setTimeout(() => {
+  points = 5
+}, 1000) // function will run after 1000 milliseconds (or 1 second)
+
+let res = points // res is 0.
+// JavaScript keeps going and does not sit around and wait.
+// How do you fix the code so res takes the value of points after points is updated?
+```
+
+<Spoiler>
+
+```jsx
+let points = 0
+let res = 0
+setTimeout(() => {
+  // note that this function (which will run after 1000ms)
+  //   is doing 2 things:
+  //   1. setting points to 5
+  //   2. setting res to points.
+  points = 5
+  res = points
+}, 1000)
+```
+
+</Spoiler>
+
+```jsx
+let points = 2
+setTimeout(() => {
+  if (points < 5) {
+    console.log(points) // will console.log be called?
+  }
+}, 1000)
+
+points = 10
+```
+
+<Spoiler>
+
+No, since JavaScript does not wait around, points = 10 executes before the
+callback function.
+
+</Spoiler>
+
+> **callbacks** are functions that are passed into another function as
+> arguments.
+
+## Exercises
+
+1. Write a function named wait20 that waits 20 seconds and then calls
+   `console.log("one")`.
+
+<Spoiler>
+
+1. **Examples**
+
+   ```jsx
+   wait20() // after 20 seconds, "one" will be printed out.
+   ```
+
+2. **Function Shape**
+
+   ```jsx
+   const wait20 = () => {}
+   ```
+
+3. **Explanation**
+   - We need to run `setTimeout`, which takes in a function and a number (20
+     seconds)
+     - The callback function will run `console.log`
+4. **Code**
+
+   ```jsx
+   const wait20 = () => {
+     setTimeout(() => {
+       console.log('one')
+     }, 20 * 1000) // setTimeout uses milliseconds. 1000 milliseconds per second
+   }
+   // FYI. wait20 will return undefined, because it has no return
+   ```
+
+</Spoiler>
+
+2. Write a function named `oneAndTwo` that waits 20 seconds and then calls
+   `console.log("one")`, then waits another 10 seconds and then calls
+   `console.log("two")`. _Reminder: 'two' will appear 30 seconds after the
+   function is run._
+
+<Spoiler>
+
+1. **Examples**
+
+   ```jsx
+   oneAndTwo()
+   /* 
+   ... 20 seconds later ...
+   "one"
+   ... 10 seconds later...
+   "two"
+   */
+   ```
+
+2. **Function Shape**
+
+   ```jsx
+   const oneAndTwo = () => {}
+   ```
+
+3. **Explanation**
+   - We need to run `setTimeout`, and pass in 2 arguments, a function and 20000
+   - The callbackfunction will:
+     - run `console.log`
+     - run `setTimeout` with 2 arguments, a function and 1000
+       - The callback function will run `console.log`
+4. **Code**
+
+   ```jsx
+   const oneAndTwo = () => {
+     setTimeout(() => {
+       console.log('one')
+
+       setTimeout(() => {
+         console.log('two')
+       }, 10 * 1000)
+     }, 20 * 1000) // setTimeout uses milliseconds. 1000 milliseconds per second
+   }
+   ```
+
+</Spoiler>
+
+3. Write a function that takes in a string, and calls `console.log` for every
+   character in the string, 1 second after each call (aka 1 character per
+   second).
+
+<Spoiler>
+
+1. **Examples**
+
+   ```jsx
+   // Example 1
+   printLetter('')
+   /*
+    */
+
+   // Example 2
+   printLetter('hello')
+   /*
+   ... 1 second later ...
+   "h"
+   ... 1 second later...
+   "e"
+   ... 1 second later...
+   "l"
+   ... 1 second later...
+   "l"
+   ... 1 second later...
+   "o"
+   */
+   ```
+
+2. **Function Shape**
+
+   ```jsx
+   const printLetter = str => {}
+   ```
+
+3. **Explanation**
+   - We need a variable `i` to keep track of which letter we are on, starting
+     from 0
+   - If we are at the end of the string, `i === str.length`, stop / return
+   - run `setTimeout` and pass in a function and 1000
+     - log the letter
+     - In callback function, continue by running `printLetter` with `i+1` .
+4. **Code**
+
+   ```jsx
+   const printLetter = (str, i = 0) => {
+     if (i === str.length) {
+       return
+     }
+     setTimeout(() => {
+       console.log(str[i])
+       printLetter(str, i + 1)
+     }, 1000)
+   }
+   ```
+
+</Spoiler>
+
+4. What's wrong with the solution on the left for the previous exercise (1
+   letter per second)?
+
+<Image
+  src="/assets/curriculum/lessons/js1/async.jpeg"
+  height="308"
+  width="960"
+/>
+
+<Spoiler>
+
+Function on the left will completely stop in about.... 1 second. All the letters
+gets printed out all at once after about 1 second, no matter how long the string
+is.
+
+</Spoiler>
+
+# Lesson Challenges
+
+Please solve these challenges with recursive functions instead of using `for` or
+`while` loops. Some of these challenges do not need a recursive solution, but if
+you feel the need to use `for` or `while`, then please use recursion instead.
+
+<ChallengeBar
+  href="/curriculum/2"
+  description="Complete recursion and closure challenges"
+  title="Master your skill by solving challenges"
+/>

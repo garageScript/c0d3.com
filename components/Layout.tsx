@@ -7,6 +7,7 @@ const Layout: React.FC<{ title?: string }> = ({ children, title }) => (
     <Head>
       <title key="title">{title ? `${title} — C0D3` : 'C0D3'}</title>
     </Head>
+    <input type="text"></input>
     <AppNav />
     <div className="container-md">{children}</div>
     <Footer />
