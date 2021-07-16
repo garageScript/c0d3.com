@@ -36,7 +36,7 @@
     "@quixo3/prisma-session-store": "^3.0.1",
     "@sentry/nextjs": "^6.8.0",
     "apollo-server-micro": "^2.25.2",
-    "apollo3-cache-persist": "^0.9.1",
+    "apollo3-cache-persist": "^0.10.0",
     "bcrypt": "5.0.0",
     "bootstrap": "^4.6.0",
     "c0d3-diff": "^0.0.1",
